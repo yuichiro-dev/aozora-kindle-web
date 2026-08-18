@@ -22,6 +22,7 @@ export default function Home() {
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
+  const [bookCount, setBookCount] = useState<number | null>(null);
 
   useEffect(() => {
     fetch('/books.json')
@@ -166,13 +167,25 @@ export default function Home() {
     name: '青空文庫 to Kindle (EPUB)',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
-    description: '青空文庫の作品を縦書き・右開き用 EPUB に瞬時に変換してダウンロードできます。',
+    description: '青空文庫の作品を縦書き・右開き用 EPUB(イーパブ)形式に瞬時に変換してダウンロードできます。',
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'JPY',
     },
   };
+
+  // ページ読み込み時に /books.json を取得して件数を数える
+  useEffect(() => {
+    fetch('/books.json')
+      .then((res) => res.json())
+      .then((data) => {
+        if (Array.isArray(data)) {
+          setBookCount(data.length);
+        }
+      })
+      .catch(() => setBookCount(0));
+  }, []);
 
   return (
     <>
@@ -187,8 +200,9 @@ export default function Home() {
               青空文庫 to Kindle (EPUB)
             </h1>
             <p className="text-sm text-gray-500 mt-1">
-              青空文庫の作品を縦書き・右開き用 EPUB に瞬時に変換してダウンロードします。
-            </p>
+              青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードします。<br />
+              作品リストは1日1回自動更新されます 
+              {bookCount !== null && ` / 現在の収録数: ${bookCount.toLocaleString()} 作品`}</p>
           </header>
 
           {/* 検索バー */}
@@ -245,7 +259,7 @@ export default function Home() {
                           : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
                       }`}
                     >
-                      {downloadingId === book.id ? 'EPUB生成中...' : 'EPUB を取得'}
+                      {downloadingId === book.id ? 'EPUB生成中...' : 'ダウンロード'}
                     </button>
                   </div>
                 ))}
