@@ -4,18 +4,17 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
   title: {
-    default: '青空文庫 to Kindle (EPUB) | 縦書き・右開きに無料一括変換',
-    template: '%s | 青空文庫 to Kindle (EPUB)',
+    default: '青空文庫 Kindle 変換ツール | 縦書き・右開きに無料一括変換',
+    template: '%s | 青空文庫 Kindle 変換ツール',
   },
   description:
     '青空文庫の作品をKindleで読みやすい縦書き・右開きのEPUB形式へ瞬時に変換。面倒な登録不要でSend to Kindleにも最適です。',
-keywords: [
+  keywords: [
     '青空文庫',
     '青空Kindle',
     '青空キンドル',
@@ -39,11 +38,11 @@ keywords: [
     telephone: false,
   },
   openGraph: {
-    title: '青空文庫 to Kindle (EPUB) | 無料で瞬時に縦書きEPUB変換',
+    title: '青空文庫 Kindle 変換ツール | 無料で瞬時に縦書きEPUB変換',
     description:
       '青空文庫の作品を縦書き・右開き用のEPUB形式に瞬時に変換してダウンロード。Kindleで快適な縦書き読書を。',
     url: siteUrl,
-    siteName: '青空文庫 to Kindle (EPUB)',
+    siteName: '青空文庫 Kindle 変換ツール',
     locale: 'ja_JP',
     type: 'website',
   },
@@ -58,11 +57,7 @@ keywords: [
   },
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
       <body className={inter.className}>{children}</body>

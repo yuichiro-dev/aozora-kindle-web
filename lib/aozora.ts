@@ -16,7 +16,9 @@ export function parseAozoraText(text: string): { bodyHtml: string } {
     ''
   );
 
-  const lastBorderIndex = parsed.lastIndexOf('-------------------------------------------------------');
+  const lastBorderIndex = parsed.lastIndexOf(
+    '-------------------------------------------------------'
+  );
   if (lastBorderIndex !== -1) {
     parsed = parsed.substring(0, lastBorderIndex);
   }
@@ -52,7 +54,7 @@ export function parseAozoraText(text: string): { bodyHtml: string } {
 
   // 6. 段落タグ変換
   const finalLines = parsed.split(/\r?\n/);
-  const htmlLines = finalLines.map(line => {
+  const htmlLines = finalLines.map((line) => {
     const trimmed = line.trim();
     if (!trimmed) return '<p><br/></p>';
     if (trimmed.startsWith('<div')) return trimmed; // 挿絵用divはそのまま保持
@@ -63,7 +65,9 @@ export function parseAozoraText(text: string): { bodyHtml: string } {
 }
 
 // ZIPからテキストと画像群を一括ダウンロード・抽出
-export async function fetchAozoraBundle(zipUrl: string): Promise<{ rawText: string; images: ExtractedImage[] }> {
+export async function fetchAozoraBundle(
+  zipUrl: string
+): Promise<{ rawText: string; images: ExtractedImage[] }> {
   const res = await fetch(zipUrl);
   if (!res.ok) throw new Error(`ZIP取得失敗: Status ${res.status}`);
 
@@ -71,15 +75,15 @@ export async function fetchAozoraBundle(zipUrl: string): Promise<{ rawText: stri
   const zip = await JSZip.loadAsync(arrayBuffer);
 
   // テキストファイル取得
-  const txtFileName = Object.keys(zip.files).find(name => name.endsWith('.txt'));
+  const txtFileName = Object.keys(zip.files).find((name) => name.endsWith('.txt'));
   if (!txtFileName) throw new Error('.txt ファイルが見つかりません');
   const txtBuffer = await zip.files[txtFileName].async('nodebuffer');
   const rawText = iconv.decode(txtBuffer, 'Shift_JIS');
 
   // 画像ファイル取得 (.png, .jpg, .jpeg, .gif)
   const images: ExtractedImage[] = [];
-  const imageFiles = Object.keys(zip.files).filter(name =>
-    !name.startsWith('__MACOSX') && /\.(png|jpe?g|gif)$/i.test(name)
+  const imageFiles = Object.keys(zip.files).filter(
+    (name) => !name.startsWith('__MACOSX') && /\.(png|jpe?g|gif)$/i.test(name)
   );
 
   for (const imgName of imageFiles) {

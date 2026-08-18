@@ -61,19 +61,20 @@ export default function Home() {
       const authorEn = cleanStr(b.author_en);
 
       const authorParts = (b.author || '').split(/[\s\u3000]+/);
-      const authorReversed = authorParts.length > 1
-        ? cleanStr(`${authorParts.slice(1).join('')}${authorParts[0]}`)
-        : '';
+      const authorReversed =
+        authorParts.length > 1 ? cleanStr(`${authorParts.slice(1).join('')}${authorParts[0]}`) : '';
 
       const authorKanaParts = (b.author_kana || '').split(/[\s\u3000]+/);
-      const authorKanaReversed = authorKanaParts.length > 1
-        ? cleanStr(`${authorKanaParts.slice(1).join('')}${authorKanaParts[0]}`)
-        : '';
+      const authorKanaReversed =
+        authorKanaParts.length > 1
+          ? cleanStr(`${authorKanaParts.slice(1).join('')}${authorKanaParts[0]}`)
+          : '';
 
       const authorEnParts = (b.author_en || '').split(/[\s\u3000]+/);
-      const authorEnReversed = authorEnParts.length > 1
-        ? cleanStr(`${authorEnParts.slice(1).join('')}${authorEnParts[0]}`)
-        : '';
+      const authorEnReversed =
+        authorEnParts.length > 1
+          ? cleanStr(`${authorEnParts.slice(1).join('')}${authorEnParts[0]}`)
+          : '';
 
       // 入力全体（記号・空白なし）での完全・部分一致判定
       const isDirectMatch =
@@ -105,10 +106,6 @@ export default function Home() {
       });
     });
   }, [books, query]);
-
-  useEffect(() => {
-    setCurrentPage(1);
-  }, [query]);
 
   const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
   const currentBooks = useMemo(() => {
@@ -151,8 +148,9 @@ export default function Home() {
       a.click();
       a.remove();
       window.URL.revokeObjectURL(url);
-    } catch (err: any) {
-      alert(`エラー: ${err.message}`);
+    } catch (err: unknown) {
+      const message = err instanceof Error ? err.message : '不明なエラーが発生しました';
+      alert(`エラー: ${message}`);
     } finally {
       setDownloadingId(null);
     }
@@ -167,7 +165,8 @@ export default function Home() {
     name: '青空文庫 to Kindle (EPUB)',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
-    description: '青空文庫の作品を縦書き・右開き用 EPUB(イーパブ)形式に瞬時に変換してダウンロードできます。',
+    description:
+      '青空文庫の作品を縦書き・右開き用 EPUB(イーパブ)形式に瞬時に変換してダウンロードできます。',
     offers: {
       '@type': 'Offer',
       price: '0',
@@ -193,25 +192,30 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-gray-50 text-gray-800 p-6 md:p-12">
+      <main className="min-h-screen bg-stone-50 text-gray-800 p-6 md:p-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="border-b pb-4 text-center md:text-left">
-            <h1 className="text-3xl font-bold tracking-tight text-gray-900">
-              青空文庫 to Kindle (EPUB)
+            <h1 className="text-3xl font-bold font-seriftracking-tight text-gray-900">
+              青空文庫 Kindle 変換ツール
             </h1>
             <p className="text-sm text-gray-500 mt-1">
-              青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードします。<br />
-              作品リストは1日1回自動更新されます 
-              {bookCount !== null && ` / 現在の収録数: ${bookCount.toLocaleString()} 作品`}</p>
+              青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードします。
+              <br />
+              作品リストは1日1回自動更新されます
+              {bookCount !== null && ` / 現在の収録数: ${bookCount.toLocaleString()} 作品`}
+            </p>
           </header>
 
           {/* 検索バー */}
           <div className="relative">
             <input
               type="text"
-              placeholder="例: Poe / 夏目漱石 / 吉川英治 三国志..."
+              placeholder="例：夏目漱石 こころ、走れメロス などで検索..."
               value={query}
-              onChange={(e) => setQuery(e.target.value)}
+              onChange={(e) => {
+                setQuery(e.target.value);
+                setCurrentPage(1);
+              }}
               disabled={loading}
               className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg bg-white disabled:bg-gray-100"
             />
@@ -222,7 +226,9 @@ export default function Home() {
             <>
               <div className="flex justify-between items-center text-sm text-gray-600">
                 <span>
-                  {loading ? 'データ読み込み中...' : `該当作品: ${filteredBooks.length.toLocaleString()} 件`}
+                  {loading
+                    ? 'データ読み込み中...'
+                    : `該当作品: ${filteredBooks.length.toLocaleString()} 件`}
                 </span>
                 {totalPages > 1 && (
                   <span>
@@ -235,13 +241,13 @@ export default function Home() {
                 {currentBooks.map((book, index) => (
                   <div
                     key={`${book.id}-${index}`}
-                    className="p-4 bg-white border border-gray-200 rounded-lg shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all"
+                    className="p-4 bg-white border border-stone-200/80 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all"
                   >
                     <div>
                       <div className="flex items-baseline gap-2 flex-wrap">
                         <h2 className="text-xl font-semibold text-gray-900">{book.title}</h2>
                         {book.sub_title && (
-                          <span className="text-base font-medium text-blue-700 bg-blue-50 px-2 py-0.5 rounded">
+                          <span className="text-sm font-normal text-gray-800">
                             {book.sub_title}
                           </span>
                         )}
@@ -251,12 +257,12 @@ export default function Home() {
                     <button
                       onClick={() => handleDownload(book)}
                       disabled={downloadingId === book.id || !book.zip_url}
-                      className={`px-4 py-2 rounded-md font-medium text-sm transition-colors whitespace-nowrap ${
+                      className={`px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 shadow-sm whitespace-nowrap ${
                         !book.zip_url
-                          ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
+                          ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed shadow-none'
                           : downloadingId === book.id
-                          ? 'bg-blue-300 text-white cursor-wait'
-                          : 'bg-blue-600 text-white hover:bg-blue-700 active:bg-blue-800'
+                            ? 'bg-stone-500 text-white cursor-wait animate-pulse'
+                            : 'bg-gradient-to-r from-stone-800 to-stone-700 text-stone-100 hover:from-stone-700 hover:to-stone-600 active:from-stone-900 active:to-stone-800 shadow'
                       }`}
                     >
                       {downloadingId === book.id ? 'EPUB生成中...' : 'ダウンロード'}
@@ -294,6 +300,22 @@ export default function Home() {
               )}
             </>
           )}
+
+          <footer className="max-w-2xl mx-auto w-full mt-16 pt-6 border-t border-stone-200 text-center text-xs text-stone-400 space-y-2">
+            <p>
+              すべてのソースコードは{' '}
+              <a
+                href="https://github.com/yuichiro-dev/aozora-kindle-web"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline hover:text-stone-600"
+              >
+                GitHub
+              </a>{' '}
+              にて公開されています。不具合はIssuesにて報告して下さい。
+            </p>
+            <p>© {new Date().getFullYear()} 青空文庫 Kindle 変換ツール</p>
+          </footer>
         </div>
       </main>
     </>

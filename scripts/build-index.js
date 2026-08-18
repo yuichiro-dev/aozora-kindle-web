@@ -1,10 +1,14 @@
-const fs = require('fs');
-const path = require('path');
-const https = require('https');
-const http = require('http');
-const unzipper = require('unzipper');
-const Papa = require('papaparse');
-const iconv = require('iconv-lite');
+import fs from 'fs';
+import path from 'path';
+import https from 'https';
+import http from 'http';
+import unzipper from 'unzipper';
+import { fileURLToPath } from 'url';
+import Papa from 'papaparse';
+import iconv from 'iconv-lite';
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const CSV_ZIP_URL = 'https://www.aozora.gr.jp/index_pages/list_person_all_extended_utf8.zip';
 const OUTPUT_PATH = path.join(__dirname, '../public/books.json');
@@ -58,7 +62,7 @@ async function downloadAndExtractCsv() {
   let response;
   try {
     response = await fetchUrl(CSV_ZIP_URL);
-  } catch (err) {
+  } catch {
     console.log('HTTPSでの取得に失敗したため、HTTPで再試行します...');
     const httpUrl = CSV_ZIP_URL.replace('https://', 'http://');
     response = await fetchUrl(httpUrl);
@@ -99,7 +103,7 @@ async function main() {
       skipEmptyLines: true,
     });
 
-    const books = [];
+    const booksMap = new Map(); // IDで管理するためにMapを使用
     const rows = parsed.data.slice(1);
 
     for (const row of rows) {
@@ -109,18 +113,17 @@ async function main() {
       const titleKana = clean(row[2]);
       const subTitle = clean(row[4]);
       const subTitleKana = clean(row[5]);
-      const originalTitle = clean(row[6]); // 原題 (欧文タイトル)
+      const originalTitle = clean(row[6]);
 
       const lastName = clean(row[15]);
       const firstName = clean(row[16]);
       const lastNameKana = clean(row[17]);
       const firstNameKana = clean(row[18]);
 
-      // 【確定インデックス】21: 姓ローマ字 ("Poe", "Irving"), 22: 名ローマ字 ("Edgar Allan", "Washington")
       const lastNameEn = clean(row[21]);
       const firstNameEn = clean(row[22]);
 
-      const role = clean(row[23]); // "著者"
+      const role = clean(row[23]);
       const zipUrl = clean(row[45]);
       const htmlUrl = clean(row[50]);
 
@@ -128,25 +131,41 @@ async function main() {
         const author = `${lastName} ${firstName}`.trim();
         const authorKana = `${lastNameKana} ${firstNameKana}`.trim();
 
-        // 姓ローマ字と名ローマ字を結合 (例: "Poe Edgar Allan", "Irving Washington")
         const rawEn = `${lastNameEn} ${firstNameEn}`.trim();
         const authorEn = /[a-zA-Z]/.test(rawEn) ? rawEn : null;
 
-        books.push({
-          id: bookId,
-          title,
-          title_kana: titleKana,
-          sub_title: subTitle || null,
-          sub_title_kana: subTitleKana || null,
-          original_title: originalTitle || null,
-          author,
-          author_kana: authorKana,
-          author_en: authorEn,
-          zip_url: zipUrl || null,
-          html_url: htmlUrl || null,
-        });
+        if (booksMap.has(bookId)) {
+          // すでにIDが存在する場合は、著者を追加（重複チェック付き）
+          const existingBook = booksMap.get(bookId);
+          if (!existingBook.author.includes(author)) {
+            existingBook.author += `, ${author}`;
+            existingBook.author_kana += `, ${authorKana}`;
+          }
+          // URLデータがない場合のみ上書き（データ欠損を防ぐ）
+          if (!existingBook.zip_url) existingBook.zip_url = zipUrl || null;
+          if (!existingBook.html_url) existingBook.html_url = htmlUrl || null;
+        } else {
+          // 新規登録
+          booksMap.set(bookId, {
+            id: bookId,
+            title,
+            title_kana: titleKana,
+            sub_title: subTitle || null,
+            sub_title_kana: subTitleKana || null,
+            original_title: originalTitle || null,
+            author,
+            author_kana: authorKana,
+            author_en: authorEn,
+            zip_url: zipUrl || null,
+            html_url: htmlUrl || null,
+          });
+        }
       }
     }
+
+    const books = Array.from(booksMap.values()); // Mapから配列に変換
+
+    books.sort((a, b) => a.id - b.id);
 
     const publicDir = path.dirname(OUTPUT_PATH);
     if (!fs.existsSync(publicDir)) {

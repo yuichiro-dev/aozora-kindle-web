@@ -8,19 +8,27 @@ export interface BuildEpubOptions {
   images?: ExtractedImage[];
 }
 
-export async function buildEpub({ title, author, bodyHtml, images = [] }: BuildEpubOptions): Promise<Uint8Array> {
+export async function buildEpub({
+  title,
+  author,
+  bodyHtml,
+  images = [],
+}: BuildEpubOptions): Promise<Uint8Array> {
   const zip = new JSZip();
 
   // 1. mimetype
   zip.file('mimetype', 'application/epub+zip', { compression: 'STORE' });
 
   // 2. META-INF/container.xml
-  zip.folder('META-INF')?.file('container.xml', `<?xml version="1.0" encoding="UTF-8"?>
+  zip.folder('META-INF')?.file(
+    'container.xml',
+    `<?xml version="1.0" encoding="UTF-8"?>
 <container version="1.0" xmlns="urn:oasis:names:tc:opendocument:xmlns:container">
   <rootfiles>
     <rootfile full-path="OEBPS/content.opf" media-type="application/oebps-package+xml"/>
   </rootfiles>
-</container>`);
+</container>`
+  );
 
   // 3. OEBPS/style.css
   const css = `

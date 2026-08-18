@@ -123,12 +123,12 @@ function parseAozoraTxtToHtml(rawTxt: string): string {
     }
   }
 
-  let bodyStart =
+  const bodyStart =
     secondDividerIdx !== -1
       ? secondDividerIdx + 1
       : firstDividerIdx !== -1
-      ? firstDividerIdx + 1
-      : 0;
+        ? firstDividerIdx + 1
+        : 0;
 
   // 2. フッター切り落とし
   let bodyEnd = lines.length;
@@ -173,20 +173,13 @@ function parseAozoraTxtToHtml(rawTxt: string): string {
     }
 
     // B. XML特殊文字のエスケープ
-    line = line
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;');
+    line = line.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
 
     // C. ルビ処理
-    line = line.replace(
-      RUBY_PATTERN,
-      (match, rubyBase, rubyText, kanji, kanjiRuby) => {
-        if (rubyBase !== undefined)
-          return `<ruby>${rubyBase}<rt>${rubyText}</rt></ruby>`;
-        return `<ruby>${kanji}<rt>${kanjiRuby}</rt></ruby>`;
-      }
-    );
+    line = line.replace(RUBY_PATTERN, (match, rubyBase, rubyText, kanji, kanjiRuby) => {
+      if (rubyBase !== undefined) return `<ruby>${rubyBase}<rt>${rubyText}</rt></ruby>`;
+      return `<ruby>${kanji}<rt>${kanjiRuby}</rt></ruby>`;
+    });
 
     // D. 外字文字救出 (［＃「...」は〜］)
     line = line.replace(/［＃「([^」]+)」[^］]*］/g, '$1');
@@ -290,7 +283,7 @@ ${bodyHtml}
 </html>`;
 
   const zipFiles: Zippable = {
-    'mimetype': [mimetype, { level: 0 }],
+    mimetype: [mimetype, { level: 0 }],
     'META-INF/container.xml': strToU8(containerXml),
     'item/style/style.css': strToU8(css),
     'item/xhtml/p-001.xhtml': strToU8(xhtmlContent),
@@ -326,9 +319,7 @@ ${bodyHtml}
 // --------------------------------------------------
 export async function POST(req: NextRequest) {
   const forwardedFor = req.headers.get('x-forwarded-for');
-  const clientIp = forwardedFor
-    ? forwardedFor.split(',')[0].trim()
-    : '127.0.0.1';
+  const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : '127.0.0.1';
 
   const { success, remaining } = checkRateLimit(clientIp);
 
@@ -349,38 +340,27 @@ export async function POST(req: NextRequest) {
     const { title, author, zipUrl } = await req.json();
 
     if (!zipUrl) {
-      return NextResponse.json(
-        { error: 'ZIP URL が指定されていません。' },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: 'ZIP URL が指定されていません。' }, { status: 400 });
     }
 
     const zipBuffer = await fetchBuffer(zipUrl);
     const rawTxt = extractTxtFromZip(zipBuffer);
     const bodyHtml = parseAozoraTxtToHtml(rawTxt);
 
-    const epubArray = buildEpubBuffer(
-      title || '無題',
-      author || '作者不明',
-      bodyHtml
-    );
+    const epubArray = buildEpubBuffer(title || '無題', author || '作者不明', bodyHtml);
 
     return new NextResponse(epubArray as unknown as BodyInit, {
       status: 200,
       headers: {
         'Content-Type': 'application/epub+zip',
-        'Content-Disposition': `attachment; filename="${encodeURIComponent(
-          title || 'book'
-        )}.epub"`,
+        'Content-Disposition': `attachment; filename="${encodeURIComponent(title || 'book')}.epub"`,
         'X-RateLimit-Limit': MAX_REQUESTS.toString(),
         'X-RateLimit-Remaining': remaining.toString(),
       },
     });
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.error('EPUB変換エラー:', error);
-    return NextResponse.json(
-      { error: error.message || 'EPUBの生成処理に失敗しました。' },
-      { status: 500 }
-    );
+    const message = error instanceof Error ? error.message : 'EPUBの生成処理に失敗しました。';
+    return NextResponse.json({ error: message }, { status: 500 });
   }
 }
