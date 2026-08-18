@@ -22,6 +22,7 @@ const LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS = 10;
 const MAX_ZIP_BYTES = 20 * 1024 * 1024;
 const MAX_TEXT_BYTES = 10 * 1024 * 1024;
+const MAX_COMPRESSION_RATIO = 50;
 
 const RUBY_PATTERN =
   /｜([^《\n]+)《([^》\n]+)》|([\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]+)《([^》\n]+)》/g;
@@ -58,57 +59,111 @@ function checkRateLimit(ip: string): { success: boolean; remaining: number } {
   return { success: true, remaining: MAX_REQUESTS - record.count };
 }
 
-async function fetchBuffer(url: string, timeout = 15000): Promise<Buffer> {
-  const res = await fetch(url, {
-    method: 'GET',
-    redirect: 'follow',
-    headers: {
-      'User-Agent':
-        'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-      Accept: '*/*',
-    },
-    signal: AbortSignal.timeout(timeout),
-  });
 
-  if (!res.ok) {
-    throw new Error(`ZIPダウンロード失敗: Status ${res.status}`);
+async function fetchBuffer(urlStr: string, timeout = 15000): Promise<Buffer> {
+  let parsedUrl: URL;
+  try {
+    parsedUrl = new URL(urlStr);
+  } catch {
+    throw new Error('無効なURL形式です。');
   }
 
-  const contentLength = res.headers.get('content-length');
+  if (parsedUrl.protocol !== 'https:') {
+    throw new Error('HTTPS以外のプロトコルは許可されていません。');
+  }
+
+  const hostname = parsedUrl.hostname.toLowerCase();
+  if (
+    hostname === 'localhost' ||
+    hostname === '127.0.0.1' ||
+    hostname === '::1' ||
+    hostname.startsWith('10.') ||
+    hostname.startsWith('192.168.') ||
+    /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(hostname) ||
+    hostname.endsWith('.local')
+  ) {
+    throw new Error('許可されていないホストへのアクセスです。');
+  }
+
+  const allowedDomains = ['aozora.gr.jp'];
+  const isAllowed = allowedDomains.some(
+    (domain) => hostname === domain || hostname.endsWith(`.${domain}`)
+  );
+
+  if (!isAllowed) {
+    throw new Error('許可されていないドメインのURLです。');
+  }
+
+  let currentUrl = urlStr;
+  let res: Response;
+  let redirectCount = 0;
+  const maxRedirects = 3;
+
+  while (true) {
+    res = await fetch(currentUrl, {
+      method: 'GET',
+      redirect: 'manual', 
+      headers: {
+        'User-Agent':
+          'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+        Accept: '*/*',
+      },
+      signal: AbortSignal.timeout(timeout),
+    });
+
+    if (res.status >= 300 && res.status < 400) {
+      const location = res.headers.get('location');
+      if (!location) {
+        throw new Error('リダイレクト先が見つかりません。');
+      }
+
+      redirectCount++;
+      if (redirectCount > maxRedirects) {
+        throw new Error('リダイレクト回数が多すぎます。');
+      }
+
+      const nextUrl = new URL(location, currentUrl);
+
+      if (nextUrl.protocol !== 'https:') {
+        throw new Error('リダイレクト先がHTTPSではありません。');
+      }
+      
+      const nextHost = nextUrl.hostname.toLowerCase();
+      if (
+        nextHost === 'localhost' ||
+        nextHost === '127.0.0.1' ||
+        nextHost.startsWith('10.') ||
+        nextHost.startsWith('192.168.')
+      ) {
+        throw new Error('不正なリダイレクト先が検知されました。');
+      }
+
+      currentUrl = nextUrl.toString();
+      continue;
+    }
+    break;
+  }
+
+  if (!res!.ok) {
+    throw new Error(`ZIPダウンロード失敗: Status ${res!.status}`);
+  }
+
+  const contentLength = res!.headers.get('content-length');
   if (contentLength && Number(contentLength) > MAX_ZIP_BYTES) {
     throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
   }
 
-  if (!res.body) {
-    const buf = Buffer.from(await res.arrayBuffer());
-    if (buf.length > MAX_ZIP_BYTES) {
-      throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
-    }
-    return buf;
+  const arrayBuffer = await res!.arrayBuffer();
+  const buf = Buffer.from(arrayBuffer);
+  if (buf.length > MAX_ZIP_BYTES) {
+    throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
   }
 
-  const reader = res.body.getReader();
-  const chunks: Uint8Array[] = [];
-  let total = 0;
-
-  while (true) {
-    const { done, value } = await reader.read();
-    if (done) break;
-
-    total += value.length;
-    if (total > MAX_ZIP_BYTES) {
-      reader.cancel();
-      throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
-    }
-    chunks.push(value);
-  }
-
-  return Buffer.concat(chunks);
+  return buf;
 }
 
 function extractTxtFromZip(zipBuffer: Buffer): string {
   let txtFileName: string | null = null;
-  let oversized = false;
 
   const unzipped = unzipSync(new Uint8Array(zipBuffer), {
     filter(file) {
@@ -116,8 +171,14 @@ function extractTxtFromZip(zipBuffer: Buffer): string {
       if (txtFileName !== null) return false;
 
       if (file.originalSize > MAX_TEXT_BYTES) {
-        oversized = true;
-        return false;
+        throw new Error(`展開後の予測テキストサイズが大きすぎます（上限: ${MAX_TEXT_BYTES / 1024 / 1024}MB）`);
+      }
+
+      if (file.size > 0) {
+        const ratio = file.originalSize / file.size;
+        if (ratio > MAX_COMPRESSION_RATIO) {
+          throw new Error('異常な高圧縮率のファイル（Zip Bombの可能性）が検知されたため処理を中断しました。');
+        }
       }
 
       txtFileName = file.name;
@@ -125,11 +186,8 @@ function extractTxtFromZip(zipBuffer: Buffer): string {
     },
   });
 
-  if (oversized) {
-    throw new Error(`展開後のテキストが大きすぎます（上限: ${MAX_TEXT_BYTES / 1024 / 1024}MB）`);
-  }
   if (!txtFileName) {
-    throw new Error('ZIP内に .txt ファイルが見つかりませんでした。');
+    throw new Error('ZIP内に有効な .txt ファイルが見つかりませんでした。');
   }
 
   const contentBuffer = Buffer.from(unzipped[txtFileName]);
@@ -391,13 +449,17 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { id } = await req.json();
+    const body = await req.json();
 
-    if (typeof id !== 'number' || !Number.isInteger(id)) {
+    if (
+      !body ||
+      typeof body.id !== 'number' ||
+      !Number.isSafeInteger(body.id)
+    ) {
       return NextResponse.json({ error: '不正なリクエストです。' }, { status: 400 });
     }
 
-    const book = booksMap.get(id);
+    const book = booksMap.get(body.id);
     if (!book || !book.zip_url) {
       return NextResponse.json({ error: '対象の作品が見つかりません。' }, { status: 404 });
     }
@@ -422,7 +484,9 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: unknown) {
     console.error('EPUB変換エラー:', error);
-    const message = error instanceof Error ? error.message : 'EPUBの生成処理に失敗しました。';
-    return NextResponse.json({ error: message }, { status: 500 });
+    return NextResponse.json(
+      { error: 'EPUBの生成に失敗しました。' },
+      { status: 500 }
+    );
   }
 }

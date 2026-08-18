@@ -129,8 +129,6 @@ export default function Home() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           id: book.id,
-          title: fullTitle,
-          author: book.author,
         }),
       });
 

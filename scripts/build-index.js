@@ -1,7 +1,6 @@
 import fs from 'fs';
 import path from 'path';
 import https from 'https';
-import http from 'http';
 import unzipper from 'unzipper';
 import { fileURLToPath } from 'url';
 import Papa from 'papaparse';
@@ -13,14 +12,19 @@ const __dirname = path.dirname(__filename);
 const CSV_ZIP_URL = 'https://www.aozora.gr.jp/index_pages/list_person_all_extended_utf8.zip';
 const OUTPUT_PATH = path.join(__dirname, '../public/books.json');
 
-function fetchUrl(url, timeout = 15000) {
+function fetchUrl(url, timeout = 15000, redirectCount = 0) {
+  const MAX_REDIRECTS = 5;
+  if (redirectCount > MAX_REDIRECTS) {
+    return Promise.reject(new Error(`リダイレクト回数が上限(${MAX_REDIRECTS}回)を超えました。`));
+  }
+
   return new Promise((resolve, reject) => {
     const parsedUrl = new URL(url);
-    const client = parsedUrl.protocol === 'https:' ? https : http;
+    const client = https;
 
     const options = {
       hostname: parsedUrl.hostname,
-      port: parsedUrl.port || (parsedUrl.protocol === 'https:' ? 443 : 80),
+      port: parsedUrl.port || 443,
       path: parsedUrl.pathname + parsedUrl.search,
       method: 'GET',
       headers: {
@@ -32,12 +36,20 @@ function fetchUrl(url, timeout = 15000) {
     };
 
     const req = client.get(options, (response) => {
-      if (response.statusCode >= 300 && response.statusCode < 400 && response.headers.location) {
+      if (
+        response.statusCode &&
+        response.statusCode >= 300 &&
+        response.statusCode < 400 &&
+        response.headers.location
+      ) {
         let redirectUrl = response.headers.location;
         if (!redirectUrl.startsWith('http')) {
           redirectUrl = `${parsedUrl.origin}${redirectUrl}`;
         }
-        return resolve(fetchUrl(redirectUrl, timeout));
+        if (!redirectUrl.startsWith('https://')) {
+          return reject(new Error('HTTPS以外のURLへのリダイレクトは許可されていません。'));
+        }
+        return resolve(fetchUrl(redirectUrl, timeout, redirectCount + 1));
       }
 
       if (response.statusCode !== 200) {
@@ -59,14 +71,7 @@ function fetchUrl(url, timeout = 15000) {
 async function downloadAndExtractCsv() {
   console.log('青空文庫のインデックスCSVを取得中...');
 
-  let response;
-  try {
-    response = await fetchUrl(CSV_ZIP_URL);
-  } catch {
-    console.log('HTTPSでの取得に失敗したため、HTTPで再試行します...');
-    const httpUrl = CSV_ZIP_URL.replace('https://', 'http://');
-    response = await fetchUrl(httpUrl);
-  }
+  const response = await fetchUrl(CSV_ZIP_URL);
 
   return new Promise((resolve, reject) => {
     response
