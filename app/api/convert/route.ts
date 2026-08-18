@@ -1,20 +1,34 @@
+import booksData from '@/public/books.json';
 import { NextRequest, NextResponse } from 'next/server';
 import { unzipSync, zipSync, strToU8, Zippable } from 'fflate';
 import iconv from 'iconv-lite';
+import crypto from 'crypto';
 
-export const maxDuration = 15;
+export const maxDuration = 20;
 
-// --------------------------------------------------
-// レート制限ロジック
-// --------------------------------------------------
+interface Book {
+  id: number;
+  title: string;
+  author: string;
+  zip_url: string | null;
+}
+
 interface RateLimitStore {
   count: number;
   resetTime: number;
 }
 
-const rateLimitMap = new Map<string, RateLimitStore>();
 const LIMIT_WINDOW_MS = 60 * 1000;
 const MAX_REQUESTS = 10;
+const MAX_ZIP_BYTES = 20 * 1024 * 1024;
+const MAX_TEXT_BYTES = 10 * 1024 * 1024;
+
+const RUBY_PATTERN =
+  /｜([^《\n]+)《([^》\n]+)》|([\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]+)《([^》\n]+)》/g;
+const ANNOTATION_PATTERN = /［＃[^］]+］/g;
+
+const rateLimitMap = new Map<string, RateLimitStore>();
+const booksMap = new Map<number, Book>((booksData as Book[]).map((b) => [b.id, b]));
 
 function cleanupRateLimitMap(now: number) {
   if (rateLimitMap.size < 5000) return;
@@ -44,9 +58,6 @@ function checkRateLimit(ip: string): { success: boolean; remaining: number } {
   return { success: true, remaining: MAX_REQUESTS - record.count };
 }
 
-// --------------------------------------------------
-// ユーティリティ関数
-// --------------------------------------------------
 async function fetchBuffer(url: string, timeout = 15000): Promise<Buffer> {
   const res = await fetch(url, {
     method: 'GET',
@@ -63,24 +74,71 @@ async function fetchBuffer(url: string, timeout = 15000): Promise<Buffer> {
     throw new Error(`ZIPダウンロード失敗: Status ${res.status}`);
   }
 
-  const arrayBuffer = await res.arrayBuffer();
-  return Buffer.from(arrayBuffer);
+  const contentLength = res.headers.get('content-length');
+  if (contentLength && Number(contentLength) > MAX_ZIP_BYTES) {
+    throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
+  }
+
+  if (!res.body) {
+    const buf = Buffer.from(await res.arrayBuffer());
+    if (buf.length > MAX_ZIP_BYTES) {
+      throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
+    }
+    return buf;
+  }
+
+  const reader = res.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let total = 0;
+
+  while (true) {
+    const { done, value } = await reader.read();
+    if (done) break;
+
+    total += value.length;
+    if (total > MAX_ZIP_BYTES) {
+      reader.cancel();
+      throw new Error(`ZIPファイルが大きすぎます（上限: ${MAX_ZIP_BYTES / 1024 / 1024}MB）`);
+    }
+    chunks.push(value);
+  }
+
+  return Buffer.concat(chunks);
 }
 
 function extractTxtFromZip(zipBuffer: Buffer): string {
-  const unzipped = unzipSync(new Uint8Array(zipBuffer));
+  let txtFileName: string | null = null;
+  let oversized = false;
 
-  const txtFileName = Object.keys(unzipped).find((fileName) =>
-    fileName.toLowerCase().endsWith('.txt')
-  );
+  const unzipped = unzipSync(new Uint8Array(zipBuffer), {
+    filter(file) {
+      if (!file.name.toLowerCase().endsWith('.txt')) return false;
+      if (txtFileName !== null) return false;
 
+      if (file.originalSize > MAX_TEXT_BYTES) {
+        oversized = true;
+        return false;
+      }
+
+      txtFileName = file.name;
+      return true;
+    },
+  });
+
+  if (oversized) {
+    throw new Error(`展開後のテキストが大きすぎます（上限: ${MAX_TEXT_BYTES / 1024 / 1024}MB）`);
+  }
   if (!txtFileName) {
     throw new Error('ZIP内に .txt ファイルが見つかりませんでした。');
   }
 
   const contentBuffer = Buffer.from(unzipped[txtFileName]);
-  let text = iconv.decode(contentBuffer, 'Shift_JIS');
 
+  if (contentBuffer.length > MAX_TEXT_BYTES) {
+    throw new Error(`展開後のテキストが大きすぎます（上限: ${MAX_TEXT_BYTES / 1024 / 1024}MB）`);
+  }
+
+  let text = iconv.decode(contentBuffer, 'Shift_JIS');
   if (text.charCodeAt(0) === 0xfeff) {
     text = text.slice(1);
   }
@@ -96,10 +154,6 @@ function escapeXml(str: string): string {
     .replace(/"/g, '&quot;')
     .replace(/'/g, '&apos;');
 }
-
-const RUBY_PATTERN =
-  /｜([^《\n]+)《([^》\n]+)》|([\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF]+)《([^》\n]+)》/g;
-const ANNOTATION_PATTERN = /［＃[^］]+］/g;
 
 // --------------------------------------------------
 // 青空文庫テキストの1ファイルパース処理
@@ -213,7 +267,7 @@ function parseAozoraTxtToHtml(rawTxt: string): string {
 function buildEpubBuffer(title: string, author: string, bodyHtml: string): Uint8Array {
   const safeTitle = escapeXml(title);
   const safeAuthor = escapeXml(author);
-  const bookId = `urn:uuid:${Date.now()}`;
+  const bookId = `urn:uuid:${crypto.randomUUID()}`;
 
   const mimetype = strToU8('application/epub+zip');
   const containerXml = `<?xml version="1.0" encoding="UTF-8"?>
@@ -337,13 +391,21 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { title, author, zipUrl } = await req.json();
+    const { id } = await req.json();
 
-    if (!zipUrl) {
-      return NextResponse.json({ error: 'ZIP URL が指定されていません。' }, { status: 400 });
+    if (typeof id !== 'number' || !Number.isInteger(id)) {
+      return NextResponse.json({ error: '不正なリクエストです。' }, { status: 400 });
     }
 
-    const zipBuffer = await fetchBuffer(zipUrl);
+    const book = booksMap.get(id);
+    if (!book || !book.zip_url) {
+      return NextResponse.json({ error: '対象の作品が見つかりません。' }, { status: 404 });
+    }
+
+    const title = book.title;
+    const author = book.author;
+
+    const zipBuffer = await fetchBuffer(book.zip_url);
     const rawTxt = extractTxtFromZip(zipBuffer);
     const bodyHtml = parseAozoraTxtToHtml(rawTxt);
 

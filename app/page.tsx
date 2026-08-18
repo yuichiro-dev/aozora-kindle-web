@@ -128,9 +128,9 @@ export default function Home() {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
+          id: book.id,
           title: fullTitle,
           author: book.author,
-          zipUrl: book.zip_url,
         }),
       });
 
