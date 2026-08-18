@@ -1,36 +1,13 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Aozora to Kindle EPUB Converter
 
-## Getting Started
+青空文庫のZIP（TXT）ファイルを、Kindleに最適な縦書き・右開き・右端余白確保済みのEPUB3へ自動変換するNext.js (App Router) アプリケーションです。
 
-First, run the development server:
+## 特徴
+- 縦書き（`writing-mode: vertical-rl`）および右開き（`rtl`）の完全サポート
+- Kindleの右端吸着を防ぐ物理余白の確保
+- 巨大な長編作品もAmazonの処理エラーを防ぐための自動HTML分割（チャンク化）機能
+- 目次ページの完全非表示化（1ページ目から直接本文が開きます）
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## 動作要件
+- Node.js 18+
+- インストールされている主要パッケージ: `fflate`, `iconv-lite`
