@@ -178,14 +178,14 @@ export default function Home() {
       <main className="min-h-screen bg-stone-50 p-4 md:p-10">
         <div className="max-w-4xl mx-auto space-y-5">
           <header
-            className={`border-b border-stone-200 transition-all ${hasQuery ? 'pb-2' : 'pb-4'} text-center md:text-left`}
+            className={`border-b border-stone-200 transition-all text-center md:text-left ${
+              hasQuery ? 'hidden sm:block pb-2' : 'block pb-4'
+            }`}
           >
             <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl">
               青空文庫Kindle保存
             </h1>
-            <p
-              className={`text-xs sm:text-sm font-medium mt-1.5 ${hasQuery ? 'hidden sm:block' : 'block'}`}
-            >
+            <p className="text-xs sm:text-sm font-medium mt-1.5">
               [完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。
               <br className="hidden sm:inline" />
               {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
