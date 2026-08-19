@@ -155,7 +155,7 @@ export default function Home() {
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
     description:
-      '青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードできる無料Webツール。',
+      '[完全無料・広告なし]青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードできる無料Webツール。',
     url: 'https://aozora-kindle-web.vercel.app/',
     inLanguage: 'ja',
     offers: {
@@ -188,7 +188,7 @@ export default function Home() {
               青空文庫 Kindle 変換ツール
             </h1>
             <p className={`text-xs text-gray-500 mt-1 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
-              青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードします。
+              [完全無料・広告なし]青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に変換してダウンロードします。
               <br className="hidden sm:inline" />
               作品リストは1日1回自動更新されます
               {bookCount !== null && ` / 現在の収録数: ${bookCount.toLocaleString()} 作品`}
@@ -295,7 +295,7 @@ export default function Home() {
                             : 'bg-gradient-to-r from-stone-800 to-stone-700 text-stone-100 hover:from-stone-700 hover:to-stone-600 active:from-stone-900 active:to-stone-800 shadow'
                       }`}
                     >
-                      {downloadingId === book.id ? '生成中...' : 'ダウンロード'}
+                      {downloadingId === book.id ? '生成中...' : '保存'}
                     </button>
                   </div>
                 ))}
