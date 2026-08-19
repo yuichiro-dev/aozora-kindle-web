@@ -46,6 +46,10 @@ export default function Home() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // ひらがなをカタカナに変換するヘルパー関数
+  const toKatakana = (str: string) =>
+    str.replace(/[\u3041-\u3096]/g, (ch) => String.fromCharCode(ch.charCodeAt(0) + 0x60));
+
   const cleanStr = (str: string | null) =>
     str ? str.replace(/[\s\u3000・\.\,]+/g, '').toLowerCase() : '';
 
@@ -53,12 +57,15 @@ export default function Home() {
     if (!query.trim()) return [];
 
     const fullCleanQuery = cleanStr(query);
+    const katakanaQuery = toKatakana(fullCleanQuery);
 
     const keywords = query
       .trim()
       .split(/[\s\u3000・\.\,]+/)
       .map((k) => cleanStr(k))
       .filter(Boolean);
+
+    const katakanaKeywords = keywords.map((k) => toKatakana(k));
 
     return books.filter((b) => {
       const title = cleanStr(b.title);
@@ -69,16 +76,7 @@ export default function Home() {
       const authorKana = cleanStr(b.author_kana);
       const authorEn = cleanStr(b.author_en);
 
-      const authorParts = (b.author || '').split(/[\s\u3000]+/);
-      const authorReversed =
-        authorParts.length > 1 ? cleanStr(`${authorParts.slice(1).join('')}${authorParts[0]}`) : '';
-
-      const authorKanaParts = (b.author_kana || '').split(/[\s\u3000]+/);
-      const authorKanaReversed =
-        authorKanaParts.length > 1
-          ? cleanStr(`${authorKanaParts.slice(1).join('')}${authorKanaParts[0]}`)
-          : '';
-
+      // 英語の姓名逆転用（例: "poe edgar" -> "edgarpoe"）
       const authorEnParts = (b.author_en || '').split(/[\s\u3000]+/);
       const authorEnReversed =
         authorEnParts.length > 1
@@ -86,28 +84,32 @@ export default function Home() {
           : '';
 
       const isDirectMatch =
-        (author && author.includes(fullCleanQuery)) ||
-        (authorKana && authorKana.includes(fullCleanQuery)) ||
+        (author && (author.includes(fullCleanQuery) || author.includes(katakanaQuery))) ||
+        (authorKana &&
+          (authorKana.includes(fullCleanQuery) || authorKana.includes(katakanaQuery))) ||
         (authorEn && authorEn.includes(fullCleanQuery)) ||
-        (authorReversed && authorReversed.includes(fullCleanQuery)) ||
-        (authorKanaReversed && authorKanaReversed.includes(fullCleanQuery)) ||
         (authorEnReversed && authorEnReversed.includes(fullCleanQuery)) ||
-        (title && title.includes(fullCleanQuery)) ||
-        (titleKana && titleKana.includes(fullCleanQuery));
+        (title && (title.includes(fullCleanQuery) || title.includes(katakanaQuery))) ||
+        (titleKana && (titleKana.includes(fullCleanQuery) || titleKana.includes(katakanaQuery)));
 
       if (isDirectMatch) return true;
 
-      return keywords.every((kw) => {
+      return keywords.every((kw, idx) => {
+        const kKata = katakanaKeywords[idx];
         return (
           title.includes(kw) ||
+          title.includes(kKata) ||
           titleKana.includes(kw) ||
+          titleKana.includes(kKata) ||
           subTitle.includes(kw) ||
+          subTitle.includes(kKata) ||
           subTitleKana.includes(kw) ||
+          subTitleKana.includes(kKata) ||
           author.includes(kw) ||
+          author.includes(kKata) ||
           authorKana.includes(kw) ||
+          authorKana.includes(kKata) ||
           authorEn.includes(kw) ||
-          authorReversed.includes(kw) ||
-          authorKanaReversed.includes(kw) ||
           authorEnReversed.includes(kw)
         );
       });
@@ -120,6 +122,8 @@ export default function Home() {
     if (!trimmed || books.length === 0) return [];
 
     const cleanQ = cleanStr(trimmed);
+    const katakanaQ = toKatakana(cleanQ);
+
     const matchedAuthors = new Set<string>();
     const matchedTitles = new Set<string>();
 
@@ -128,14 +132,19 @@ export default function Home() {
 
       const author = book.author ? book.author.replace(/[\s\u3000]+/g, '') : '';
       const authorKana = cleanStr(book.author_kana);
+      const authorEn = cleanStr(book.author_en);
       const title = book.title;
       const titleKana = cleanStr(book.title_kana);
 
-      // 著者名のマッチング
+      // 著者名（漢字・かな・カタカナ・英語）のマッチング
       if (
         author &&
         !matchedAuthors.has(author) &&
-        (cleanStr(author).includes(cleanQ) || authorKana.includes(cleanQ))
+        (cleanStr(author).includes(cleanQ) ||
+          cleanStr(author).includes(katakanaQ) ||
+          authorKana.includes(cleanQ) ||
+          authorKana.includes(katakanaQ) ||
+          authorEn.includes(cleanQ))
       ) {
         matchedAuthors.add(author);
       }
@@ -144,7 +153,10 @@ export default function Home() {
       if (
         title &&
         !matchedTitles.has(title) &&
-        (cleanStr(title).includes(cleanQ) || titleKana.includes(cleanQ))
+        (cleanStr(title).includes(cleanQ) ||
+          cleanStr(title).includes(katakanaQ) ||
+          titleKana.includes(cleanQ) ||
+          titleKana.includes(katakanaQ))
       ) {
         matchedTitles.add(title);
       }
