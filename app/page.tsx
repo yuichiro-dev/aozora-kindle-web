@@ -151,11 +151,11 @@ export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: '青空文庫 Kindle 変換ツール',
+    name: '青空文庫Kindle保存',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
     description:
-      '[完全無料・広告なし]青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードできる無料Webツール。',
+      '[完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。',
     url: 'https://aozora-kindle-web.vercel.app/',
     inLanguage: 'ja',
     offers: {
@@ -163,11 +163,11 @@ export default function Home() {
       price: '0',
       priceCurrency: 'JPY',
     },
-    featureList: [
-      '青空文庫作品のEPUB変換（縦書き・右開き）',
-      '作品名・著者名での高速リアルタイム検索',
-      'ジャンル・同世代作家の自動レコメンド',
-      '毎日自動更新される作品データベース',
+featureList: [
+      '青空文庫の作品を縦書き・右開きのKindle本に保存',
+      '作品名や著者名からすぐに見つかる高速検索',
+      '面倒な会員登録・ログインなしで全機能が無料',
+      'Send to Kindle対応で端末への送信もかんたん',
     ],
   };
 
@@ -185,13 +185,13 @@ export default function Home() {
             <h1
               className={`font-bold font-serif tracking-tight text-gray-900 transition-all ${hasQuery ? 'text-xl md:text-2xl' : 'text-2xl'}`}
             >
-              青空文庫 Kindle 変換ツール
+              青空文庫Kindle保存
             </h1>
             <p className={`text-xs text-gray-500 mt-1 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
-              [完全無料・広告なし]青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に変換してダウンロードします。
+              [完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。
               <br className="hidden sm:inline" />
-              作品リストは1日1回自動更新されます
-              {bookCount !== null && ` / 現在の収録数: ${bookCount.toLocaleString()} 作品`}
+              {bookCount !== null && `収録数: ${bookCount.toLocaleString()}冊`}
+              (作品リストは毎日自動更新)
             </p>
           </header>
 
@@ -333,7 +333,9 @@ export default function Home() {
 
           <footer className="max-w-2xl mx-auto w-full mt-16 pt-6 border-t border-stone-200 text-center text-xs text-stone-400 space-y-2">
             <p>
-              すべてのソースコードは{' '}
+              青空文庫の注釈・ルビ記号を解析し、縦書き・右開き（vertical-rl / rtl）仕様のEPUB3ファイルへオンデマンド変換します。
+
+※Send to Kindle完全対応 / クライアント・サーバー間暗号化通信。すべてのソースコードは{' '}
               <a
                 href="https://github.com/yuichiro-dev/aozora-kindle-web"
                 target="_blank"
@@ -342,9 +344,9 @@ export default function Home() {
               >
                 GitHub
               </a>{' '}
-              にて公開されています。不具合はIssuesにて報告して下さい。
+              にて公開されています。
             </p>
-            <p>© {new Date().getFullYear()} 青空文庫 Kindle 変換ツール</p>
+            <p>© {new Date().getFullYear()} 青空文庫Kindle保存</p>
           </footer>
         </div>
       </main>
