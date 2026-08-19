@@ -29,7 +29,7 @@ export const metadata: Metadata = {
     template: '%s | 青空文庫 Kindle 変換ツール',
   },
   description:
-    '青空文庫の作品をKindleで読みやすい縦書き・右開きのEPUB形式へ瞬時に変換。面倒な登録不要でSend to Kindleにも最適です。',
+    '[完全無料・広告なし]青空文庫の作品をKindleで読みやすい縦書き・右開きのEPUB形式へ瞬時に変換。面倒な登録不要でSend to Kindleにも最適です。',
   keywords: [
     '青空文庫',
     '青空Kindle',
@@ -45,9 +45,9 @@ export const metadata: Metadata = {
     '青空文庫 ルビ対応',
     'Kindle 縦書き 変換',
   ],
-  authors: [{ name: 'Aozora EPUB Converter' }],
-  creator: 'Aozora EPUB Converter',
-  publisher: 'Aozora EPUB Converter',
+  authors: [{ name: '青空文庫 Kindle 変換ツール' }],
+  creator: '青空文庫 Kindle 変換ツール',
+  publisher: '青空文庫 Kindle 変換ツール',
   formatDetection: {
     email: false,
     address: false,
@@ -56,7 +56,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '青空文庫 Kindle 変換ツール | 無料で瞬時に縦書きEPUB変換',
     description:
-      '青空文庫の作品を縦書き・右開き用のEPUB形式に瞬時に変換してダウンロード。Kindleで快適な縦書き読書を。',
+      '[完全無料・広告なし]青空文庫の作品を縦書き・右開き用のEPUB形式に瞬時に変換してダウンロード。Kindleで快適な縦書き読書を。',
     url: metadataBaseUrl.toString(),
     siteName: '青空文庫 Kindle 変換ツール',
     locale: 'ja_JP',
@@ -65,7 +65,8 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '青空文庫 to Kindle (EPUB)',
-    description: '青空文庫の作品を縦書き・右開き用のEPUB形式に瞬時に変換してダウンロード。',
+    description:
+      '[完全無料・広告なし]青空文庫の作品を縦書き・右開き用のEPUB形式に瞬時に変換してダウンロード。',
   },
   robots: {
     index: true,

@@ -2,10 +2,10 @@ import React from 'react';
 
 export default function StepGuide() {
   const steps = [
-    { num: '1', title: '検索', desc: '作品・著者を検索' },
-    { num: '2', title: 'ダウンロード', desc: '「開く」を選択' },
-    { num: '3', title: 'ファイル共有', desc: 'Kindleアプリを指定' },
-    { num: '4', title: 'Kindleで開く', desc: '送信ボタンを押す' },
+    { num: '①', title: '検索', desc: '作品・著者を検索' },
+    { num: '②', title: '保存', desc: '「開く」を選択' },
+    { num: '③', title: 'Kindleで開く', desc: 'Kindleアプリを指定' },
+    { num: '④', title: 'Kindleに送信', desc: '送信ボタンを押す' },
   ];
 
   return (
@@ -19,7 +19,7 @@ export default function StepGuide() {
           <React.Fragment key={idx}>
             <div className="flex flex-col items-center text-center">
               <span className="text-[9px] font-semibold text-stone-400 uppercase tracking-wider">
-                STEP {step.num}
+                {step.num}
               </span>
               <span className="text-xs font-bold text-stone-700 leading-tight mt-0.5">
                 {step.title}
