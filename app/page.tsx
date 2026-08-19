@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Recommendations, { Book } from '@/components/Recommendations';
 import StepGuide from '@/components/StepGuide';
 
@@ -12,6 +12,11 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   const [bookCount, setBookCount] = useState<number | null>(null);
+
+  // サジェスチョン用の状態とRef
+  const [isFocused, setIsFocused] = useState(false);
+  const inputRef = useRef<HTMLInputElement>(null);
+  const searchContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     fetch('/books.json')
@@ -28,6 +33,17 @@ export default function Home() {
         setBookCount(0);
         setLoading(false);
       });
+  }, []);
+
+  // 検索バーの外側をクリックした時にサジェスチョンを閉じる処理
+  useEffect(() => {
+    const handleClickOutside = (e: MouseEvent) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(e.target as Node)) {
+        setIsFocused(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
   const cleanStr = (str: string | null) =>
@@ -97,6 +113,61 @@ export default function Home() {
       });
     });
   }, [books, query]);
+
+  // 入力途中のサジェスチョン候補（著者名・作品名から最大6件生成）
+  const suggestions = useMemo(() => {
+    const trimmed = query.trim();
+    if (!trimmed || books.length === 0) return [];
+
+    const cleanQ = cleanStr(trimmed);
+    const matchedAuthors = new Set<string>();
+    const matchedTitles = new Set<string>();
+
+    for (const book of books) {
+      if (matchedAuthors.size + matchedTitles.size >= 8) break;
+
+      const author = book.author ? book.author.replace(/[\s\u3000]+/g, '') : '';
+      const authorKana = cleanStr(book.author_kana);
+      const title = book.title;
+      const titleKana = cleanStr(book.title_kana);
+
+      // 著者名のマッチング
+      if (
+        author &&
+        !matchedAuthors.has(author) &&
+        (cleanStr(author).includes(cleanQ) || authorKana.includes(cleanQ))
+      ) {
+        matchedAuthors.add(author);
+      }
+
+      // 作品名のマッチング
+      if (
+        title &&
+        !matchedTitles.has(title) &&
+        (cleanStr(title).includes(cleanQ) || titleKana.includes(cleanQ))
+      ) {
+        matchedTitles.add(title);
+      }
+    }
+
+    const list: { type: 'author' | 'title'; text: string }[] = [];
+    matchedAuthors.forEach((a) => list.push({ type: 'author', text: a }));
+    matchedTitles.forEach((t) => list.push({ type: 'title', text: t }));
+
+    return list.slice(0, 6);
+  }, [books, query]);
+
+  // サジェスチョン選択時の処理（文字セット ＆ キーボードを隠す）
+  const handleSelectSuggestion = (text: string) => {
+    setQuery(text);
+    setCurrentPage(1);
+    setIsFocused(false);
+
+    // スマホのキーボードを閉じる
+    if (inputRef.current) {
+      inputRef.current.blur();
+    }
+  };
 
   const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
   const currentBooks = useMemo(() => {
@@ -177,15 +248,16 @@ export default function Home() {
       />
       <main className="min-h-screen bg-stone-50 p-4 md:p-10">
         <div className="max-w-4xl mx-auto space-y-5">
+          {/* ヘッダー：スマホ検索時は隠す */}
           <header
             className={`border-b border-stone-200 transition-all text-center md:text-left ${
               hasQuery ? 'hidden sm:block pb-2' : 'block pb-4'
             }`}
           >
-            <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl">
+            <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl text-stone-900">
               青空文庫Kindle保存
             </h1>
-            <p className="text-xs sm:text-sm font-medium mt-1.5">
+            <p className="text-xs sm:text-sm font-medium text-stone-700 mt-1.5">
               [完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。
               <br className="hidden sm:inline" />
               {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
@@ -199,8 +271,8 @@ export default function Home() {
             </div>
           )}
 
-          {/* 検索バー */}
-          <div className="relative group">
+          {/* 検索バー ＆ サジェスチョンコンテナ */}
+          <div ref={searchContainerRef} className="relative group z-30">
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-60 group-hover:opacity-100 animate-pulse transition duration-500"></div>
 
             <div className="relative bg-white rounded-xl shadow-md flex items-center">
@@ -216,35 +288,59 @@ export default function Home() {
               </div>
 
               <input
+                ref={inputRef}
                 type="text"
                 placeholder="著者名や作品名で検索"
                 value={query}
+                onFocus={() => setIsFocused(true)}
                 onChange={(e) => {
                   setQuery(e.target.value);
                   setCurrentPage(1);
+                  setIsFocused(true);
                 }}
                 disabled={loading}
-                className="w-full pl-3 pr-4 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium placeholder-stone-400 disabled:bg-stone-100"
+                className="w-full pl-3 pr-4 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium text-stone-900 placeholder-stone-400 disabled:bg-stone-100"
               />
             </div>
+
+            {/* サジェスチョンドロップダウンメニュー */}
+            {isFocused && suggestions.length > 0 && (
+              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-stone-300 rounded-xl shadow-xl overflow-hidden z-50 divide-y divide-stone-100">
+                {suggestions.map((item, idx) => (
+                  <button
+                    key={`${item.type}-${item.text}-${idx}`}
+                    type="button"
+                    onClick={() => handleSelectSuggestion(item.text)}
+                    className="w-full text-left px-4 py-3 hover:bg-stone-100 active:bg-stone-200 flex items-center gap-2.5 transition-colors"
+                  >
+                    <span className="text-sm shrink-0">{item.type === 'author' ? '👤' : '📖'}</span>
+                    <span className="text-sm sm:text-base font-bold text-stone-900 truncate">
+                      {item.text}
+                    </span>
+                    <span className="text-xs font-medium text-stone-500 ml-auto shrink-0">
+                      {item.type === 'author' ? '作者' : '作品'}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
           </div>
 
-          <p className="text-xs sm:text-sm mt-2 px-1 flex items-center gap-1.5 font-bold">
-            <span>「夏目漱石 こころ」のようにスペースを空けて検索結果を絞り込めます</span>
+          <p className="text-xs sm:text-sm mt-2 px-1 flex items-center gap-1.5 font-bold text-stone-900">
+            <span>「夏目漱石 こころ」のようにスペースを空けて作品名も絞り込めます</span>
           </p>
 
           <Recommendations
             books={books}
             searchQuery={query}
             onSelectAuthor={(author) => {
-              setQuery(author);
-              setCurrentPage(1);
+              handleSelectSuggestion(author);
             }}
           />
 
           {hasQuery && (
             <>
-              <div className="flex justify-between items-center text-sm font-bold">
+              <div className="flex justify-between items-center text-sm font-bold text-stone-900">
                 <span>
                   {loading
                     ? 'データ読み込み中...'
@@ -265,16 +361,18 @@ export default function Home() {
                   >
                     <div className="min-w-0 flex-1 space-y-1">
                       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                        <h2 className="text-base sm:text-lg font-bold leading-snug break-words">
+                        <h2 className="text-base sm:text-lg font-bold text-stone-900 leading-snug break-words">
                           {book.title}
                         </h2>
                         {book.sub_title && (
-                          <span className="text-sm font-medium leading-snug break-words">
+                          <span className="text-sm font-medium text-stone-800 leading-snug break-words">
                             {book.sub_title}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm font-medium leading-tight break-words">{book.author}</p>
+                      <p className="text-sm font-medium text-stone-800 leading-tight break-words">
+                        {book.author}
+                      </p>
                     </div>
 
                     <button
@@ -294,7 +392,7 @@ export default function Home() {
                 ))}
 
                 {!loading && currentBooks.length === 0 && (
-                  <div className="text-center py-10 font-medium text-base">
+                  <div className="text-center py-10 font-medium text-base text-stone-800">
                     該当する作品が見つかりませんでした。
                   </div>
                 )}
@@ -305,17 +403,17 @@ export default function Home() {
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
-                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold bg-white disabled:opacity-40"
+                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold text-stone-900 bg-white disabled:opacity-40"
                   >
                     前へ
                   </button>
-                  <span className="text-sm font-bold px-2">
+                  <span className="text-sm font-bold text-stone-900 px-2">
                     {currentPage} / {totalPages}
                   </span>
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                     disabled={currentPage === totalPages}
-                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold bg-white disabled:opacity-40"
+                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold text-stone-900 bg-white disabled:opacity-40"
                   >
                     次へ
                   </button>
@@ -324,7 +422,6 @@ export default function Home() {
             </>
           )}
 
-          {/* フッター（色を --color-text-muted で一括管理） */}
           <footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-stone-200 text-center text-xs text-[var(--color-text-muted)] space-y-2">
             <p>
               青空文庫の注釈・ルビ記号を解析し、縦書き・右開き（vertical-rl /
