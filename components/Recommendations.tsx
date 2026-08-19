@@ -467,31 +467,41 @@ export default function Recommendations({
 
       {showRecommendations && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {recommendations.map((item, idx) => (
-            <div
-              key={idx}
-              className="p-3.5 rounded-xl border bg-white border-stone-200/80 shadow-sm flex flex-col justify-between"
-            >
-              <div>
-                <div className="flex items-baseline justify-between mb-2">
-                  <h3 className="font-bold text-sm text-stone-900">{item.title}</h3>
-                  <span className="text-[10px] text-stone-400">{item.description}</span>
-                </div>
+          {recommendations.map((item, idx) => {
+            // 検索キーワードがあるか判定
+            const isSearching = Boolean(searchQuery && searchQuery.trim().length > 0);
 
-                <div className="flex flex-wrap gap-1.5">
-                  {item.authors.map((author) => (
-                    <button
-                      key={author}
-                      onClick={() => onSelectAuthor?.(author)}
-                      className="text-xs bg-stone-100 hover:bg-stone-800 hover:text-white border border-stone-200 text-stone-700 px-2.5 py-1 rounded-lg transition-all duration-150"
-                    >
-                      {author}
-                    </button>
-                  ))}
+            // 検索中でかつ2枚目以降のカードは、スマホ(sm未満)で非表示にする
+            const hideOnMobile = isSearching && idx > 0;
+
+            return (
+              <div
+                key={idx}
+                className={`p-3.5 rounded-xl border bg-white border-stone-200/80 shadow-sm flex-col justify-between ${
+                  hideOnMobile ? 'hidden sm:flex' : 'flex'
+                }`}
+              >
+                <div>
+                  <div className="flex items-baseline justify-between mb-2">
+                    <h3 className="font-bold text-sm text-stone-900">{item.title}</h3>
+                    <span className="text-[10px] text-stone-400">{item.description}</span>
+                  </div>
+
+                  <div className="flex flex-wrap gap-1.5">
+                    {item.authors.map((author) => (
+                      <button
+                        key={author}
+                        onClick={() => onSelectAuthor?.(author)}
+                        className="text-xs bg-stone-100 hover:bg-stone-800 hover:text-white border border-stone-200 text-stone-700 px-2.5 py-1 rounded-lg transition-all duration-150"
+                      >
+                        {author}
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </div>
       )}
     </section>
