@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
@@ -22,6 +22,13 @@ const getMetadataBase = (): URL => {
 
 const metadataBaseUrl = getMetadataBase();
 
+export const viewport: Viewport = {
+  themeColor: '#1c1917',
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+};
+
 export const metadata: Metadata = {
   metadataBase: metadataBaseUrl,
   title: {
@@ -29,7 +36,12 @@ export const metadata: Metadata = {
     template: '%s | 青空保存 to Kindle',
   },
   description:
-    '[完全無料・広告なし] 青空文庫の本を保存して、すぐにKindleで読めます。面倒な会員登録・ログイン不要で、縦書き・右開き対応のEPUB形式へ一括変換。Send to Kindleにも最適です。',
+    '[完全無料・広告なし] 青空文庫の作品を縦書き・右開きのEPUBへ一括変換。直接Kindleへ送信・保存して、すぐに読めます。',
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: 'default',
+    title: '青空保存',
+  },
   keywords: [
     '青空保存 to Kindle',
     '青空文庫',
@@ -57,7 +69,7 @@ export const metadata: Metadata = {
   openGraph: {
     title: '青空保存 to Kindle | 青空文庫を保存してKindleで読む',
     description:
-      '[完全無料・登録不要・広告なし] 青空文庫の本を保存して、すぐにKindleで読めます。縦書き・右開きのEPUB形式に対応。',
+      '[完全無料・登録不要・広告なし] 青空文庫の作品を縦書き・右開きのEPUBへ一括変換。直接Kindleへ送信・保存して、すぐに読めます。',
     url: metadataBaseUrl.toString(),
     siteName: '青空保存 to Kindle',
     locale: 'ja_JP',
@@ -66,7 +78,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '青空保存 to Kindle | 青空文庫を保存してKindleで読む',
-    description: '[完全無料・登録不要・広告なし] 青空文庫の本を保存して、すぐにKindleで読めます。',
+    description: '[完全無料・登録不要・広告なし] 青空文庫の作品を縦書き・右開きのEPUBへ一括変換。直接Kindleへ送信・保存して、すぐに読めます。',
   },
   robots: {
     index: true,
