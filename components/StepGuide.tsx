@@ -2,35 +2,36 @@ import React from 'react';
 
 export default function StepGuide() {
   const steps = [
-    { num: '①', title: '検索', desc: '作品・著者を検索' },
-    { num: '②', title: '保存', desc: '「開く」を選択' },
-    { num: '③', title: 'Kindleで開く', desc: 'Kindleアプリを指定' },
-    { num: '④', title: 'Kindleに送信', desc: '送信ボタンを押す' },
+    { num: '①', name: '検索' },
+    { num: '②', name: '保存' },
+    { num: '③', name: 'Kindleで「開く」' },
+    { num: '④', name: 'Kindleで「送信」' },
   ];
 
   return (
-    <div className="w-full bg-stone-100/60 border border-stone-200/60 rounded-xl p-3 my-2 select-none pointer-events-none">
-      <div className="text-[11px] font-medium text-stone-500 mb-2 text-center sm:text-left">
-        💡 Kindleへの取り込み手順
+    <div className="w-full bg-stone-100 border border-stone-300 rounded-xl p-3 my-2 select-none pointer-events-none">
+      <div className="text-xs sm:text-sm font-bold text-stone-800 mb-2.5 text-center sm:text-left">
+        💡 かんたん操作手順
       </div>
 
-      <div className="flex items-center justify-between text-stone-600 px-1">
+      <div className="flex items-center justify-between text-center px-0.5">
         {steps.map((step, idx) => (
           <React.Fragment key={idx}>
-            <div className="flex flex-col items-center text-center">
-              <span className="text-[9px] font-semibold text-stone-400 uppercase tracking-wider">
+            <div className="flex flex-col items-center min-w-0">
+              {/* 番号（くっきり大きい青文字） */}
+              <span className="text-base sm:text-lg font-black text-stone-900 leading-none mb-1">
                 {step.num}
               </span>
-              <span className="text-xs font-bold text-stone-700 leading-tight mt-0.5">
-                {step.title}
-              </span>
-              <span className="text-[10px] text-stone-400 mt-0.5 hidden sm:inline">
-                {step.desc}
+              {/* 操作名（枠なしの純粋なテキスト） */}
+              <span className="text-xs sm:text-sm font-bold text-stone-900 leading-tight">
+                {step.name}
               </span>
             </div>
 
-            {/* ステップ間の矢印 */}
-            {idx < steps.length - 1 && <span className="text-stone-300 text-xs font-bold">→</span>}
+            {/* 進行を表す矢印（ボタン感を出さずに順序を伝える） */}
+            {idx < steps.length - 1 && (
+              <span className="text-stone-400 text-xs sm:text-sm font-bold shrink-0 mx-0.5">➔</span>
+            )}
           </React.Fragment>
         ))}
       </div>

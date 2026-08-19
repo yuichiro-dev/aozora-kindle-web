@@ -232,7 +232,7 @@ function escapeXml(str: string): string {
 function parseAozoraTxtToHtml(rawTxt: string): string {
   const lines = rawTxt.split(/\r?\n/);
 
-  // 1. ヘッダー切り落とし
+  // 1. ヘッダー切り落とし（冒頭の注釈ダッシュ線ブロックを除去）
   const dividerRegex = /^[-―─-]{10,}\s*$/;
   let firstDividerIdx = -1;
   let secondDividerIdx = -1;
@@ -255,23 +255,26 @@ function parseAozoraTxtToHtml(rawTxt: string): string {
         ? firstDividerIdx + 1
         : 0;
 
-  // 2. フッター切り落とし
-  let bodyEnd = lines.length;
-  for (let i = bodyStart; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (line.startsWith('底本：') || line.startsWith('［＃本文終わり］')) {
-      bodyEnd = i;
-      break;
-    }
-  }
-
-  const bodyLines = lines.slice(bodyStart, bodyEnd);
+  // 2. 本文および末尾（底本・奥付情報）を取得
+  const bodyLines = lines.slice(bodyStart);
   const htmlResult: string[] = ['<div class="main"><div class="chapter">'];
   let inPageCenter = false;
+  let inToc = false;
 
   for (let i = 0; i < bodyLines.length; i++) {
     let line = bodyLines[i];
     const trimmed = line.trim();
+
+    // 目次ブロックのスキップ
+    if (trimmed.includes('［＃ここから目次］') || trimmed.includes('［＃目次］')) {
+      inToc = true;
+      continue;
+    }
+    if (trimmed.includes('［＃ここで目次終わり］')) {
+      inToc = false;
+      continue;
+    }
+    if (inToc) continue;
 
     // A. ブロック命令判定
     if (
@@ -306,11 +309,11 @@ function parseAozoraTxtToHtml(rawTxt: string): string {
       return `<ruby>${kanji}<rt>${kanjiRuby}</rt></ruby>`;
     });
 
-    // D. 外字文字救出 (［＃「...」は〜］)
-    line = line.replace(/［＃「([^」]+)」[^］]*］/g, '$1');
-
+    // D. 注釈処理と外字救出（★「一一」バグ対策版）
     const isHeading = /［＃.*見出し］/.test(line);
-    line = line.replace(ANNOTATION_PATTERN, '');
+    line = line.replace(/［＃「[^」]+」は[^］]*］/g, ''); // 説明注釈（「一」は中見出し等）を削除
+    line = line.replace(/［＃「([^」]+)」、[^］]*］/g, '$1'); // 本物の外字のみ抽出
+    line = line.replace(ANNOTATION_PATTERN, ''); // 残りの［＃...］を削除
 
     // E. HTML構造の出力
     if (line.trim() === '') {
@@ -331,7 +334,6 @@ function parseAozoraTxtToHtml(rawTxt: string): string {
   htmlResult.push('</div></div>');
   return htmlResult.join('');
 }
-
 // --------------------------------------------------
 // EPUB3 ZIP 構築（1ファイル構成）
 // --------------------------------------------------
