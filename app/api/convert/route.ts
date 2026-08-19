@@ -59,7 +59,6 @@ function checkRateLimit(ip: string): { success: boolean; remaining: number } {
   return { success: true, remaining: MAX_REQUESTS - record.count };
 }
 
-
 async function fetchBuffer(urlStr: string, timeout = 15000): Promise<Buffer> {
   let parsedUrl: URL;
   try {
@@ -102,7 +101,7 @@ async function fetchBuffer(urlStr: string, timeout = 15000): Promise<Buffer> {
   while (true) {
     res = await fetch(currentUrl, {
       method: 'GET',
-      redirect: 'manual', 
+      redirect: 'manual',
       headers: {
         'User-Agent':
           'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
@@ -127,7 +126,7 @@ async function fetchBuffer(urlStr: string, timeout = 15000): Promise<Buffer> {
       if (nextUrl.protocol !== 'https:') {
         throw new Error('リダイレクト先がHTTPSではありません。');
       }
-      
+
       const nextHost = nextUrl.hostname.toLowerCase();
       if (
         nextHost === 'localhost' ||
@@ -171,13 +170,17 @@ function extractTxtFromZip(zipBuffer: Buffer): string {
       if (txtFileName !== null) return false;
 
       if (file.originalSize > MAX_TEXT_BYTES) {
-        throw new Error(`展開後の予測テキストサイズが大きすぎます（上限: ${MAX_TEXT_BYTES / 1024 / 1024}MB）`);
+        throw new Error(
+          `展開後の予測テキストサイズが大きすぎます（上限: ${MAX_TEXT_BYTES / 1024 / 1024}MB）`
+        );
       }
 
       if (file.size > 0) {
         const ratio = file.originalSize / file.size;
         if (ratio > MAX_COMPRESSION_RATIO) {
-          throw new Error('異常な高圧縮率のファイル（Zip Bombの可能性）が検知されたため処理を中断しました。');
+          throw new Error(
+            '異常な高圧縮率のファイル（Zip Bombの可能性）が検知されたため処理を中断しました。'
+          );
         }
       }
 
@@ -451,11 +454,7 @@ export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
 
-    if (
-      !body ||
-      typeof body.id !== 'number' ||
-      !Number.isSafeInteger(body.id)
-    ) {
+    if (!body || typeof body.id !== 'number' || !Number.isSafeInteger(body.id)) {
       return NextResponse.json({ error: '不正なリクエストです。' }, { status: 400 });
     }
 
@@ -484,9 +483,6 @@ export async function POST(req: NextRequest) {
     });
   } catch (error: unknown) {
     console.error('EPUB変換エラー:', error);
-    return NextResponse.json(
-      { error: 'EPUBの生成に失敗しました。' },
-      { status: 500 }
-    );
+    return NextResponse.json({ error: 'EPUBの生成に失敗しました。' }, { status: 500 });
   }
 }

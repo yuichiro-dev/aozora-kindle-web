@@ -128,6 +128,9 @@ async function main() {
       const lastNameEn = clean(row[21]);
       const firstNameEn = clean(row[22]);
 
+      const authorBirth = clean(row[24]);
+      const authorDeath = clean(row[25]);
+
       const role = clean(row[23]);
       const zipUrl = clean(row[45]);
       const htmlUrl = clean(row[50]);
@@ -159,6 +162,8 @@ async function main() {
             sub_title_kana: subTitleKana || null,
             original_title: originalTitle || null,
             author,
+            author_birth: authorBirth || null,
+            author_death: authorDeath || null,
             author_kana: authorKana,
             author_en: authorEn,
             zip_url: zipUrl || null,
