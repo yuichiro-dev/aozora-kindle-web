@@ -4,7 +4,15 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+// 環境変数やVercel Preview環境に対応した安全な URL 取得
+const getSiteUrl = () => {
+  const url = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL;
+  if (!url) return 'http://localhost:3000';
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `https://${url}`;
+};
+
+const siteUrl = getSiteUrl();
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),
