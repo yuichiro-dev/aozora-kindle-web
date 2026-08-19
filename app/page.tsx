@@ -285,9 +285,7 @@ export default function Home() {
 
           {/* 検索バー ＆ サジェスチョンコンテナ */}
           <div ref={searchContainerRef} className="relative group z-30">
-            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-60 group-hover:opacity-100 animate-pulse transition duration-500"></div>
-
-            <div className="relative bg-white rounded-xl shadow-md flex items-center">
+            <div className="relative bg-white border-2 border-stone-400 focus-within:border-stone-900 rounded-xl shadow-md flex items-center transition-colors">
               <div className="pl-4 text-stone-500 shrink-0">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
@@ -390,7 +388,7 @@ export default function Home() {
                     <button
                       onClick={() => handleDownload(book)}
                       disabled={downloadingId === book.id || !book.zip_url}
-                      className={`shrink-0 whitespace-nowrap px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm ${
+                      className={`shrink-0 whitespace-nowrap px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg font-bold text-base sm:text-lg transition-all duration-200 shadow-sm ${
                         !book.zip_url
                           ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed shadow-none'
                           : downloadingId === book.id
