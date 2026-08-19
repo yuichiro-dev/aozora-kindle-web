@@ -13,7 +13,6 @@ export default function Home() {
   const itemsPerPage = 20;
   const [bookCount, setBookCount] = useState<number | null>(null);
 
-  // インデックスデータ (/books.json) の取得
   useEffect(() => {
     fetch('/books.json')
       .then((res) => res.json())
@@ -154,8 +153,7 @@ export default function Home() {
     name: '青空文庫Kindle保存',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
-    description:
-      '[完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。',
+    description: '[完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。',
     url: 'https://aozora-kindle-web.vercel.app/',
     inLanguage: 'ja',
     offers: {
@@ -163,7 +161,7 @@ export default function Home() {
       price: '0',
       priceCurrency: 'JPY',
     },
-featureList: [
+    featureList: [
       '青空文庫の作品を縦書き・右開きのKindle本に保存',
       '作品名や著者名からすぐに見つかる高速検索',
       '面倒な会員登録・ログインなしで全機能が無料',
@@ -177,44 +175,39 @@ featureList: [
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
-      <main className="min-h-screen bg-stone-50 text-gray-800 p-6 md:p-12">
-        <div className="max-w-4xl mx-auto space-y-6">
+      <main className="min-h-screen bg-stone-50 p-4 md:p-10">
+        <div className="max-w-4xl mx-auto space-y-5">
           <header
-            className={`border-b transition-all ${hasQuery ? 'pb-2' : 'pb-4'} text-center md:text-left`}
+            className={`border-b border-stone-200 transition-all ${hasQuery ? 'pb-2' : 'pb-4'} text-center md:text-left`}
           >
-            <h1
-              className={`font-bold font-serif tracking-tight text-gray-900 transition-all ${hasQuery ? 'text-xl md:text-2xl' : 'text-2xl'}`}
-            >
+            <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl">
               青空文庫Kindle保存
             </h1>
-            <p className={`text-xs text-gray-500 mt-1 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
+            <p className={`text-xs sm:text-sm font-medium mt-1.5 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
               [完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。
               <br className="hidden sm:inline" />
-              {bookCount !== null && `収録数: ${bookCount.toLocaleString()}冊`}
+              {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
               (作品リストは毎日自動更新)
             </p>
           </header>
 
           {!hasQuery && (
-            <div className="-mt-4 mb-5">
+            <div className="-mt-3 mb-4">
               <StepGuide />
             </div>
           )}
 
-          {/* 検索バー（アニメーション発光エフェクト） */}
+          {/* 検索バー */}
           <div className="relative group">
-            {/* バックグラウンドで呼吸するように光るグラデーション（animate-pulse） */}
             <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-60 group-hover:opacity-100 animate-pulse transition duration-500"></div>
 
-            {/* 入力欄本体 */}
             <div className="relative bg-white rounded-xl shadow-md flex items-center">
-              {/* 検索アイコン */}
-              <div className="pl-4 text-stone-400 shrink-0">
+              <div className="pl-4 text-stone-500 shrink-0">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
                     strokeLinejoin="round"
-                    strokeWidth={2}
+                    strokeWidth={2.5}
                     d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
                   />
                 </svg>
@@ -222,19 +215,22 @@ featureList: [
 
               <input
                 type="text"
-                placeholder="例：夏目漱石 こころ などで検索"
+                placeholder="著者名や作品名で検索"
                 value={query}
                 onChange={(e) => {
                   setQuery(e.target.value);
                   setCurrentPage(1);
                 }}
                 disabled={loading}
-                className="w-full pl-3 pr-4 py-3.5 bg-transparent rounded-xl focus:outline-none text-base sm:text-lg text-gray-900 placeholder-stone-400 disabled:bg-gray-100"
+                className="w-full pl-3 pr-4 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium placeholder-stone-400 disabled:bg-stone-100"
               />
             </div>
           </div>
 
-          {/* おすすめ作家（検索クエリのみで連動） */}
+          <p className="text-xs sm:text-sm mt-2 px-1 flex items-center gap-1.5 font-bold">
+            <span>「夏目漱石 こころ」のようにスペースを空けて検索結果を絞り込めます</span>
+          </p>
+
           <Recommendations
             books={books}
             searchQuery={query}
@@ -244,10 +240,9 @@ featureList: [
             }}
           />
 
-          {/* 入力時のみ表示される検索結果エリア */}
           {hasQuery && (
             <>
-              <div className="flex justify-between items-center text-sm text-gray-600">
+              <div className="flex justify-between items-center text-sm font-bold">
                 <span>
                   {loading
                     ? 'データ読み込み中...'
@@ -264,35 +259,33 @@ featureList: [
                 {currentBooks.map((book, index) => (
                   <div
                     key={`${book.id}-${index}`}
-                    className="p-3 sm:p-4 bg-white border border-stone-200/80 rounded-xl shadow-sm flex items-center justify-between gap-3 hover:border-gray-300 transition-all"
+                    className="p-3.5 sm:p-4 bg-white border border-stone-300 rounded-xl shadow-sm flex items-center justify-between gap-3 hover:border-stone-400 transition-all"
                   >
-                    {/* 左側：タイトルと作者（省略せず折り返し許可） */}
-                    <div className="min-w-0 flex-1 space-y-0.5 sm:space-y-1">
+                    <div className="min-w-0 flex-1 space-y-1">
                       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                        <h2 className="text-sm sm:text-lg font-semibold text-gray-900 leading-snug break-words">
+                        <h2 className="text-base sm:text-lg font-bold leading-snug break-words">
                           {book.title}
                         </h2>
                         {book.sub_title && (
-                          <span className="text-xs sm:text-sm font-normal text-gray-600 leading-snug break-words">
+                          <span className="text-sm font-medium leading-snug break-words">
                             {book.sub_title}
                           </span>
                         )}
                       </div>
-                      <p className="text-xs sm:text-sm text-gray-500 leading-tight break-words">
+                      <p className="text-sm font-medium leading-tight break-words">
                         {book.author}
                       </p>
                     </div>
 
-                    {/* 右側：ボタン（崩れないよう固める） */}
                     <button
                       onClick={() => handleDownload(book)}
                       disabled={downloadingId === book.id || !book.zip_url}
-                      className={`shrink-0 whitespace-nowrap px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium text-xs sm:text-sm transition-all duration-200 shadow-sm ${
+                      className={`shrink-0 whitespace-nowrap px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg font-bold text-sm transition-all duration-200 shadow-sm ${
                         !book.zip_url
                           ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed shadow-none'
                           : downloadingId === book.id
-                            ? 'bg-stone-500 text-white cursor-wait animate-pulse'
-                            : 'bg-gradient-to-r from-stone-800 to-stone-700 text-stone-100 hover:from-stone-700 hover:to-stone-600 active:from-stone-900 active:to-stone-800 shadow'
+                            ? 'bg-stone-600 text-white cursor-wait animate-pulse'
+                            : 'bg-stone-900 text-white hover:bg-stone-800 active:bg-black shadow'
                       }`}
                     >
                       {downloadingId === book.id ? '生成中...' : '保存'}
@@ -301,28 +294,28 @@ featureList: [
                 ))}
 
                 {!loading && currentBooks.length === 0 && (
-                  <div className="text-center py-12 text-gray-500">
+                  <div className="text-center py-10 font-medium text-base">
                     該当する作品が見つかりませんでした。
                   </div>
                 )}
               </div>
 
               {totalPages > 1 && (
-                <div className="flex justify-center items-center gap-2 pt-6">
+                <div className="flex justify-center items-center gap-2 pt-4">
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
-                    className="px-3 py-1.5 border rounded-md text-sm bg-white disabled:opacity-50"
+                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold bg-white disabled:opacity-40"
                   >
                     前へ
                   </button>
-                  <span className="text-sm px-2">
+                  <span className="text-sm font-bold px-2">
                     {currentPage} / {totalPages}
                   </span>
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                     disabled={currentPage === totalPages}
-                    className="px-3 py-1.5 border rounded-md text-sm bg-white disabled:opacity-50"
+                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold bg-white disabled:opacity-40"
                   >
                     次へ
                   </button>
@@ -331,11 +324,12 @@ featureList: [
             </>
           )}
 
-          <footer className="max-w-2xl mx-auto w-full mt-16 pt-6 border-t border-stone-200 text-center text-xs text-stone-400 space-y-2">
+          {/* フッター（色を --color-text-muted で一括管理） */}
+          <footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-stone-200 text-center text-xs text-[var(--color-text-muted)] space-y-2">
             <p>
-              青空文庫の注釈・ルビ記号を解析し、縦書き・右開き（vertical-rl / rtl）仕様のEPUB3ファイルへオンデマンド変換します。
-
-※Send to Kindle完全対応 / クライアント・サーバー間暗号化通信。すべてのソースコードは{' '}
+              青空文庫の注釈・ルビ記号を解析し、縦書き・右開き（vertical-rl /
+              rtl）仕様のEPUB3ファイルへオンデマンド変換します。 ※Send to Kindle完全対応 /
+              クライアント・サーバー間暗号化通信。すべてのソースコードは{' '}
               <a
                 href="https://github.com/yuichiro-dev/aozora-kindle-web"
                 target="_blank"

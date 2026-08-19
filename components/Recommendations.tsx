@@ -429,7 +429,6 @@ export default function Recommendations({
   selectedBook,
   onSelectAuthor,
 }: Props) {
-  // useSyncExternalStore を使って localStorage の状態を監視（useEffect不要）
   const isHidden = useSyncExternalStore(
     subscribeLocalStorage,
     getHideRecsSnapshot,
@@ -437,7 +436,6 @@ export default function Recommendations({
   );
   const showRecommendations = !isHidden;
 
-  // useMemo を使って計算結果を直接参照（useEffectでのsetState不要）
   const recommendations = useMemo(() => {
     if (!books || books.length === 0) return [];
     return getRecommendations(books, searchQuery, selectedBook);
@@ -453,46 +451,50 @@ export default function Recommendations({
 
   return (
     <section className="w-full my-4">
-      <div className="flex justify-end items-center mb-2 px-1 text-xs text-stone-500">
+      {/* 上部コントロール：フォントサイズ・太さアップ */}
+      <div className="flex justify-end items-center mb-2 px-1 text-sm font-bold text-stone-800">
         <label className="flex items-center gap-1.5 cursor-pointer select-none">
           <input
             type="checkbox"
             checked={showRecommendations}
             onChange={handleToggle}
-            className="rounded border-stone-300 text-stone-800 focus:ring-stone-500"
+            className="w-4 h-4 rounded border-stone-300 text-stone-900 focus:ring-stone-600"
           />
-          <span>レコメンドを表示する</span>
+          <span>おすすめを表示する</span>
         </label>
       </div>
 
       {showRecommendations && (
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
           {recommendations.map((item, idx) => {
-            // 検索キーワードがあるか判定
             const isSearching = Boolean(searchQuery && searchQuery.trim().length > 0);
-
-            // 検索中でかつ2枚目以降のカードは、スマホ(sm未満)で非表示にする
             const hideOnMobile = isSearching && idx > 0;
 
             return (
               <div
                 key={idx}
-                className={`p-3.5 rounded-xl border bg-white border-stone-200/80 shadow-sm flex-col justify-between ${
+                className={`p-4 rounded-xl border bg-white border-stone-300 shadow-sm flex-col justify-between ${
                   hideOnMobile ? 'hidden sm:flex' : 'flex'
                 }`}
               >
                 <div>
-                  <div className="flex items-baseline justify-between mb-2">
-                    <h3 className="font-bold text-sm text-stone-900">{item.title}</h3>
-                    <span className="text-[10px] text-stone-400">{item.description}</span>
+                  {/* カードヘッダー：タイトルと説明文のサイズ・色をアップ */}
+                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2.5">
+                    <h3 className="font-bold text-base sm:text-lg text-stone-900 leading-snug">
+                      {item.title}
+                    </h3>
+                    <span className="text-xs sm:text-sm font-medium text-stone-700 shrink-0">
+                      {item.description}
+                    </span>
                   </div>
 
-                  <div className="flex flex-wrap gap-1.5">
+                  {/* 作家タグ：ボタンの文字サイズ・余白・色の濃さをアップ */}
+                  <div className="flex flex-wrap gap-2 pt-1">
                     {item.authors.map((author) => (
                       <button
                         key={author}
                         onClick={() => onSelectAuthor?.(author)}
-                        className="text-xs bg-stone-100 hover:bg-stone-800 hover:text-white border border-stone-200 text-stone-700 px-2.5 py-1 rounded-lg transition-all duration-150"
+                        className="text-sm font-bold bg-stone-100 hover:bg-stone-900 hover:text-white border border-stone-300 text-stone-800 px-3 py-1.5 rounded-lg transition-all duration-150"
                       >
                         {author}
                       </button>
