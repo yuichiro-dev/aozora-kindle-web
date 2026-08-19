@@ -1,19 +1,7 @@
 'use client';
 
-import { useState, useEffect, useMemo } from 'react';
-
-interface Book {
-  id: number;
-  title: string;
-  title_kana: string;
-  sub_title: string | null;
-  sub_title_kana: string | null;
-  author: string;
-  author_kana: string;
-  author_en: string | null;
-  zip_url: string | null;
-  html_url: string | null;
-}
+import React, { useState, useEffect, useMemo } from 'react';
+import Recommendations, { Book } from '@/components/Recommendations';
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -23,16 +11,22 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   const [bookCount, setBookCount] = useState<number | null>(null);
+  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
+  // インデックスデータ (/books.json) の取得
   useEffect(() => {
     fetch('/books.json')
       .then((res) => res.json())
       .then((data) => {
-        setBooks(data);
+        if (Array.isArray(data)) {
+          setBooks(data);
+          setBookCount(data.length);
+        }
         setLoading(false);
       })
       .catch((err) => {
         console.error('インデックスデータの読み込みエラー:', err);
+        setBookCount(0);
         setLoading(false);
       });
   }, []);
@@ -76,7 +70,6 @@ export default function Home() {
           ? cleanStr(`${authorEnParts.slice(1).join('')}${authorEnParts[0]}`)
           : '';
 
-      // 入力全体（記号・空白なし）での完全・部分一致判定
       const isDirectMatch =
         (author && author.includes(fullCleanQuery)) ||
         (authorKana && authorKana.includes(fullCleanQuery)) ||
@@ -89,7 +82,6 @@ export default function Home() {
 
       if (isDirectMatch) return true;
 
-      // 複数単語でのAND判定
       return keywords.every((kw) => {
         return (
           title.includes(kw) ||
@@ -156,7 +148,6 @@ export default function Home() {
 
   const hasQuery = query.trim().length > 0;
 
-  // SEO用 構造化データ (JSON-LD)
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebApplication',
@@ -172,18 +163,6 @@ export default function Home() {
     },
   };
 
-  // ページ読み込み時に /books.json を取得して件数を数える
-  useEffect(() => {
-    fetch('/books.json')
-      .then((res) => res.json())
-      .then((data) => {
-        if (Array.isArray(data)) {
-          setBookCount(data.length);
-        }
-      })
-      .catch(() => setBookCount(0));
-  }, []);
-
   return (
     <>
       <script
@@ -193,7 +172,7 @@ export default function Home() {
       <main className="min-h-screen bg-stone-50 text-gray-800 p-6 md:p-12">
         <div className="max-w-4xl mx-auto space-y-6">
           <header className="border-b pb-4 text-center md:text-left">
-            <h1 className="text-3xl font-bold font-seriftracking-tight text-gray-900">
+            <h1 className="text-3xl font-bold font-serif tracking-tight text-gray-900">
               青空文庫 Kindle 変換ツール
             </h1>
             <p className="text-sm text-gray-500 mt-1">
@@ -219,7 +198,17 @@ export default function Home() {
             />
           </div>
 
-          {/* 入力時のみ表示されるエリア */}
+          {/* おすすめ・今日の一冊（作家名タグメイン） */}
+          <Recommendations
+            books={books}
+            selectedBook={selectedBook}
+            onSelectAuthor={(author) => {
+              setQuery(author);
+              setCurrentPage(1);
+            }}
+          />
+
+          {/* 入力時のみ表示される検索結果エリア */}
           {hasQuery && (
             <>
               <div className="flex justify-between items-center text-sm text-gray-600">
@@ -239,7 +228,12 @@ export default function Home() {
                 {currentBooks.map((book, index) => (
                   <div
                     key={`${book.id}-${index}`}
-                    className="p-4 bg-white border border-stone-200/80 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all"
+                    onClick={() => setSelectedBook(book)}
+                    className={`p-4 bg-white border rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all cursor-pointer ${
+                      selectedBook?.id === book.id
+                        ? 'ring-2 ring-stone-800 border-transparent'
+                        : 'border-stone-200/80'
+                    }`}
                   >
                     <div>
                       <div className="flex items-baseline gap-2 flex-wrap">
@@ -253,7 +247,10 @@ export default function Home() {
                       <p className="text-sm text-gray-600 mt-1">{book.author}</p>
                     </div>
                     <button
-                      onClick={() => handleDownload(book)}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDownload(book);
+                      }}
                       disabled={downloadingId === book.id || !book.zip_url}
                       className={`px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 shadow-sm whitespace-nowrap ${
                         !book.zip_url
