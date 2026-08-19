@@ -1,26 +1,33 @@
 @import 'tailwindcss';
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* ★ ベースフォントサイズを一括管理（標準16px → 18pxに拡大） */
+  font-size: 18px;
+
+  /* 背景色と文字色（石目調のやさしい背景と濃い黒） */
+  --background: #fafaf9; /* stone-50 相当 */
+  --foreground: #1c1917; /* stone-900 相当 (濃い黒) */
+
+  /* 文字色変数 */
+  --color-text-main: #1c1917;
+  --color-text-sub: #292524;
+  --color-text-muted: #a8a29e;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Hiragino Sans", "Yu Gothic UI", sans-serif;
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+/* 
+  ※端末のダークモード設定で自動的に背景が真っ黒に化けるのを防ぐため、
+  @media (prefers-color-scheme: dark) は削除しています。
+*/
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
 }

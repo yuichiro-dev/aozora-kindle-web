@@ -66,8 +66,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '青空文庫Kindle保存 | 青空文庫を保存してKindleで読む',
-    description:
-      '[完全無料・登録不要・広告なし] 青空文庫の本を保存して、すぐにKindleで読めます。',
+    description: '[完全無料・登録不要・広告なし] 青空文庫の本を保存して、すぐにKindleで読めます。',
   },
   robots: {
     index: true,
