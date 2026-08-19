@@ -198,7 +198,7 @@ export default function Home() {
           <div className="relative">
             <input
               type="text"
-              placeholder="例：夏目漱石 こころ、走れメロス などで検索..."
+              placeholder="例：夏目漱石 こころ などで検索"
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
