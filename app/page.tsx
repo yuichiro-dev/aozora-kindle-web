@@ -239,23 +239,30 @@ export default function Home() {
                 {currentBooks.map((book, index) => (
                   <div
                     key={`${book.id}-${index}`}
-                    className="p-4 bg-white border border-stone-200/80 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all"
+                    className="p-3 sm:p-4 bg-white border border-stone-200/80 rounded-xl shadow-sm flex items-center justify-between gap-3 hover:border-gray-300 transition-all"
                   >
-                    <div>
-                      <div className="flex items-baseline gap-2 flex-wrap">
-                        <h2 className="text-xl font-semibold text-gray-900">{book.title}</h2>
+                    {/* 左側：タイトルと作者（省略せず折り返し許可） */}
+                    <div className="min-w-0 flex-1 space-y-0.5 sm:space-y-1">
+                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                        <h2 className="text-sm sm:text-lg font-semibold text-gray-900 leading-snug break-words">
+                          {book.title}
+                        </h2>
                         {book.sub_title && (
-                          <span className="text-sm font-normal text-gray-800">
+                          <span className="text-xs sm:text-sm font-normal text-gray-600 leading-snug break-words">
                             {book.sub_title}
                           </span>
                         )}
                       </div>
-                      <p className="text-sm text-gray-600 mt-1">{book.author}</p>
+                      <p className="text-xs sm:text-sm text-gray-500 leading-tight break-words">
+                        {book.author}
+                      </p>
                     </div>
+
+                    {/* 右側：ボタン（崩れないよう固める） */}
                     <button
                       onClick={() => handleDownload(book)}
                       disabled={downloadingId === book.id || !book.zip_url}
-                      className={`px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 shadow-sm whitespace-nowrap ${
+                      className={`shrink-0 whitespace-nowrap px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg font-medium text-xs sm:text-sm transition-all duration-200 shadow-sm ${
                         !book.zip_url
                           ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed shadow-none'
                           : downloadingId === book.id
@@ -263,7 +270,7 @@ export default function Home() {
                             : 'bg-gradient-to-r from-stone-800 to-stone-700 text-stone-100 hover:from-stone-700 hover:to-stone-600 active:from-stone-900 active:to-stone-800 shadow'
                       }`}
                     >
-                      {downloadingId === book.id ? 'EPUB生成中...' : 'ダウンロード'}
+                      {downloadingId === book.id ? '生成中...' : 'ダウンロード'}
                     </button>
                   </div>
                 ))}
