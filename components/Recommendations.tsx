@@ -18,10 +18,10 @@ export interface Book {
   html_url: string | null;
 }
 
+// ★ description を完全に削除
 interface RecommendationCard {
   type: 'birthday' | 'deathday' | 'genre' | 'contemporary';
   title: string;
-  description: string;
   authors: string[];
 }
 
@@ -49,7 +49,6 @@ function getServerHideRecsSnapshot(): boolean {
 const normalize = (str?: string | null) =>
   str ? str.replace(/[\s\u3000・\.\,-]+/g, '').toLowerCase() : '';
 
-// カタカナが含まれているか判定するヘルパー関数
 const hasKatakana = (str: string) => /[\u30A0-\u30FF]/.test(str);
 
 export const GENRE_GROUPS = [
@@ -226,11 +225,13 @@ function parseMonthDay(
   } else if (nums.length === 2) {
     return {
       month: parseInt(nums[0], 10),
-      day: parseInt(nums[1], 10),
+      day: parseInt(nums[2], 10),
     };
   }
   return null;
 }
+
+const MAX_AUTHORS_PER_CARD = 3;
 
 function getRecommendations(
   books: Book[],
@@ -277,7 +278,6 @@ function getRecommendations(
     forceBirthdayOnly = true;
   }
 
-  // A・B: カタカナ検索時以外のジャンル／同世代作家抽出
   if (!forceBirthdayOnly) {
     if (matchedAuthor) {
       const info = findGenreInfo(matchedAuthor);
@@ -286,8 +286,7 @@ function getRecommendations(
         results.push({
           type: 'genre',
           title: `🔍 ${displayAuthor} 好きにおすすめ`,
-          description: `${info.genreName}`,
-          authors: info.relatedAuthors.slice(0, 6),
+          authors: info.relatedAuthors.slice(0, MAX_AUTHORS_PER_CARD),
         });
       }
     }
@@ -323,13 +322,12 @@ function getRecommendations(
               new Set(contemporaryBooks.map((b) => b.author.replace(/[\s\u3000]+/g, '')))
             )
               .sort(() => 0.5 - Math.random())
-              .slice(0, 6);
+              .slice(0, MAX_AUTHORS_PER_CARD);
 
             const displayAuthor = targetAuthorName.replace(/[\s\u3000]+/g, '');
             results.push({
               type: 'contemporary',
               title: `📜 ${displayAuthor} と同世代の作家`,
-              description: `${baseBirthYear}年前後（±10年）生まれ`,
               authors,
             });
           }
@@ -338,15 +336,12 @@ function getRecommendations(
     }
   }
 
-  // C. 本日の生誕作家（※カタカナ名を除外）
   const todayBirthAuthors = Array.from(
     new Set(
       books
         .filter((b) => {
           const p = parseMonthDay(b.author_birth);
-          return (
-            p && p.month === currentMonth && p.day === currentDay && !hasKatakana(b.author) // カタカナ作家を除外
-          );
+          return p && p.month === currentMonth && p.day === currentDay && !hasKatakana(b.author);
         })
         .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
     )
@@ -356,8 +351,7 @@ function getRecommendations(
     results.push({
       type: 'birthday',
       title: '🎂 本日の生誕作家',
-      description: `${currentMonth}月${currentDay}日生まれ`,
-      authors: todayBirthAuthors.slice(0, 6),
+      authors: todayBirthAuthors.slice(0, MAX_AUTHORS_PER_CARD),
     });
   } else {
     const monthBirthAuthors = Array.from(
@@ -365,9 +359,7 @@ function getRecommendations(
         books
           .filter((b) => {
             const p = parseMonthDay(b.author_birth);
-            return (
-              p && p.month === currentMonth && !hasKatakana(b.author) // カタカナ作家を除外
-            );
+            return p && p.month === currentMonth && !hasKatakana(b.author);
           })
           .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
       )
@@ -377,22 +369,18 @@ function getRecommendations(
       results.push({
         type: 'birthday',
         title: `🎂 ${currentMonth}月生まれの作家`,
-        description: `${currentMonth}月生まれのピックアップ`,
-        authors: monthBirthAuthors.slice(0, 6),
+        authors: monthBirthAuthors.slice(0, MAX_AUTHORS_PER_CARD),
       });
     }
   }
 
-  // D. 本日の命日作家（※カタカナ検索時以外のとき ＆ カタカナ名を除外）
   if (!forceBirthdayOnly) {
     const todayDeathAuthors = Array.from(
       new Set(
         books
           .filter((b) => {
             const p = parseMonthDay(b.author_death);
-            return (
-              p && p.month === currentMonth && p.day === currentDay && !hasKatakana(b.author) // カタカナ作家を除外
-            );
+            return p && p.month === currentMonth && p.day === currentDay && !hasKatakana(b.author);
           })
           .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
       )
@@ -402,8 +390,7 @@ function getRecommendations(
       results.push({
         type: 'deathday',
         title: '🕯️ 本日の命日作家',
-        description: `${currentMonth}月${currentDay}日に没`,
-        authors: todayDeathAuthors.slice(0, 6),
+        authors: todayDeathAuthors.slice(0, MAX_AUTHORS_PER_CARD),
       });
     } else {
       const monthDeathAuthors = Array.from(
@@ -411,9 +398,7 @@ function getRecommendations(
           books
             .filter((b) => {
               const p = parseMonthDay(b.author_death);
-              return (
-                p && p.month === currentMonth && !hasKatakana(b.author) // カタカナ作家を除外
-              );
+              return p && p.month === currentMonth && !hasKatakana(b.author);
             })
             .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
         )
@@ -423,14 +408,13 @@ function getRecommendations(
         results.push({
           type: 'deathday',
           title: `🕯️ ${currentMonth}月に没した作家`,
-          description: `${currentMonth}月没のピックアップ`,
-          authors: monthDeathAuthors.slice(0, 6),
+          authors: monthDeathAuthors.slice(0, MAX_AUTHORS_PER_CARD),
         });
       }
     }
   }
 
-  return results;
+  return results.slice(0, 3);
 }
 
 export default function Recommendations({
@@ -487,13 +471,10 @@ export default function Recommendations({
                 }`}
               >
                 <div>
-                  <div className="flex flex-col sm:flex-row sm:items-baseline justify-between gap-1 mb-2.5">
+                  <div className="mb-2.5">
                     <h3 className="font-bold text-base sm:text-lg text-stone-900 leading-snug">
                       {item.title}
                     </h3>
-                    <span className="text-xs sm:text-sm font-medium text-stone-700 shrink-0">
-                      {item.description}
-                    </span>
                   </div>
 
                   <div className="flex flex-wrap gap-2 pt-1">

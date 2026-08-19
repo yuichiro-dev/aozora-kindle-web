@@ -260,10 +260,10 @@ export default function Home() {
       />
       <main className="min-h-screen bg-stone-50 p-4 md:p-10">
         <div className="max-w-4xl mx-auto space-y-5">
-          {/* ヘッダー：スマホ検索時は隠す */}
+          {/* ヘッダー：検索時は画面サイズ問わず非表示 */}
           <header
             className={`border-b border-stone-200 transition-all text-center md:text-left ${
-              hasQuery ? 'hidden sm:block pb-2' : 'block pb-4'
+              hasQuery ? 'hidden' : 'block pb-4'
             }`}
           >
             <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl text-stone-900">
