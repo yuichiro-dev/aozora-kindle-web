@@ -4,18 +4,29 @@ import './globals.css';
 
 const inter = Inter({ subsets: ['latin'] });
 
-// 環境変数やVercel Preview環境に対応した安全な URL 取得
-const getSiteUrl = () => {
-  const url = process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL;
-  if (!url) return 'http://localhost:3000';
-  if (url.startsWith('http://') || url.startsWith('https://')) return url;
-  return `https://${url}`;
+const getMetadataBase = (): URL => {
+  const rawUrl =
+    process.env.NEXT_PUBLIC_SITE_URL ||
+    process.env.VERCEL_URL ||
+    'http://localhost:3000';
+
+  const formattedUrl =
+    rawUrl.startsWith('http://') || rawUrl.startsWith('https://')
+      ? rawUrl
+      : `https://${rawUrl}`;
+
+  try {
+    return new URL(formattedUrl);
+  } catch {
+    // パースに失敗した場合は安全なデフォルト値を返す
+    return new URL('http://localhost:3000');
+  }
 };
 
-const siteUrl = getSiteUrl();
+const metadataBaseUrl = getMetadataBase();
 
 export const metadata: Metadata = {
-  metadataBase: new URL(siteUrl),
+  metadataBase: metadataBaseUrl,
   title: {
     default: '青空文庫 Kindle 変換ツール | 縦書き・右開きに無料一括変換',
     template: '%s | 青空文庫 Kindle 変換ツール',
@@ -49,7 +60,7 @@ export const metadata: Metadata = {
     title: '青空文庫 Kindle 変換ツール | 無料で瞬時に縦書きEPUB変換',
     description:
       '青空文庫の作品を縦書き・右開き用のEPUB形式に瞬時に変換してダウンロード。Kindleで快適な縦書き読書を。',
-    url: siteUrl,
+    url: metadataBaseUrl.toString(),
     siteName: '青空文庫 Kindle 変換ツール',
     locale: 'ja_JP',
     type: 'website',
