@@ -233,7 +233,7 @@ export default function Home() {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'SoftwareApplication',
-    name: '青空文庫Kindle保存',
+    name: '青空保存 to Kindle',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
     description: '[完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。',
@@ -267,7 +267,7 @@ export default function Home() {
             }`}
           >
             <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl text-stone-900">
-              青空文庫Kindle保存
+              青空保存 to Kindle
             </h1>
             <p className="text-xs sm:text-sm font-medium text-stone-700 mt-1.5">
               [完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。
@@ -447,7 +447,7 @@ export default function Home() {
               </a>{' '}
               にて公開されています。
             </p>
-            <p>© {new Date().getFullYear()} 青空文庫Kindle保存</p>
+            <p>© {new Date().getFullYear()} 青空保存 to Kindle</p>
           </footer>
         </div>
       </main>
