@@ -11,7 +11,6 @@ export default function Home() {
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 20;
   const [bookCount, setBookCount] = useState<number | null>(null);
-  const [selectedBook, setSelectedBook] = useState<Book | null>(null);
 
   // インデックスデータ (/books.json) の取得
   useEffect(() => {
@@ -187,7 +186,7 @@ export default function Home() {
           <div className="relative">
             <input
               type="text"
-              placeholder="例：夏目漱石 こころ、などで検索..."
+              placeholder="例：夏目漱石 こころ、走れメロス などで検索..."
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -198,11 +197,10 @@ export default function Home() {
             />
           </div>
 
-          {/* おすすめ・今日の一冊（作家名タグメイン） */}
+          {/* おすすめ作家（検索クエリのみで連動） */}
           <Recommendations
             books={books}
             searchQuery={query}
-            selectedBook={selectedBook}
             onSelectAuthor={(author) => {
               setQuery(author);
               setCurrentPage(1);
@@ -229,12 +227,7 @@ export default function Home() {
                 {currentBooks.map((book, index) => (
                   <div
                     key={`${book.id}-${index}`}
-                    onClick={() => setSelectedBook(book)}
-                    className={`p-4 bg-white border rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all cursor-pointer ${
-                      selectedBook?.id === book.id
-                        ? 'ring-2 ring-stone-800 border-transparent'
-                        : 'border-stone-200/80'
-                    }`}
+                    className="p-4 bg-white border border-stone-200/80 rounded-xl shadow-sm flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 hover:border-gray-300 transition-all"
                   >
                     <div>
                       <div className="flex items-baseline gap-2 flex-wrap">
@@ -248,10 +241,7 @@ export default function Home() {
                       <p className="text-sm text-gray-600 mt-1">{book.author}</p>
                     </div>
                     <button
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDownload(book);
-                      }}
+                      onClick={() => handleDownload(book)}
                       disabled={downloadingId === book.id || !book.zip_url}
                       className={`px-4 py-2.5 rounded-lg font-medium text-sm transition-all duration-200 shadow-sm whitespace-nowrap ${
                         !book.zip_url

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useMemo, useSyncExternalStore } from 'react';
 
 export interface Book {
   id: number;
@@ -32,8 +32,26 @@ interface Props {
   onSelectAuthor?: (author: string) => void;
 }
 
+// === localStorage の状態監視用ヘルパー ===
+function subscribeLocalStorage(callback: () => void) {
+  window.addEventListener('storage', callback);
+  return () => window.removeEventListener('storage', callback);
+}
+
+function getHideRecsSnapshot(): boolean {
+  if (typeof window === 'undefined') return false;
+  return localStorage.getItem('hide_recommendations') === 'true';
+}
+
+function getServerHideRecsSnapshot(): boolean {
+  return false;
+}
+
+// 文字列から空白・記号を完全に除去して正規化するヘルパー関数
+const normalize = (str?: string | null) =>
+  str ? str.replace(/[\s\u3000・\.\,-]+/g, '').toLowerCase() : '';
+
 // === ジャンルごとの作家グループ（相互互換リスト） ===
-// 配列内に名前がある作家同士は、誰で検索しても相互に関連作家として表示されます
 const GENRE_GROUPS = [
   {
     name: 'ミステリー・怪奇探偵小説',
@@ -48,6 +66,29 @@ const GENRE_GROUPS = [
       '平林初之輔',
       '久生十蘭',
       '木々高太郎',
+      '大阪圭吉',
+      '香山滋',
+      '大下宇陀児',
+      '角田喜久雄',
+    ],
+  },
+  {
+    name: '翻案・古典翻訳ミステリー',
+    authors: ['黒岩涙香', '江戸川乱歩', '森鴎外', '保篠龍緒', '延原謙', '楠山正雄'],
+  },
+  {
+    name: '伝奇・怪奇・幻想文学',
+    authors: [
+      '国枝史郎',
+      '泉鏡花',
+      '夢野久作',
+      '江戸川乱歩',
+      '谷崎潤一郎',
+      '岡本綺堂',
+      '内田百閒',
+      '稲垣足穂',
+      '黒岩涙香',
+      '日夏耿之介',
     ],
   },
   {
@@ -60,10 +101,12 @@ const GENRE_GROUPS = [
       '坪田譲治',
       '鈴木三重吉',
       '島崎藤村',
+      '有島武郎',
+      '豊島与志雄',
     ],
   },
   {
-    name: '時代小説・捕物帖',
+    name: '時代小説・歴史ロマン',
     authors: [
       '岡本綺堂',
       '野村胡堂',
@@ -71,8 +114,27 @@ const GENRE_GROUPS = [
       '中里介山',
       '直木三十五',
       '長谷川伸',
+      '国枝史郎',
       '都筑道夫',
+      '子母沢寛',
+      '白井喬二',
     ],
+  },
+  {
+    name: '白樺派・人道主義文学',
+    authors: ['有島武郎', '志賀直哉', '武者小路実篤', '倉田百三', '里見弴'],
+  },
+  {
+    name: 'プロレタリア・社会派文学',
+    authors: ['小林多喜二', '葉山嘉樹', '黒島伝治', '徳永直', '宮本百合子', '佐多稲子'],
+  },
+  {
+    name: '自然主義・写実主義文学',
+    authors: ['田山花袋', '島崎藤村', '国木田独歩', '徳田秋声', '正宗白鳥', '岩野泡鳴'],
+  },
+  {
+    name: '新感覚派・新心理主義・抒情文学',
+    authors: ['堀辰雄', '川端康成', '横光利一', '梶井基次郎', '伊藤整', '中島敦', '牧野信一'],
   },
   {
     name: '近代名作純文学・文豪',
@@ -87,6 +149,10 @@ const GENRE_GROUPS = [
       '樋口一葉',
       '菊池寛',
       '佐藤春夫',
+      '有島武郎',
+      '志賀直哉',
+      '武者小路実篤',
+      '国木田独歩',
     ],
   },
   {
@@ -98,32 +164,78 @@ const GENRE_GROUPS = [
       '梶井基次郎',
       '石川淳',
       '中原中也',
+      '田中英光',
+      '檀一雄',
     ],
   },
   {
     name: '唯美主義・浪漫文学',
+    authors: ['谷崎潤一郎', '泉鏡花', '永井荷風', '尾崎紅葉', '佐藤春夫', '堀辰雄', '高村光太郎'],
+  },
+  {
+    name: '初期SF・空想科学小説',
     authors: [
-      '谷崎潤一郎',
-      '泉鏡花',
-      '永井荷風',
-      '尾崎紅葉',
-      '佐藤春夫',
+      '海野十三',
+      '黒岩涙香',
+      '蘭郁二郎',
+      '押川春浪',
+      '平林初之輔',
+      '黒島伝治',
+      '小栗虫太郎',
+    ],
+  },
+  {
+    name: '近代詩歌・抒情詩',
+    authors: [
+      '萩原朔太郎',
+      '室生犀星',
+      '中原中也',
+      '高村光太郎',
+      '与謝野晶子',
+      '宮沢賢治',
+      '種田山頭火',
+      '若山牧水',
     ],
   },
 ];
 
-// 作家名から所属グループと関連作家（自分以外）を抽出するヘルパー関数
 function findGenreInfo(authorName: string) {
-  for (const group of GENRE_GROUPS) {
-    if (group.authors.includes(authorName)) {
-      return {
-        genreName: group.name,
-        // 自分を除外したリストをランダムに並べ替え
-        relatedAuthors: group.authors
-          .filter((a) => a !== authorName)
-          .sort(() => 0.5 - Math.random()),
-      };
-    }
+  const cleanAuthorName = normalize(authorName);
+
+  const matchedGroups = GENRE_GROUPS.filter((group) =>
+    group.authors.some((a) => normalize(a) === cleanAuthorName)
+  );
+
+  if (matchedGroups.length === 0) return null;
+
+  const randomGroup = matchedGroups[Math.floor(Math.random() * matchedGroups.length)];
+
+  return {
+    genreName: randomGroup.name,
+    relatedAuthors: randomGroup.authors
+      .filter((a) => normalize(a) !== cleanAuthorName)
+      .sort(() => 0.5 - Math.random()),
+  };
+}
+
+function parseMonthDay(
+  dateStr: string | null
+): { year?: number; month: number; day: number } | null {
+  if (!dateStr) return null;
+  const nums = dateStr.match(/\d+/g);
+  if (!nums) return null;
+
+  if (nums.length >= 3) {
+    return {
+      year: parseInt(nums[0], 10),
+      month: parseInt(nums[1], 10),
+      day: parseInt(nums[2], 10),
+    };
+  } else if (nums.length === 2) {
+    return {
+      month: parseInt(nums[0], 10),
+      day: parseInt(nums[1], 10),
+    };
   }
   return null;
 }
@@ -136,28 +248,46 @@ function getRecommendations(
   const results: RecommendationCard[] = [];
 
   const now = new Date();
-  const month = String(now.getMonth() + 1).padStart(2, '0');
-  const day = String(now.getDate()).padStart(2, '0');
-  const todayMMDD = `-${month}-${day}`;
+  const currentMonth = now.getMonth() + 1;
+  const currentDay = now.getDate();
+
+  const cleanQuery = normalize(searchQuery);
 
   // -------------------------------------------------------------
-  // A. 検索クエリまたは選択作品から「相互関連ジャンルカード」を生成
+  // A. 検索クエリ（作家名または作品名）から「部分一致」でジャンルカードを生成
   // -------------------------------------------------------------
-  // グループ内に存在する全作家名の中から、検索キーワードや選択中の作品にマッチするものを探す
-  const allKnownAuthors = Array.from(
-    new Set(GENRE_GROUPS.flatMap((g) => g.authors))
-  );
+  const allKnownAuthors = Array.from(new Set(GENRE_GROUPS.flatMap((g) => g.authors)));
 
-  const matchedAuthor =
-    selectedBook?.author ||
-    allKnownAuthors.find((author) => searchQuery?.trim().includes(author));
+  let matchedAuthor = selectedBook?.author;
+
+  if (!matchedAuthor && cleanQuery.length >= 1) {
+    matchedAuthor = allKnownAuthors.find((author) => {
+      const cleanAuthor = normalize(author);
+      return cleanAuthor.includes(cleanQuery) || cleanQuery.includes(cleanAuthor);
+    });
+
+    if (!matchedAuthor) {
+      const matchedBook = books.find((b) => {
+        const title = normalize(b.title);
+        const titleKana = normalize(b.title_kana);
+        return (
+          (title && title.includes(cleanQuery)) || (titleKana && titleKana.includes(cleanQuery))
+        );
+      });
+
+      if (matchedBook && matchedBook.author) {
+        matchedAuthor = matchedBook.author;
+      }
+    }
+  }
 
   if (matchedAuthor) {
     const info = findGenreInfo(matchedAuthor);
     if (info && info.relatedAuthors.length > 0) {
+      const displayAuthor = matchedAuthor.replace(/[\s\u3000]+/g, '');
       results.push({
         type: 'genre',
-        title: `🔍 ${matchedAuthor} 好きにおすすめ`,
+        title: `🔍 ${displayAuthor} 好きにおすすめ`,
         description: `${info.genreName}`,
         authors: info.relatedAuthors.slice(0, 6),
       });
@@ -167,62 +297,135 @@ function getRecommendations(
   // -------------------------------------------------------------
   // B. グループにない作家の場合は「同世代（±10年）」にフォールバック
   // -------------------------------------------------------------
-  if (results.length === 0 && selectedBook && selectedBook.author_birth) {
-    const baseBirthYear = parseInt(selectedBook.author_birth.split('-')[0], 10);
-    if (!isNaN(baseBirthYear)) {
-      const contemporaryBooks = books.filter((b) => {
-        if (!b.author_birth) return false;
-        const year = parseInt(b.author_birth.split('-')[0], 10);
-        return (
-          Math.abs(year - baseBirthYear) <= 10 &&
-          b.author !== selectedBook.author
-        );
+  if (results.length === 0) {
+    let fallbackAuthorBook = selectedBook;
+
+    if (!fallbackAuthorBook && cleanQuery.length >= 1) {
+      fallbackAuthorBook = books.find((b) => {
+        const author = normalize(b.author);
+        return author && (author.includes(cleanQuery) || cleanQuery.includes(author));
       });
+    }
 
-      if (contemporaryBooks.length > 0) {
-        const authors = Array.from(
-          new Set(contemporaryBooks.map((b) => b.author))
-        )
-          .sort(() => 0.5 - Math.random())
-          .slice(0, 6);
+    if (fallbackAuthorBook && fallbackAuthorBook.author_birth) {
+      const parsed = parseMonthDay(fallbackAuthorBook.author_birth);
+      const baseBirthYear = parsed?.year;
 
-        results.push({
-          type: 'contemporary',
-          title: `📜 ${selectedBook.author} と同世代の作家`,
-          description: `${baseBirthYear}年前後（±10年）生まれ`,
-          authors,
+      if (baseBirthYear) {
+        const targetAuthorName = fallbackAuthorBook.author;
+        const contemporaryBooks = books.filter((b) => {
+          if (!b.author_birth) return false;
+          const p = parseMonthDay(b.author_birth);
+          return (
+            p?.year &&
+            Math.abs(p.year - baseBirthYear) <= 10 &&
+            normalize(b.author) !== normalize(targetAuthorName)
+          );
         });
+
+        if (contemporaryBooks.length > 0) {
+          const authors = Array.from(
+            new Set(contemporaryBooks.map((b) => b.author.replace(/[\s\u3000]+/g, '')))
+          )
+            .sort(() => 0.5 - Math.random())
+            .slice(0, 6);
+
+          const displayAuthor = targetAuthorName.replace(/[\s\u3000]+/g, '');
+          results.push({
+            type: 'contemporary',
+            title: `📜 ${displayAuthor} と同世代の作家`,
+            description: `${baseBirthYear}年前後（±10年）生まれ`,
+            authors,
+          });
+        }
       }
     }
   }
 
   // -------------------------------------------------------------
-  // C. デイリーコンテンツ：本日の生誕・命日作家
+  // C. デイリーコンテンツ：本日の生誕作家（いなければ同月生まれ）
   // -------------------------------------------------------------
-  const birthdayBooks = books.filter(
-    (b) => b.author_birth && b.author_birth.endsWith(todayMMDD)
+  const todayBirthAuthors = Array.from(
+    new Set(
+      books
+        .filter((b) => {
+          const p = parseMonthDay(b.author_birth);
+          return p && p.month === currentMonth && p.day === currentDay;
+        })
+        .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+    )
   );
-  if (birthdayBooks.length > 0) {
-    const authors = Array.from(new Set(birthdayBooks.map((b) => b.author))).slice(0, 6);
+
+  if (todayBirthAuthors.length > 0) {
     results.push({
       type: 'birthday',
       title: '🎂 本日の生誕作家',
-      description: `${month}月${day}日生まれ`,
-      authors,
+      description: `${currentMonth}月${currentDay}日生まれ`,
+      authors: todayBirthAuthors.slice(0, 6),
     });
+  } else {
+    const monthBirthAuthors = Array.from(
+      new Set(
+        books
+          .filter((b) => {
+            const p = parseMonthDay(b.author_birth);
+            return p && p.month === currentMonth;
+          })
+          .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+      )
+    ).sort(() => 0.5 - Math.random());
+
+    if (monthBirthAuthors.length > 0) {
+      results.push({
+        type: 'birthday',
+        title: `🎂 ${currentMonth}月生まれの作家`,
+        description: `${currentMonth}月生まれのピックアップ`,
+        authors: monthBirthAuthors.slice(0, 6),
+      });
+    }
   }
 
-  const deathdayBooks = books.filter(
-    (b) => b.author_death && b.author_death.endsWith(todayMMDD)
+  // -------------------------------------------------------------
+  // D. デイリーコンテンツ：本日の命日作家（いなければ同月没）
+  // -------------------------------------------------------------
+  const todayDeathAuthors = Array.from(
+    new Set(
+      books
+        .filter((b) => {
+          const p = parseMonthDay(b.author_death);
+          return p && p.month === currentMonth && p.day === currentDay;
+        })
+        .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+    )
   );
-  if (deathdayBooks.length > 0) {
-    const authors = Array.from(new Set(deathdayBooks.map((b) => b.author))).slice(0, 6);
+
+  if (todayDeathAuthors.length > 0) {
     results.push({
       type: 'deathday',
       title: '🕯️ 本日の命日作家',
-      description: `${month}月${day}日に没`,
-      authors,
+      description: `${currentMonth}月${currentDay}日に没`,
+      authors: todayDeathAuthors.slice(0, 6),
     });
+  } else {
+    const monthDeathAuthors = Array.from(
+      new Set(
+        books
+          .filter((b) => {
+            const p = parseMonthDay(b.author_death);
+            return p && p.month === currentMonth;
+          })
+          .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+      )
+    ).sort(() => 0.5 - Math.random());
+
+    if (monthDeathAuthors.length > 0) {
+      results.push({
+        type: 'deathday',
+        title: `🕯️ ${currentMonth}月に没した作家`,
+        description: `${currentMonth}月没のピックアップ`,
+        authors: monthDeathAuthors.slice(0, 6),
+      });
+    }
   }
 
   return results;
@@ -234,36 +437,31 @@ export default function Recommendations({
   selectedBook,
   onSelectAuthor,
 }: Props) {
-  const [showRecommendations, setShowRecommendations] = useState(true);
-  const [recommendations, setRecommendations] = useState<RecommendationCard[]>([]);
-  const [isLoaded, setIsLoaded] = useState(false);
+  // useSyncExternalStore を使って localStorage の状態を監視（useEffect不要）
+  const isHidden = useSyncExternalStore(
+    subscribeLocalStorage,
+    getHideRecsSnapshot,
+    getServerHideRecsSnapshot
+  );
+  const showRecommendations = !isHidden;
 
-  useEffect(() => {
-    const savedSetting = localStorage.getItem('hide_recommendations');
-    if (savedSetting === 'true') {
-      setShowRecommendations(false);
-    }
-    setIsLoaded(true);
-  }, []);
-
-  useEffect(() => {
-    if (books && books.length > 0) {
-      setRecommendations(getRecommendations(books, searchQuery, selectedBook));
-    }
+  // useMemo を使って計算結果を直接参照（useEffectでのsetState不要）
+  const recommendations = useMemo(() => {
+    if (!books || books.length === 0) return [];
+    return getRecommendations(books, searchQuery, selectedBook);
   }, [books, searchQuery, selectedBook]);
 
   const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
     const isChecked = e.target.checked;
-    setShowRecommendations(isChecked);
     localStorage.setItem('hide_recommendations', isChecked ? 'false' : 'true');
+    window.dispatchEvent(new Event('storage'));
   };
 
-  if (!isLoaded || recommendations.length === 0) return null;
+  if (!books || books.length === 0) return null;
 
   return (
     <section className="w-full my-4">
-      <div className="flex justify-between items-center mb-2 px-1 text-xs text-stone-500">
-        <span className="font-semibold">おすすめ・今日の一冊</span>
+      <div className="flex justify-end items-center mb-2 px-1 text-xs text-stone-500">
         <label className="flex items-center gap-1.5 cursor-pointer select-none">
           <input
             type="checkbox"

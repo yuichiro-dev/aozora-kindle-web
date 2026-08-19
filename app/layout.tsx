@@ -6,14 +6,10 @@ const inter = Inter({ subsets: ['latin'] });
 
 const getMetadataBase = (): URL => {
   const rawUrl =
-    process.env.NEXT_PUBLIC_SITE_URL ||
-    process.env.VERCEL_URL ||
-    'http://localhost:3000';
+    process.env.NEXT_PUBLIC_SITE_URL || process.env.VERCEL_URL || 'http://localhost:3000';
 
   const formattedUrl =
-    rawUrl.startsWith('http://') || rawUrl.startsWith('https://')
-      ? rawUrl
-      : `https://${rawUrl}`;
+    rawUrl.startsWith('http://') || rawUrl.startsWith('https://') ? rawUrl : `https://${rawUrl}`;
 
   try {
     return new URL(formattedUrl);
