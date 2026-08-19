@@ -187,7 +187,7 @@ export default function Home() {
           <div className="relative">
             <input
               type="text"
-              placeholder="例：夏目漱石 こころ、走れメロス などで検索..."
+              placeholder="例：夏目漱石 こころ、などで検索..."
               value={query}
               onChange={(e) => {
                 setQuery(e.target.value);
@@ -201,6 +201,7 @@ export default function Home() {
           {/* おすすめ・今日の一冊（作家名タグメイン） */}
           <Recommendations
             books={books}
+            searchQuery={query}
             selectedBook={selectedBook}
             onSelectAuthor={(author) => {
               setQuery(author);
