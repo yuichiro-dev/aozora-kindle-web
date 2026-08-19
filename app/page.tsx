@@ -149,17 +149,25 @@ export default function Home() {
 
   const jsonLd = {
     '@context': 'https://schema.org',
-    '@type': 'WebApplication',
-    name: '青空文庫 to Kindle (EPUB)',
+    '@type': 'SoftwareApplication',
+    name: '青空文庫 Kindle 変換ツール',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
     description:
-      '青空文庫の作品を縦書き・右開き用 EPUB(イーパブ)形式に瞬時に変換してダウンロードできます。',
+      '青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードできる無料Webツール。',
+    url: 'https://aozora-kindle-web.vercel.app/',
+    inLanguage: 'ja',
     offers: {
       '@type': 'Offer',
       price: '0',
       priceCurrency: 'JPY',
     },
+    featureList: [
+      '青空文庫作品のEPUB変換（縦書き・右開き）',
+      '作品名・著者名での高速リアルタイム検索',
+      'ジャンル・同世代作家の自動レコメンド',
+      '毎日自動更新される作品データベース',
+    ],
   };
 
   return (
