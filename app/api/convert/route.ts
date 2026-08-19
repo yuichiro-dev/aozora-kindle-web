@@ -131,10 +131,20 @@ async function fetchBuffer(urlStr: string, timeout = 15000): Promise<Buffer> {
       if (
         nextHost === 'localhost' ||
         nextHost === '127.0.0.1' ||
+        nextHost === '::1' ||
         nextHost.startsWith('10.') ||
-        nextHost.startsWith('192.168.')
+        nextHost.startsWith('192.168.') ||
+        /^172\.(1[6-9]|2[0-9]|3[0-1])\./.test(nextHost) ||
+        nextHost.endsWith('.local')
       ) {
         throw new Error('不正なリダイレクト先が検知されました。');
+      }
+
+      const nextIsAllowed = allowedDomains.some(
+        (domain) => nextHost === domain || nextHost.endsWith(`.${domain}`)
+      );
+      if (!nextIsAllowed) {
+        throw new Error('リダイレクト先が許可ドメイン外です。');
       }
 
       currentUrl = nextUrl.toString();
