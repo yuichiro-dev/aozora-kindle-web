@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect, useMemo } from 'react';
 import Recommendations, { Book } from '@/components/Recommendations';
+import StepGuide from '@/components/StepGuide';
 
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
@@ -182,11 +183,11 @@ export default function Home() {
             className={`border-b transition-all ${hasQuery ? 'pb-2' : 'pb-4'} text-center md:text-left`}
           >
             <h1
-              className={`font-bold font-serif tracking-tight text-gray-900 transition-all ${hasQuery ? 'text-xl md:text-3xl' : 'text-3xl'}`}
+              className={`font-bold font-serif tracking-tight text-gray-900 transition-all ${hasQuery ? 'text-xl md:text-2xl' : 'text-2xl'}`}
             >
               青空文庫 Kindle 変換ツール
             </h1>
-            <p className={`text-sm text-gray-500 mt-1 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
+            <p className={`text-xs text-gray-500 mt-1 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
               青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードします。
               <br className="hidden sm:inline" />
               作品リストは1日1回自動更新されます
@@ -194,19 +195,43 @@ export default function Home() {
             </p>
           </header>
 
-          {/* 検索バー */}
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="例：夏目漱石 こころ などで検索"
-              value={query}
-              onChange={(e) => {
-                setQuery(e.target.value);
-                setCurrentPage(1);
-              }}
-              disabled={loading}
-              className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500 text-lg bg-white disabled:bg-gray-100"
-            />
+          {!hasQuery && (
+            <div className="-mt-4 mb-5">
+              <StepGuide />
+            </div>
+          )}
+
+          {/* 検索バー（アニメーション発光エフェクト） */}
+          <div className="relative group">
+            {/* バックグラウンドで呼吸するように光るグラデーション（animate-pulse） */}
+            <div className="absolute -inset-1 bg-gradient-to-r from-cyan-500 via-indigo-500 to-fuchsia-500 rounded-2xl blur-md opacity-60 group-hover:opacity-100 animate-pulse transition duration-500"></div>
+
+            {/* 入力欄本体 */}
+            <div className="relative bg-white rounded-xl shadow-md flex items-center">
+              {/* 検索アイコン */}
+              <div className="pl-4 text-stone-400 shrink-0">
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+                  />
+                </svg>
+              </div>
+
+              <input
+                type="text"
+                placeholder="例：夏目漱石 こころ などで検索"
+                value={query}
+                onChange={(e) => {
+                  setQuery(e.target.value);
+                  setCurrentPage(1);
+                }}
+                disabled={loading}
+                className="w-full pl-3 pr-4 py-3.5 bg-transparent rounded-xl focus:outline-none text-base sm:text-lg text-gray-900 placeholder-stone-400 disabled:bg-gray-100"
+              />
+            </div>
           </div>
 
           {/* おすすめ作家（検索クエリのみで連動） */}
