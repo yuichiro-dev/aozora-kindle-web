@@ -170,13 +170,17 @@ export default function Home() {
       />
       <main className="min-h-screen bg-stone-50 text-gray-800 p-6 md:p-12">
         <div className="max-w-4xl mx-auto space-y-6">
-          <header className="border-b pb-4 text-center md:text-left">
-            <h1 className="text-3xl font-bold font-serif tracking-tight text-gray-900">
+          <header
+            className={`border-b transition-all ${hasQuery ? 'pb-2' : 'pb-4'} text-center md:text-left`}
+          >
+            <h1
+              className={`font-bold font-serif tracking-tight text-gray-900 transition-all ${hasQuery ? 'text-xl md:text-3xl' : 'text-3xl'}`}
+            >
               青空文庫 Kindle 変換ツール
             </h1>
-            <p className="text-sm text-gray-500 mt-1">
+            <p className={`text-sm text-gray-500 mt-1 ${hasQuery ? 'hidden sm:block' : 'block'}`}>
               青空文庫の作品を縦書き・右開き用のKindleファイル(EPUB)に瞬時に変換してダウンロードします。
-              <br />
+              <br className="hidden sm:inline" />
               作品リストは1日1回自動更新されます
               {bookCount !== null && ` / 現在の収録数: ${bookCount.toLocaleString()} 作品`}
             </p>
