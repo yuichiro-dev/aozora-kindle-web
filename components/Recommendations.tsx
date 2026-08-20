@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
+import { Search } from 'lucide-react';
 
 export interface Book {
   id: number;
@@ -200,6 +201,11 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
 
   useEffect(() => {
     const buildRecommendations = () => {
+      if (searchQuery && searchQuery.trim().length > 0) {
+        setRecommendations([]);
+        return;
+      }
+
       if (!books || books.length === 0) {
         setRecommendations([]);
         return;
@@ -350,7 +356,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
       window.removeEventListener('storage', buildRecommendations);
       window.removeEventListener('history-updated', buildRecommendations);
     };
-  }, [books]);
+  }, [books, searchQuery]);
 
   if (searchQuery && searchQuery.trim().length > 0) return null;
   if (recommendations.length === 0) return null;
@@ -370,9 +376,10 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
                   <button
                     key={author}
                     onClick={() => onSelectAuthor?.(author)}
-                    className="text-xs sm:text-sm font-bold bg-stone-100 hover:bg-stone-900 hover:text-white border border-stone-300 text-stone-800 px-3 py-1.5 rounded-lg transition-all duration-150"
+                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-white hover:bg-stone-900 hover:text-white border border-stone-300 text-stone-800 px-3 py-1.5 rounded-lg shadow-sm hover:shadow transition-all duration-150 cursor-pointer active:translate-y-0.5"
                   >
-                    {author}
+                    <Search className="w-3.5 h-3.5 opacity-60" />
+                    <span>{author}</span>
                   </button>
                 ))}
               </div>
