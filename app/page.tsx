@@ -467,7 +467,7 @@ export default function Home() {
               <p>© {new Date().getFullYear()} 青空保存 to Kindle</p>
               <span className="opacity-40">|</span>
               <a
-                href="https://github.com/your-username/your-repo"
+                href="https://github.com/yuichiro-dev/aozora-kindle-web"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="inline-flex items-center gap-1 hover:text-stone-900 transition-colors"
