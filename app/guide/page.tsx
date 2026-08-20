@@ -11,8 +11,8 @@ export default function GuidePage() {
         <div className="space-y-4">
           {/* STEP 1 */}
           <section className="bg-white border border-stone-200 rounded-xl p-5 shadow-sm space-y-3">
-            <h2 className="font-bold text-stone-800 text-base">❶. 本を検索し保存する</h2>
-            <p className="text-stone-600 leading-relaxed text-xs">
+            <h2 className="font-bold text-stone-800 text-base">❶ 本を検索し保存する</h2>
+            <p className="text-stone-800 leading-relaxed text-base">
               作品を検索します。途中までの入力で出てきた候補を選ぶか、スペースで区切って複数のキーワードを指定し、目的の作品の「保存」ボタンを押します。
             </p>
             <div className="overflow-hidden rounded-xl border border-stone-200 bg-stone-100">
@@ -29,10 +29,8 @@ export default function GuidePage() {
 
           {/* STEP 2 */}
           <section className="bg-white border border-stone-200 rounded-xl p-5 shadow-sm space-y-3">
-            <h2 className="font-bold text-stone-800 text-base">
-              ❷. 保存したファイルをKindleで開く
-            </h2>
-            <p className="text-stone-600 leading-relaxed text-xs">
+            <h2 className="font-bold text-stone-800 text-base">❷ 保存したファイルをKindleで開く</h2>
+            <p className="text-stone-800 leading-relaxed text-base">
               ダウンロードが完了すると表示される「開く」ボタンを押して、Kindleアプリで開きます。
             </p>
             <div className="overflow-hidden rounded-xl border border-stone-200 bg-stone-100">
@@ -49,8 +47,8 @@ export default function GuidePage() {
 
           {/* STEP 3 */}
           <section className="bg-white border border-stone-200 rounded-xl p-5 shadow-sm space-y-3">
-            <h2 className="font-bold text-stone-800 text-base">❸. Kindleに送信する</h2>
-            <p className="text-stone-600 leading-relaxed text-xs">
+            <h2 className="font-bold text-stone-800 text-base">❸ Kindleに送信する</h2>
+            <p className="text-stone-800 leading-relaxed text-base">
               開いたKindleアプリに表示される灰色の送信ボタンをそのまま押すと、Kindleに送信されます。
             </p>
             <div className="overflow-hidden rounded-xl border border-stone-200 bg-stone-100">

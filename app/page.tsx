@@ -42,6 +42,58 @@ export default function Home() {
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
   const [lastUpdated, setLastUpdated] = useState<string>('');
+  // 履歴にある書籍IDと最終保存日時のマップを保持する State（初期値で一度だけローカルストレージを読む）
+  const [savedHistoryMap, setSavedHistoryMap] = useState<Record<string, number>>(() => {
+    try {
+      const raw = localStorage.getItem('aozora_history');
+      if (raw) {
+        const parsed: { id: string; timestamp: number }[] = JSON.parse(raw);
+        const map: Record<string, number> = {};
+        parsed.forEach((item) => {
+          map[String(item.id)] = item.timestamp;
+        });
+        return map;
+      }
+    } catch (e) {
+      console.error('初期履歴の読み込みに失敗しました:', e);
+    }
+    return {};
+  });
+
+  // 日付フォーマット用ヘルパー
+  const formatDate = (timestamp: number): string => {
+    const date = new Date(timestamp);
+    return `${date.getFullYear()}/${date.getMonth() + 1}/${date.getDate()}`;
+  };
+
+  // 外部（履歴ページなどでの削除・追加）からの変更を監視するリスナー
+  useEffect(() => {
+    const handleSync = () => {
+      try {
+        const raw = localStorage.getItem('aozora_history');
+        if (raw) {
+          const parsed: { id: string; timestamp: number }[] = JSON.parse(raw);
+          const map: Record<string, number> = {};
+          parsed.forEach((item) => {
+            map[String(item.id)] = item.timestamp;
+          });
+          setSavedHistoryMap(map);
+        } else {
+          setSavedHistoryMap({});
+        }
+      } catch (e) {
+        console.error('履歴マップの同期に失敗しました:', e);
+      }
+    };
+
+    window.addEventListener('history-updated', handleSync);
+    window.addEventListener('storage', handleSync);
+
+    return () => {
+      window.removeEventListener('history-updated', handleSync);
+      window.removeEventListener('storage', handleSync);
+    };
+  }, []);
 
   useEffect(() => {
     fetch('/books.json')
@@ -420,8 +472,13 @@ export default function Home() {
                           </span>
                         )}
                       </div>
-                      <p className="text-sm font-medium text-stone-800 leading-tight break-words">
-                        {book.author}
+                      <p className="text-base font-medium text-stone-800 leading-tight break-words flex flex-wrap items-center gap-2">
+                        <span>{book.author}</span>
+                        {savedHistoryMap[String(book.id)] && (
+                          <span className="text-sm text-blue-700 font-normal">
+                            （前回保存: {formatDate(savedHistoryMap[String(book.id)])}）
+                          </span>
+                        )}
                       </p>
                     </div>
 
@@ -433,10 +490,16 @@ export default function Home() {
                           ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed shadow-none'
                           : downloadingId === book.id
                             ? 'bg-stone-600 text-white cursor-wait animate-pulse'
-                            : 'bg-stone-900 text-white hover:bg-stone-800 active:bg-black shadow'
+                            : savedHistoryMap[String(book.id)]
+                              ? 'bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 hover:border-blue-300 active:bg-blue-200 shadow-sm'
+                              : 'bg-stone-900 text-white hover:bg-stone-800 active:bg-black shadow'
                       }`}
                     >
-                      {downloadingId === book.id ? '生成中...' : '保存'}
+                      {downloadingId === book.id
+                        ? '生成中...'
+                        : savedHistoryMap[String(book.id)]
+                          ? '再保存'
+                          : '保存'}
                     </button>
                   </div>
                 ))}
