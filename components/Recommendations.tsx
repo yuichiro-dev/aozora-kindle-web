@@ -453,7 +453,7 @@ export default function Recommendations({
             onChange={handleToggle}
             className="w-4 h-4 rounded border-stone-300 text-stone-900 focus:ring-stone-600"
           />
-          <span>レコメンドを表示する</span>
+          <span>おすすめを表示する</span>
         </label>
       </div>
 

@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
+import BottomNav from '@/components/BottomNav';
 
 const inter = Inter({ subsets: ['latin'] });
 
@@ -35,8 +36,7 @@ export const metadata: Metadata = {
     default: '青空保存 to Kindle | 青空文庫を保存してKindleで読む',
     template: '%s | 青空保存 to Kindle',
   },
-  description:
-    '[完全無料・広告なし] 青空文庫の作品を縦書き・右開きのEPUBへ一括変換。直接Kindleへ送信・保存して、すぐに読めます。',
+  description: '青空文庫の作品を縦書きEPUBでKindleに保存するツール。',
   appleWebApp: {
     capable: true,
     statusBarStyle: 'default',
@@ -49,14 +49,7 @@ export const metadata: Metadata = {
     '青空キンドル',
     '青空文庫 EPUB',
     '青空文庫 Kindle 変換',
-    '青空文庫 縦書き EPUB',
-    '青空文庫 スマホ 読む',
-    '青空文庫 変換 無料',
-    'Send to Kindle',
     '縦書き 右開き EPUB',
-    '青空文庫 電子書籍 変換',
-    '青空文庫 ルビ対応',
-    'Kindle 縦書き 変換',
   ],
   authors: [{ name: '青空保存 to Kindle' }],
   creator: '青空保存 to Kindle',
@@ -68,8 +61,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: '青空保存 to Kindle | 青空文庫を保存してKindleで読む',
-    description:
-      '[完全無料・登録不要・広告なし] 青空文庫の作品を縦書き・右開きのEPUBへ一括変換。直接Kindleへ送信・保存して、すぐに読めます。',
+    description: '青空文庫の作品を縦書きEPUBでKindleに保存するツール。',
     url: metadataBaseUrl.toString(),
     siteName: '青空保存 to Kindle',
     locale: 'ja_JP',
@@ -78,7 +70,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: '青空保存 to Kindle | 青空文庫を保存してKindleで読む',
-    description: '[完全無料・登録不要・広告なし] 青空文庫の作品を縦書き・右開きのEPUBへ一括変換。直接Kindleへ送信・保存して、すぐに読めます。',
+    description: '青空文庫の作品を縦書きEPUBでKindleに保存するツール。',
   },
   robots: {
     index: true,
@@ -89,8 +81,12 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body className={inter.className}>
-        {children}
+      <body className={`${inter.className} bg-stone-50 text-stone-900 min-h-screen flex flex-col`}>
+        {/* ボトムナビの高さ＋Safe Area分（80px程度）を下に確保 */}
+        <main className="flex-1 pb-20 md:pb-0">{children}</main>
+
+        {/* スマホ時のみ表示されるボトムナビ */}
+        <BottomNav />
         <Analytics />
       </body>
     </html>
