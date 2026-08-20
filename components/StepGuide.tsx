@@ -2,10 +2,9 @@ import React from 'react';
 
 export default function StepGuide() {
   const steps = [
-    { num: '①', name: '検索' },
-    { num: '②', name: '保存' },
-    { num: '③', name: 'Kindleで「開く」' },
-    { num: '④', name: 'Kindleで「送信」' },
+    { num: '❶', name: '検索し保存' },
+    { num: '❷', name: 'Kindleで「開く」' },
+    { num: '❸', name: 'Kindleで「送信」' },
   ];
 
   return (

@@ -2,7 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Recommendations, { Book } from '@/components/Recommendations';
-import StepGuide from '@/components/StepGuide';
+import Link from 'next/link';
+import { History, HelpCircle } from 'lucide-react';
 
 // 履歴保存用のヘルパー関数
 const saveToHistory = (id: string | number, title: string, author: string) => {
@@ -291,13 +292,26 @@ export default function Home() {
               {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
               (作品リストは毎日自動更新)
             </p>
-          </header>
+            <br />
+            {/* PC表示時（md以上）のナビゲーション：ボタン風UIに変更 */}
+            <nav className="hidden md:flex items-center gap-2 shrink-0">
+              <Link
+                href="/history"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 border border-stone-200 text-xs font-bold text-stone-700 transition-colors"
+              >
+                <History className="h-4 w-4 text-stone-500" />
+                <span>履歴</span>
+              </Link>
 
-          {!hasQuery && (
-            <div className="-mt-3 mb-4">
-              <StepGuide />
-            </div>
-          )}
+              <Link
+                href="/guide"
+                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 border border-stone-200 text-xs font-bold text-stone-700 transition-colors"
+              >
+                <HelpCircle className="h-4 w-4 text-stone-500" />
+                <span>使い方</span>
+              </Link>
+            </nav>
+          </header>
 
           {/* 検索バー ＆ サジェスチョンコンテナ */}
           <div ref={searchContainerRef} className="relative group z-30">
