@@ -38,9 +38,20 @@ export default function Home() {
   const inputRef = useRef<HTMLInputElement>(null);
   const searchContainerRef = useRef<HTMLDivElement>(null);
 
+  const [lastUpdated, setLastUpdated] = useState<string>('');
+
   useEffect(() => {
     fetch('/books.json')
-      .then((res) => res.json())
+      .then((res) => {
+        // レスポンスヘッダーから Last-Modified を取得
+        const lastModified = res.headers.get('Last-Modified');
+        if (lastModified) {
+          const date = new Date(lastModified);
+          const formattedDate = `${date.getFullYear()}/${String(date.getMonth() + 1).padStart(2, '0')}/${String(date.getDate()).padStart(2, '0')}`;
+          setLastUpdated(formattedDate);
+        }
+        return res.json();
+      })
       .then((data) => {
         if (Array.isArray(data)) {
           setBooks(data);
@@ -281,19 +292,21 @@ export default function Home() {
         <div className="max-w-4xl mx-auto space-y-5">
           {/* ヘッダー：検索時は画面サイズ問わず非表示 */}
           <header
-            className={`border-b border-stone-200 transition-all text-center md:text-left ${
-              hasQuery ? 'hidden' : 'block pb-4'
+            className={`transition-all flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-2 ${
+              hasQuery ? 'hidden' : 'block pb-2 md:pb-4'
             }`}
           >
-            <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl text-stone-900">
-              青空保存 to Kindle
-            </h1>
-            <p className="text-xs sm:text-sm font-medium text-stone-700 mt-1.5">
-              {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
-              (作品リストは毎日自動更新)
-            </p>
-            <br />
-            {/* PC表示時（md以上）のナビゲーション：ボタン風UIに変更 */}
+            <div>
+              <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl text-stone-900">
+                青空保存 to Kindle
+              </h1>
+              <p className="text-xs sm:text-sm font-medium text-stone-700 mt-1 md:mt-1.5">
+                {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
+                {lastUpdated && `（最終更新: ${lastUpdated}）`}
+              </p>
+            </div>
+
+            {/* PC表示時（md以上）のみ見せるシンプルナビ */}
             <nav className="hidden md:flex items-center gap-2 shrink-0">
               <Link
                 href="/history"
