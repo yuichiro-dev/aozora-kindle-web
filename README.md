@@ -2,6 +2,8 @@
 
 青空文庫の作品を縦書き・右開きのEPUBに一発変換し、Kindleへ保存・共有できるミニマルなWebアプリ（PWA）です。
 
+ライブデモ：[https://aozora-kindle-web.vercel.app/](https://aozora-kindle-web.vercel.app/)
+
 ## 注意事項・仕様
 
 - **未対応の青空タグ・外字について**: 一部の未対応タグや外字注記（`［＃...］` 等）は削除せず、そのままテキストとして表示・出力されます。
