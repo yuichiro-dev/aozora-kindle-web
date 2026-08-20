@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useSyncExternalStore } from 'react';
+import React, { useState, useEffect } from 'react';
 
 export interface Book {
   id: number;
@@ -18,32 +18,15 @@ export interface Book {
   html_url: string | null;
 }
 
-// ★ description を完全に削除
-interface RecommendationCard {
-  type: 'birthday' | 'deathday' | 'genre' | 'contemporary';
-  title: string;
-  authors: string[];
-}
-
 interface Props {
   books: Book[];
   searchQuery?: string;
-  selectedBook?: Book | null;
   onSelectAuthor?: (author: string) => void;
 }
 
-function subscribeLocalStorage(callback: () => void) {
-  window.addEventListener('storage', callback);
-  return () => window.removeEventListener('storage', callback);
-}
-
-function getHideRecsSnapshot(): boolean {
-  if (typeof window === 'undefined') return false;
-  return localStorage.getItem('hide_recommendations') === 'true';
-}
-
-function getServerHideRecsSnapshot(): boolean {
-  return false;
+interface RecommendationData {
+  title: string;
+  authors: string[];
 }
 
 const normalize = (str?: string | null) =>
@@ -190,310 +173,215 @@ export const GENRE_GROUPS = [
   },
 ];
 
-function findGenreInfo(authorName: string) {
-  const cleanAuthorName = normalize(authorName);
-
-  const matchedGroups = GENRE_GROUPS.filter((group) =>
-    group.authors.some((a) => normalize(a) === cleanAuthorName)
-  );
-
-  if (matchedGroups.length === 0) return null;
-
-  const randomGroup = matchedGroups[Math.floor(Math.random() * matchedGroups.length)];
-
-  return {
-    genreName: randomGroup.name,
-    relatedAuthors: randomGroup.authors
-      .filter((a) => normalize(a) !== cleanAuthorName)
-      .sort(() => 0.5 - Math.random()),
-  };
-}
-
-function parseMonthDay(
-  dateStr: string | null
-): { year?: number; month: number; day: number } | null {
+function parseMonthDay(dateStr: string | null): { month: number; day: number } | null {
   if (!dateStr) return null;
   const nums = dateStr.match(/\d+/g);
   if (!nums) return null;
 
   if (nums.length >= 3) {
-    return {
-      year: parseInt(nums[0], 10),
-      month: parseInt(nums[1], 10),
-      day: parseInt(nums[2], 10),
-    };
+    return { month: parseInt(nums[1], 10), day: parseInt(nums[2], 10) };
   } else if (nums.length === 2) {
-    return {
-      month: parseInt(nums[0], 10),
-      day: parseInt(nums[2], 10),
-    };
+    return { month: parseInt(nums[0], 10), day: parseInt(nums[1], 10) };
   }
   return null;
 }
 
-const MAX_AUTHORS_PER_CARD = 3;
-
-function getRecommendations(
-  books: Book[],
-  searchQuery?: string,
-  selectedBook?: Book | null
-): RecommendationCard[] {
-  const results: RecommendationCard[] = [];
-
-  const now = new Date();
-  const currentMonth = now.getMonth() + 1;
-  const currentDay = now.getDate();
-
-  const cleanQuery = normalize(searchQuery);
-
-  const isKatakanaQuery = hasKatakana(cleanQuery);
-  let forceBirthdayOnly = isKatakanaQuery;
-
-  const allKnownAuthors = Array.from(new Set(GENRE_GROUPS.flatMap((g) => g.authors)));
-
-  let matchedAuthor = selectedBook?.author;
-
-  if (!matchedAuthor && cleanQuery.length >= 1) {
-    matchedAuthor = allKnownAuthors.find((author) => {
-      const cleanAuthor = normalize(author);
-      return cleanAuthor.includes(cleanQuery) || cleanQuery.includes(cleanAuthor);
-    });
-
-    if (!matchedAuthor) {
-      const matchedBook = books.find((b) => {
-        const title = normalize(b.title);
-        const titleKana = normalize(b.title_kana);
-        return (
-          (title && title.includes(cleanQuery)) || (titleKana && titleKana.includes(cleanQuery))
-        );
-      });
-
-      if (matchedBook && matchedBook.author) {
-        matchedAuthor = matchedBook.author;
-      }
-    }
+// 配列をランダムにシャッフルする純粋なユーティリティ関数
+function shuffleArray<T>(array: T[]): T[] {
+  const arr = [...array];
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
   }
+  return arr;
+}
 
-  if (matchedAuthor && hasKatakana(matchedAuthor)) {
-    forceBirthdayOnly = true;
-  }
+export default function Recommendations({ books, searchQuery, onSelectAuthor }: Props) {
+  const [recommendations, setRecommendations] = useState<RecommendationData[]>([]);
 
-  if (!forceBirthdayOnly) {
-    if (matchedAuthor) {
-      const info = findGenreInfo(matchedAuthor);
-      if (info && info.relatedAuthors.length > 0) {
-        const displayAuthor = matchedAuthor.replace(/[\s\u3000]+/g, '');
-        results.push({
-          type: 'genre',
-          title: `🔍 ${displayAuthor} 好きにおすすめ`,
-          authors: info.relatedAuthors.slice(0, MAX_AUTHORS_PER_CARD),
-        });
-      }
-    }
-
-    if (results.length === 0) {
-      let fallbackAuthorBook = selectedBook;
-
-      if (!fallbackAuthorBook && cleanQuery.length >= 1) {
-        fallbackAuthorBook = books.find((b) => {
-          const author = normalize(b.author);
-          return author && (author.includes(cleanQuery) || cleanQuery.includes(author));
-        });
+  useEffect(() => {
+    const buildRecommendations = () => {
+      if (!books || books.length === 0) {
+        setRecommendations([]);
+        return;
       }
 
-      if (fallbackAuthorBook && fallbackAuthorBook.author_birth) {
-        const parsed = parseMonthDay(fallbackAuthorBook.author_birth);
-        const baseBirthYear = parsed?.year;
+      const historyAuthors: string[] = [];
+      try {
+        const raw = localStorage.getItem('aozora_history');
+        if (raw) {
+          const parsed = JSON.parse(raw);
+          if (Array.isArray(parsed)) {
+            for (const item of parsed.slice(0, 10)) {
+              const authorName = item?.author || item?.author_name;
+              if (authorName) {
+                const clean = authorName.replace(/[\s\u3000]+/g, '');
+                if (clean && !historyAuthors.includes(clean)) {
+                  historyAuthors.push(clean);
+                }
+              }
+            }
+          }
+        }
+      } catch {
+        // ignore
+      }
 
-        if (baseBirthYear) {
-          const targetAuthorName = fallbackAuthorBook.author;
-          const contemporaryBooks = books.filter((b) => {
-            if (!b.author_birth) return false;
-            const p = parseMonthDay(b.author_birth);
-            return (
-              p?.year &&
-              Math.abs(p.year - baseBirthYear) <= 10 &&
-              normalize(b.author) !== normalize(targetAuthorName)
-            );
+      const results: RecommendationData[] = [];
+
+      // 1. 履歴からの関連作家（最大2カードまで）
+      if (historyAuthors.length > 0) {
+        const matchedCandidates: {
+          sourceAuthor: string;
+          groupName: string;
+          relatedAuthors: string[];
+        }[] = [];
+
+        historyAuthors.forEach((author) => {
+          const cleanA = normalize(author);
+          GENRE_GROUPS.forEach((group) => {
+            if (group.authors.some((a) => normalize(a) === cleanA)) {
+              const related = group.authors.filter((a) => normalize(a) !== cleanA);
+              if (related.length > 0) {
+                matchedCandidates.push({
+                  sourceAuthor: author,
+                  groupName: group.name,
+                  relatedAuthors: related,
+                });
+              }
+            }
           });
+        });
 
-          if (contemporaryBooks.length > 0) {
-            const authors = Array.from(
-              new Set(contemporaryBooks.map((b) => b.author.replace(/[\s\u3000]+/g, '')))
-            )
-              .sort(() => 0.5 - Math.random())
-              .slice(0, MAX_AUTHORS_PER_CARD);
+        if (matchedCandidates.length > 0) {
+          const shuffled = shuffleArray(matchedCandidates);
+          const usedGroups = new Set<string>();
 
-            const displayAuthor = targetAuthorName.replace(/[\s\u3000]+/g, '');
+          for (const item of shuffled) {
+            if (usedGroups.has(item.groupName)) continue;
+            usedGroups.add(item.groupName);
+
+            const shuffledRelated = shuffleArray(item.relatedAuthors).slice(0, 3);
             results.push({
-              type: 'contemporary',
-              title: `📜 ${displayAuthor} と同世代の作家`,
-              authors,
+              title: `🔍 「${item.sourceAuthor}」好きにおすすめ`,
+              authors: shuffledRelated,
             });
+
+            if (results.length >= 2) break;
           }
         }
       }
-    }
-  }
 
-  const todayBirthAuthors = Array.from(
-    new Set(
-      books
-        .filter((b) => {
-          const p = parseMonthDay(b.author_birth);
-          return p && p.month === currentMonth && p.day === currentDay && !hasKatakana(b.author);
-        })
-        .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
-    )
-  );
+      // 2. 空き枠を生誕・命日作家で補填（常に最大3カード）
+      const now = new Date();
+      const month = now.getMonth() + 1;
+      const day = now.getDate();
 
-  if (todayBirthAuthors.length > 0) {
-    results.push({
-      type: 'birthday',
-      title: '🎂 本日の生誕作家',
-      authors: todayBirthAuthors.slice(0, MAX_AUTHORS_PER_CARD),
-    });
-  } else {
-    const monthBirthAuthors = Array.from(
-      new Set(
-        books
-          .filter((b) => {
-            const p = parseMonthDay(b.author_birth);
-            return p && p.month === currentMonth && !hasKatakana(b.author);
-          })
-          .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
-      )
-    ).sort(() => 0.5 - Math.random());
+      if (results.length < 3) {
+        const todayBirth = Array.from(
+          new Set(
+            books
+              .filter((b) => {
+                const p = parseMonthDay(b.author_birth);
+                return p && p.month === month && p.day === day && !hasKatakana(b.author);
+              })
+              .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+          )
+        );
 
-    if (monthBirthAuthors.length > 0) {
-      results.push({
-        type: 'birthday',
-        title: `🎂 ${currentMonth}月生まれの作家`,
-        authors: monthBirthAuthors.slice(0, MAX_AUTHORS_PER_CARD),
-      });
-    }
-  }
-
-  if (!forceBirthdayOnly) {
-    const todayDeathAuthors = Array.from(
-      new Set(
-        books
-          .filter((b) => {
-            const p = parseMonthDay(b.author_death);
-            return p && p.month === currentMonth && p.day === currentDay && !hasKatakana(b.author);
-          })
-          .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
-      )
-    );
-
-    if (todayDeathAuthors.length > 0) {
-      results.push({
-        type: 'deathday',
-        title: '🕯️ 本日の命日作家',
-        authors: todayDeathAuthors.slice(0, MAX_AUTHORS_PER_CARD),
-      });
-    } else {
-      const monthDeathAuthors = Array.from(
-        new Set(
-          books
-            .filter((b) => {
-              const p = parseMonthDay(b.author_death);
-              return p && p.month === currentMonth && !hasKatakana(b.author);
-            })
-            .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
-        )
-      ).sort(() => 0.5 - Math.random());
-
-      if (monthDeathAuthors.length > 0) {
-        results.push({
-          type: 'deathday',
-          title: `🕯️ ${currentMonth}月に没した作家`,
-          authors: monthDeathAuthors.slice(0, MAX_AUTHORS_PER_CARD),
-        });
+        if (todayBirth.length > 0) {
+          results.push({
+            title: '🎂 本日の生誕作家',
+            authors: todayBirth.slice(0, 3),
+          });
+        }
       }
-    }
-  }
 
-  return results.slice(0, 3);
-}
+      if (results.length < 3) {
+        const todayDeath = Array.from(
+          new Set(
+            books
+              .filter((b) => {
+                const p = parseMonthDay(b.author_death);
+                return p && p.month === month && p.day === day && !hasKatakana(b.author);
+              })
+              .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+          )
+        );
 
-export default function Recommendations({
-  books,
-  searchQuery,
-  selectedBook,
-  onSelectAuthor,
-}: Props) {
-  const isHidden = useSyncExternalStore(
-    subscribeLocalStorage,
-    getHideRecsSnapshot,
-    getServerHideRecsSnapshot
-  );
-  const showRecommendations = !isHidden;
+        if (todayDeath.length > 0) {
+          results.push({
+            title: '🕯️ 本日の命日作家',
+            authors: todayDeath.slice(0, 3),
+          });
+        }
+      }
 
-  const recommendations = useMemo(() => {
-    if (!books || books.length === 0) return [];
-    return getRecommendations(books, searchQuery, selectedBook);
-  }, [books, searchQuery, selectedBook]);
+      if (results.length < 3) {
+        const monthBirth = shuffleArray(
+          Array.from(
+            new Set(
+              books
+                .filter((b) => {
+                  const p = parseMonthDay(b.author_birth);
+                  return p && p.month === month && !hasKatakana(b.author);
+                })
+                .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+            )
+          )
+        );
 
-  const handleToggle = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const isChecked = e.target.checked;
-    localStorage.setItem('hide_recommendations', isChecked ? 'false' : 'true');
-    window.dispatchEvent(new Event('storage'));
-  };
+        if (monthBirth.length > 0) {
+          results.push({
+            title: `🎂 ${month}月生まれの作家`,
+            authors: monthBirth.slice(0, 3),
+          });
+        }
+      }
 
-  if (!books || books.length === 0) return null;
+      setRecommendations(results);
+    };
+
+    buildRecommendations();
+
+    window.addEventListener('storage', buildRecommendations);
+    window.addEventListener('history-updated', buildRecommendations);
+
+    return () => {
+      window.removeEventListener('storage', buildRecommendations);
+      window.removeEventListener('history-updated', buildRecommendations);
+    };
+  }, [books]);
+
+  // 検索入力時または表示するおすすめが無い場合は非表示
+  if (searchQuery && searchQuery.trim().length > 0) return null;
+  if (recommendations.length === 0) return null;
 
   return (
     <section className="w-full my-4">
-      <div className="flex justify-end items-center mb-2 px-1 text-sm font-bold text-stone-800">
-        <label className="flex items-center gap-1.5 cursor-pointer select-none">
-          <input
-            type="checkbox"
-            checked={showRecommendations}
-            onChange={handleToggle}
-            className="w-4 h-4 rounded border-stone-300 text-stone-900 focus:ring-stone-600"
-          />
-          <span>おすすめを表示する</span>
-        </label>
-      </div>
-
-      {showRecommendations && (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
-          {recommendations.map((item, idx) => {
-            const isSearching = Boolean(searchQuery && searchQuery.trim().length > 0);
-            const hideOnMobile = isSearching && idx > 0;
-
-            return (
-              <div
-                key={idx}
-                className={`p-4 rounded-xl border bg-white border-stone-300 shadow-sm flex-col justify-between ${
-                  hideOnMobile ? 'hidden sm:flex' : 'flex'
-                }`}
-              >
-                <div>
-                  <div className="mb-2.5">
-                    <h3 className="font-bold text-base sm:text-lg text-stone-900 leading-snug">
-                      {item.title}
-                    </h3>
-                  </div>
-
-                  <div className="flex flex-wrap gap-2 pt-1">
-                    {item.authors.map((author) => (
-                      <button
-                        key={author}
-                        onClick={() => onSelectAuthor?.(author)}
-                        className="text-sm font-bold bg-stone-100 hover:bg-stone-900 hover:text-white border border-stone-300 text-stone-800 px-3 py-1.5 rounded-lg transition-all duration-150"
-                      >
-                        {author}
-                      </button>
-                    ))}
-                  </div>
-                </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+        {recommendations.map((item, idx) => (
+          <div
+            key={idx}
+            className="p-4 rounded-xl border bg-white border-stone-200 shadow-sm flex flex-col justify-between"
+          >
+            <div>
+              <h3 className="font-bold text-sm sm:text-base text-stone-800 mb-2.5">{item.title}</h3>
+              <div className="flex flex-wrap gap-2">
+                {item.authors.map((author) => (
+                  <button
+                    key={author}
+                    onClick={() => onSelectAuthor?.(author)}
+                    className="text-xs sm:text-sm font-bold bg-stone-100 hover:bg-stone-900 hover:text-white border border-stone-300 text-stone-800 px-3 py-1.5 rounded-lg transition-all duration-150"
+                  >
+                    {author}
+                  </button>
+                ))}
               </div>
-            );
-          })}
-        </div>
-      )}
+            </div>
+          </div>
+        ))}
+      </div>
     </section>
   );
 }
