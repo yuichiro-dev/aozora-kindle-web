@@ -1,10 +1,7 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import BottomNav from '@/components/BottomNav';
-
-const inter = Inter({ subsets: ['latin'] });
 
 const getMetadataBase = (): URL => {
   const rawUrl =
@@ -81,13 +78,11 @@ export const metadata: Metadata = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body className={`${inter.className} bg-stone-50 text-stone-900 min-h-screen flex flex-col`}>
-        {/* ボトムナビの高さ＋Safe Area分（80px程度）を下に確保 */}
-        <main className="flex-1 pb-20 md:pb-0">{children}</main>
-
-        {/* スマホ時のみ表示されるボトムナビ */}
-        <BottomNav />
+      <body className="min-h-screen flex flex-col bg-stone-50 text-stone-900">
+        {/* スマホ・タブレットは pb-16、PC（マウス操作）は pb-0 */}
+        <div className="flex-1 pb-16 [@media(pointer:fine)]:pb-0">{children}</div>
         <Analytics />
+        <BottomNav />
       </body>
     </html>
   );

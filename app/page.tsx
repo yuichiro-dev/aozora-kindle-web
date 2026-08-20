@@ -306,21 +306,20 @@ export default function Home() {
               </p>
             </div>
 
-            {/* PC表示時（md以上）のみ見せるシンプルナビ */}
-            <nav className="hidden md:flex items-center gap-2 shrink-0">
+            {/* タブレットまでは非表示、PC（マウス操作）で表示 */}
+            <nav className="hidden [@media(pointer:fine)]:flex items-center gap-2 shrink-0">
               <Link
                 href="/history"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 border border-stone-200 text-xs font-bold text-stone-700 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
               >
-                <History className="h-4 w-4 text-stone-500" />
+                <History className="w-4 h-4 text-stone-500" />
                 <span>履歴</span>
               </Link>
-
               <Link
                 href="/guide"
-                className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-stone-100 hover:bg-stone-200 border border-stone-200 text-xs font-bold text-stone-700 transition-colors"
+                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
               >
-                <HelpCircle className="h-4 w-4 text-stone-500" />
+                <HelpCircle className="w-4 h-4 text-stone-500" />
                 <span>使い方</span>
               </Link>
             </nav>
