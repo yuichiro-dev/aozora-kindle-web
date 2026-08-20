@@ -4,6 +4,25 @@ import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Recommendations, { Book } from '@/components/Recommendations';
 import StepGuide from '@/components/StepGuide';
 
+// 履歴保存用のヘルパー関数
+const saveToHistory = (id: string | number, title: string, author: string) => {
+  if (typeof window === 'undefined') return;
+
+  try {
+    const currentHistory = JSON.parse(localStorage.getItem('aozora_history') || '[]');
+
+    // 重複を除外して先頭に追加（最大20件）
+    const updated = [
+      { id: String(id), title, author, timestamp: Date.now() },
+      ...currentHistory.filter((item: { id: string }) => item.id !== String(id)),
+    ].slice(0, 20);
+
+    localStorage.setItem('aozora_history', JSON.stringify(updated));
+  } catch (e) {
+    console.error('履歴の保存に失敗しました:', e);
+  }
+};
+
 export default function Home() {
   const [books, setBooks] = useState<Book[]>([]);
   const [query, setQuery] = useState('');
@@ -212,6 +231,7 @@ export default function Home() {
       }
 
       const blob = await res.blob();
+      saveToHistory(book.id, fullTitle, book.author);
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
