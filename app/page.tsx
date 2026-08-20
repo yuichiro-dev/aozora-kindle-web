@@ -236,7 +236,7 @@ export default function Home() {
     name: '青空保存 to Kindle',
     operatingSystem: 'All',
     applicationCategory: 'UtilitiesApplication',
-    description: '[完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。',
+    description: '青空文庫の作品を縦書きEPUBでKindleに保存するツール。',
     url: 'https://aozora-kindle-web.vercel.app/',
     inLanguage: 'ja',
     offers: {
@@ -247,8 +247,6 @@ export default function Home() {
     featureList: [
       '青空文庫の作品を縦書き・右開きのKindle本に保存',
       '作品名や著者名からすぐに見つかる高速検索',
-      '面倒な会員登録・ログインなしで全機能が無料',
-      'Send to Kindle対応で端末への送信もかんたん',
     ],
   };
 
@@ -270,8 +268,6 @@ export default function Home() {
               青空保存 to Kindle
             </h1>
             <p className="text-xs sm:text-sm font-medium text-stone-700 mt-1.5">
-              [完全無料・登録不要・広告なし]青空文庫の本を保存して、すぐにKindleで読めます。
-              <br className="hidden sm:inline" />
               {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
               (作品リストは毎日自動更新)
             </p>
@@ -433,20 +429,6 @@ export default function Home() {
           )}
 
           <footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-stone-200 text-center text-xs text-[var(--color-text-muted)] space-y-2">
-            <p>
-              青空文庫の注釈・ルビ記号を解析し、縦書き・右開き（vertical-rl /
-              rtl）仕様のEPUB3ファイルへオンデマンド変換します。 ※Send to Kindle完全対応 /
-              クライアント・サーバー間暗号化通信。すべてのソースコードは{' '}
-              <a
-                href="https://github.com/yuichiro-dev/aozora-kindle-web"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline hover:text-stone-600"
-              >
-                GitHub
-              </a>{' '}
-              にて公開されています。
-            </p>
             <p>© {new Date().getFullYear()} 青空保存 to Kindle</p>
           </footer>
         </div>

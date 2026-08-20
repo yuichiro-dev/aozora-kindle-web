@@ -4,7 +4,8 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: '青空保存 to Kindle',
     short_name: '青空保存',
-    description: '青空文庫を縦書きEPUBへ一発変換。ワンタップでKindleへ送信し、そのままアプリで読める保存ツール。',
+    description:
+      '青空文庫を縦書きEPUBへ一発変換。ワンタップでKindleへ送信し、そのままアプリで読める保存ツール。',
     start_url: '/',
     display: 'standalone',
     background_color: '#fafaf9',
