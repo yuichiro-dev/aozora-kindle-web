@@ -19,6 +19,9 @@ const saveToHistory = (id: string | number, title: string, author: string) => {
     ].slice(0, 20);
 
     localStorage.setItem('aozora_history', JSON.stringify(updated));
+
+    // ★ 同一タブ内のコンポーネントへ更新を通知
+    window.dispatchEvent(new Event('history-updated'));
   } catch (e) {
     console.error('履歴の保存に失敗しました:', e);
   }
