@@ -186,7 +186,6 @@ function parseMonthDay(dateStr: string | null): { month: number; day: number } |
   return null;
 }
 
-// 配列をランダムにシャッフルする純粋なユーティリティ関数
 function shuffleArray<T>(array: T[]): T[] {
   const arr = [...array];
   for (let i = arr.length - 1; i > 0; i--) {
@@ -229,13 +228,9 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
 
       const results: RecommendationData[] = [];
 
-      // 1. 履歴からの関連作家（最大2カードまで）
+      // 1. 履歴からの関連作家（厳密に「最大1枚」限定）
       if (historyAuthors.length > 0) {
-        const matchedCandidates: {
-          sourceAuthor: string;
-          groupName: string;
-          relatedAuthors: string[];
-        }[] = [];
+        const matchedCandidates: { sourceAuthor: string; relatedAuthors: string[] }[] = [];
 
         historyAuthors.forEach((author) => {
           const cleanA = normalize(author);
@@ -245,7 +240,6 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
               if (related.length > 0) {
                 matchedCandidates.push({
                   sourceAuthor: author,
-                  groupName: group.name,
                   relatedAuthors: related,
                 });
               }
@@ -254,70 +248,38 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
         });
 
         if (matchedCandidates.length > 0) {
-          const shuffled = shuffleArray(matchedCandidates);
-          const usedGroups = new Set<string>();
-
-          for (const item of shuffled) {
-            if (usedGroups.has(item.groupName)) continue;
-            usedGroups.add(item.groupName);
-
-            const shuffledRelated = shuffleArray(item.relatedAuthors).slice(0, 3);
-            results.push({
-              title: `🔍 「${item.sourceAuthor}」好きにおすすめ`,
-              authors: shuffledRelated,
-            });
-
-            if (results.length >= 2) break;
-          }
+          const selected = shuffleArray(matchedCandidates)[0];
+          const shuffledRelated = shuffleArray(selected.relatedAuthors).slice(0, 3);
+          results.push({
+            title: `🔍 「${selected.sourceAuthor}」好きにおすすめ`,
+            authors: shuffledRelated,
+          });
         }
       }
 
-      // 2. 空き枠を生誕・命日作家で補填（常に最大3カード）
+      // 2. 残りの枠を生誕・命日作家で埋める（計3枚）
       const now = new Date();
       const month = now.getMonth() + 1;
       const day = now.getDate();
 
-      if (results.length < 3) {
-        const todayBirth = Array.from(
-          new Set(
-            books
-              .filter((b) => {
-                const p = parseMonthDay(b.author_birth);
-                return p && p.month === month && p.day === day && !hasKatakana(b.author);
-              })
-              .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
-          )
-        );
+      // 生誕作家
+      const todayBirth = Array.from(
+        new Set(
+          books
+            .filter((b) => {
+              const p = parseMonthDay(b.author_birth);
+              return p && p.month === month && p.day === day && !hasKatakana(b.author);
+            })
+            .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+        )
+      );
 
-        if (todayBirth.length > 0) {
-          results.push({
-            title: '🎂 本日の生誕作家',
-            authors: todayBirth.slice(0, 3),
-          });
-        }
-      }
-
-      if (results.length < 3) {
-        const todayDeath = Array.from(
-          new Set(
-            books
-              .filter((b) => {
-                const p = parseMonthDay(b.author_death);
-                return p && p.month === month && p.day === day && !hasKatakana(b.author);
-              })
-              .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
-          )
-        );
-
-        if (todayDeath.length > 0) {
-          results.push({
-            title: '🕯️ 本日の命日作家',
-            authors: todayDeath.slice(0, 3),
-          });
-        }
-      }
-
-      if (results.length < 3) {
+      if (todayBirth.length > 0) {
+        results.push({
+          title: '🎂 本日の生誕作家',
+          authors: todayBirth.slice(0, 3),
+        });
+      } else {
         const monthBirth = shuffleArray(
           Array.from(
             new Set(
@@ -330,7 +292,6 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
             )
           )
         );
-
         if (monthBirth.length > 0) {
           results.push({
             title: `🎂 ${month}月生まれの作家`,
@@ -339,7 +300,45 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
         }
       }
 
-      setRecommendations(results);
+      // 命日作家
+      const todayDeath = Array.from(
+        new Set(
+          books
+            .filter((b) => {
+              const p = parseMonthDay(b.author_death);
+              return p && p.month === month && p.day === day && !hasKatakana(b.author);
+            })
+            .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+        )
+      );
+
+      if (todayDeath.length > 0) {
+        results.push({
+          title: '🕯️ 本日の命日作家',
+          authors: todayDeath.slice(0, 3),
+        });
+      } else {
+        const monthDeath = shuffleArray(
+          Array.from(
+            new Set(
+              books
+                .filter((b) => {
+                  const p = parseMonthDay(b.author_death);
+                  return p && p.month === month && !hasKatakana(b.author);
+                })
+                .map((b) => b.author.replace(/[\s\u3000]+/g, ''))
+            )
+          )
+        );
+        if (monthDeath.length > 0) {
+          results.push({
+            title: `🕯️ ${month}月に没した作家`,
+            authors: monthDeath.slice(0, 3),
+          });
+        }
+      }
+
+      setRecommendations(results.slice(0, 3));
     };
 
     buildRecommendations();
@@ -353,7 +352,6 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
     };
   }, [books]);
 
-  // 検索入力時または表示するおすすめが無い場合は非表示
   if (searchQuery && searchQuery.trim().length > 0) return null;
   if (recommendations.length === 0) return null;
 
