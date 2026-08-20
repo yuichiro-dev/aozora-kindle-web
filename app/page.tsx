@@ -3,7 +3,7 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Recommendations, { Book } from '@/components/Recommendations';
 import Link from 'next/link';
-import { History, HelpCircle } from 'lucide-react';
+import { History, HelpCircle, Code2 } from 'lucide-react';
 
 // 履歴保存用のヘルパー関数
 const saveToHistory = (id: string | number, title: string, author: string) => {
@@ -462,9 +462,22 @@ export default function Home() {
             </>
           )}
 
-          <footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-stone-200 text-center text-xs text-[var(--color-text-muted)] space-y-2">
-            <p>© {new Date().getFullYear()} 青空保存 to Kindle</p>
-          </footer>
+<footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-stone-200 text-center text-xs text-[var(--color-text-muted)]">
+  <div className="flex items-center justify-center gap-2.5">
+    <p>© {new Date().getFullYear()} 青空保存 to Kindle</p>
+    <span className="opacity-40">|</span>
+    <a
+      href="https://github.com/your-username/your-repo"
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 hover:text-stone-900 transition-colors"
+      aria-label="GitHub Repository"
+    >
+      <Code2 className="h-3.5 w-3.5" />
+      <span>GitHub</span>
+    </a>
+  </div>
+</footer>
         </div>
       </main>
     </>
