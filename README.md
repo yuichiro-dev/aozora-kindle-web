@@ -1,82 +1,68 @@
-# 📚 青空保存 to Kindle
+# 青空保存 to Kindle
 
-> 青空文庫の作品を、Kindleや各種電子書籍リーダーで読みやすい「縦書き・右開き用EPUB形式」に瞬時に変換・ダウンロードできるWebアプリケーションです。
+青空文庫の作品を縦書き・右開きのEPUBに一発変換し、Kindleへ保存・共有できるミニマルなWebアプリ（PWA）です。
 
-[![Vercel Deployment](https://img.shields.io/badge/Vercel-Live_Demo-000000?style=for-the-badge&logo=vercel)](https://aozora-kindle-web.vercel.app/)
+## 注意事項・仕様
 
-🔗 **Webサイト（ライブデプロイ）**: [https://aozora-kindle-web.vercel.app/](https://aozora-kindle-web.vercel.app/)
+- **未対応の青空タグ・外字について**: 一部の未対応タグや外字注記（`［＃...］` 等）は削除せず、そのままテキストとして表示・出力されます。
+- **対象ファイル**: 青空文庫（aozora.gr.jp）に公式にホストされている作品テキストのみ対応しています。外部サイトのテキストには対応していません。(青空文庫全体の0.5%未満)
 
----
+## 主な機能
 
-## ✨ 主な機能
+- **PWA対応**: スマホやPCのホーム画面にインストールしてアプリ感覚で利用可能。
+- **高精度なEPUB変換**: 縦書き・右開きフォーマットに対応。
+- **モバイル最適化UI**: PWA / スマホ操作に最適化した固定ボトムナビゲーション。
+- **ローカル履歴管理**: LocalStorage を利用した変換履歴の保存・個別消去。
+- **高速なインデックス検索**: 著者名・作品名・ひらがな・カタカナ・英語表記によるリアルタイム絞り込み。
 
-- 📖 **縦書き・右開きEPUB自動生成**  
-  青空文庫のルビ（ふりがな）や注記に対応し、Kindle等の電子書籍端末に最適化したファイル形式で変換・保存します。
-- ⚡ **高速リアルタイムインクリメンタル検索**  
-  作品名・作家名・ひらがな読みでの瞬時フィルタリングに対応。
-- 💡 **スマート・レコメンド機能**
-  - **ジャンル・系統検索**: 検索した作家に関連するおすすめ作家を自動提示
-  - **同世代作家**: データベースにない作家でも生誕年（±10年）から同時代の文豪をピックアップ
-  - **デイリーコンテンツ**: 本日の生誕作家・命日作家を自動表示
-- 🔄 **作品リストの自動同期**  
-  1日1回、青空文庫の最新作品データベースと自動同期されます。
-- 📱 **完全レスポンシブ & スマホ最適化**  
-  モバイル操作時のキーボード立ち上がり時でも検索結果が見やすい可変レイアウト設計。
+## 技術スタック
 
----
-
-## 🛠 技術スタック
-
-- **Framework**: Next.js 15+ (App Router)
-- **Language**: TypeScript
+- **Framework**: Next.js (App Router) / React
 - **Styling**: Tailwind CSS
-- **State Management**: `useSyncExternalStore` (localStorage同期), `useMemo`
-- **Data Processing**: `JSZip`, custom EPUB builder logic
+- **Icons**: Lucide React
 - **Deployment**: Vercel
 
----
+## 主要なディレクトリ構成
 
-## 🚀 開発（ローカル環境での実行）
-
-### 1. リポジトリのクローン
-
-```bash
-git clone [https://github.com/your-username/your-repo-name.git](https://github.com/your-username/your-repo-name.git)
-cd your-repo-name
+```text
+├── app/
+│   ├── layout.tsx         # ルートレイアウト（BottomNavの配置）
+│   ├── page.tsx           # メイン検索・変換画面
+│   ├── history/
+│   │   └── page.tsx       # 変換履歴画面
+│   ├── guide/
+│   │   └── page.tsx       # 使い方ガイド画面
+│   └── api/
+│       └── convert/       # EPUB変換API
+├── components/
+│   └── BottomNav.tsx      # スマホ用ボトムナビゲーション
+└── public/
+    ├── books.json         # 青空文庫作品インデックス
+    └── images/            # ガイド用画像アセット
 ```
 
-### 2. 依存パッケージのインストール
+## ローカル開発手順
 
-```bash
-npm install
-```
+1. 依存パッケージのインストール
 
-### 3. 環境変数の設定
+   ```bash
+   npm install
+   ```
 
-ルート直下に `.env.local` を作成します。
+2. 開発サーバーの起動
 
-```env
-NEXT_PUBLIC_SITE_URL=http://localhost:3000
-```
+   ```bash
+   npm run dev
+   ```
 
-### 4. 開発サーバーの起動
+   ブラウザで `http://localhost:3000` を開いて確認します。
 
-```bash
-npm run dev
-```
+3. プロダクションビルドの確認
+   ```bash
+   npm run build
+   npm run start
+   ```
 
-ブラウザで [http://localhost:3000](http://localhost:3000) にアクセスします。
+## ライセンス
 
----
-
-## 📦 ビルド & 型チェック
-
-```bash
-npm run build
-```
-
----
-
-## 📄 ライセンス
-
-[MIT License](LICENSE)
+MIT
