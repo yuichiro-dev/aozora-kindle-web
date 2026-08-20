@@ -2,8 +2,8 @@
 
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Recommendations, { Book } from '@/components/Recommendations';
-import Link from 'next/link';
-import { History, HelpCircle, Code2 } from 'lucide-react';
+import { Code2, X } from 'lucide-react';
+import Header from '@/components/Header';
 
 // 履歴保存用のヘルパー関数
 const saveToHistory = (id: string | number, title: string, author: string) => {
@@ -215,6 +215,12 @@ export default function Home() {
     }
   };
 
+  const handleClear = () => {
+    setQuery('');
+    setCurrentPage(1);
+    setIsFocused(false);
+  };
+
   const totalPages = Math.ceil(filteredBooks.length / itemsPerPage);
   const currentBooks = useMemo(() => {
     const start = (currentPage - 1) * itemsPerPage;
@@ -291,42 +297,20 @@ export default function Home() {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <Header />
       <main className="min-h-screen bg-stone-50 p-4 md:p-10">
         <div className="max-w-4xl mx-auto space-y-5">
-          {/* ヘッダー：検索時は画面サイズ問わず非表示 */}
-          <header
-            className={`transition-all flex flex-col md:flex-row md:items-center md:justify-between gap-0 md:gap-2 ${
-              hasQuery ? 'hidden' : 'block pb-2 md:pb-4'
-            }`}
-          >
-            <div>
-              <h1 className="font-bold font-serif tracking-tight text-xl md:text-2xl text-stone-900">
-                青空保存 to Kindle
-              </h1>
-              <p className="text-xs sm:text-sm font-medium text-stone-700 mt-1 md:mt-1.5">
-                {bookCount !== null && ` 収録数: ${bookCount.toLocaleString()}冊`}
-                {lastUpdated && `（最終更新: ${lastUpdated}）`}
-              </p>
-            </div>
-
-            {/* タブレットまでは非表示、PC（マウス操作）で表示 */}
-            <nav className="hidden [@media(pointer:fine)]:flex items-center gap-2 shrink-0">
-              <Link
-                href="/history"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
-              >
-                <History className="w-4 h-4 text-stone-500" />
-                <span>履歴</span>
-              </Link>
-              <Link
-                href="/guide"
-                className="inline-flex items-center gap-1.5 px-3 py-1.5 text-sm font-medium text-stone-700 bg-stone-100 hover:bg-stone-200 rounded-lg transition-colors"
-              >
-                <HelpCircle className="w-4 h-4 text-stone-500" />
-                <span>使い方</span>
-              </Link>
-            </nav>
-          </header>
+          {/* 収録数・最終更新日時：検索時は非表示 */}
+          <div className={`transition-all ${hasQuery ? 'hidden' : 'block pb-1'}`}>
+            <p className="text-xs sm:text-sm font-medium text-stone-700">
+              {bookCount !== null && `収録数: ${bookCount.toLocaleString()}冊`}
+              {lastUpdated && `（最終更新: ${lastUpdated}）`}
+            </p>
+          </div>
 
           {/* 検索バー ＆ サジェスチョンコンテナ */}
           <div ref={searchContainerRef} className="relative group z-30">
@@ -354,8 +338,19 @@ export default function Home() {
                   setIsFocused(true);
                 }}
                 disabled={loading}
-                className="w-full pl-3 pr-4 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium text-stone-900 placeholder-stone-400 disabled:bg-stone-100"
+                className="w-full pl-3 pr-2 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium text-stone-900 placeholder-stone-400 disabled:bg-stone-100"
               />
+
+              {query.length > 0 && (
+                <button
+                  type="button"
+                  onClick={handleClear}
+                  className="pr-4 text-stone-400 hover:text-stone-800 transition-colors cursor-pointer shrink-0"
+                  aria-label="検索をクリアしてホームに戻る"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              )}
             </div>
 
             {/* サジェスチョンドロップダウンメニュー */}
