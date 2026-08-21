@@ -8,7 +8,7 @@ const emptySubscribe = () => () => {};
 
 export function ThemeToggle() {
   // resolvedTheme を取得する（'system' の時に実際の「light」か「dark」かを返してくれる）
-  const { theme, setTheme, resolvedTheme } = useTheme();
+  const { setTheme, resolvedTheme } = useTheme();
 
   const mounted = useSyncExternalStore(
     emptySubscribe,

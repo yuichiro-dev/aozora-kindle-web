@@ -153,7 +153,8 @@ export default function Home() {
 
     const katakanaKeywords = keywords.map((k) => toKatakana(k));
 
-    return books.filter((b) => {
+    // 1. 条件に合う本を抽出
+    const matched = books.filter((b) => {
       const title = cleanStr(b.title);
       const titleKana = cleanStr(b.title_kana);
       const subTitle = cleanStr(b.sub_title);
@@ -162,7 +163,6 @@ export default function Home() {
       const authorKana = cleanStr(b.author_kana);
       const authorEn = cleanStr(b.author_en);
 
-      // 英語の姓名逆転用（例: "poe edgar" -> "edgarpoe"）
       const authorEnParts = (b.author_en || '').split(/[\s\u3000]+/);
       const authorEnReversed =
         authorEnParts.length > 1
@@ -200,6 +200,56 @@ export default function Home() {
         );
       });
     });
+
+    // ★ 同名・同著者の作品が何件あるかカウントする Map
+    const countMap = new Map<string, number>();
+    matched.forEach((b) => {
+      const key = `${b.title}_${b.sub_title || ''}_${b.author}`;
+      countMap.set(key, (countMap.get(key) || 0) + 1);
+    });
+
+    // 2. 「同名重複フラグ」を付与してソート
+    return matched
+      .map((b) => {
+        const key = `${b.title}_${b.sub_title || ''}_${b.author}`;
+        return {
+          ...b,
+          // 同名・同著者が2件以上存在する場合のみ true
+          isDuplicate: (countMap.get(key) || 0) > 1,
+        };
+      })
+      .sort((a, b) => {
+        // ① 文字遣い（新字新仮名を最優先）
+        const isNewA = a.kana_type ? /新/.test(a.kana_type) : true;
+        const isNewB = b.kana_type ? /新/.test(b.kana_type) : true;
+        if (isNewA !== isNewB) return isNewA ? -1 : 1;
+
+        // ② 親タイトルの比較
+        const mainTitleA = (a.title || '').replace(/[“”"'「」『』【】（）()]/g, '').trim();
+        const mainTitleB = (b.title || '').replace(/[“”"'「」『』【】（）()]/g, '').trim();
+        const mainDiff = mainTitleA.localeCompare(mainTitleB, 'ja');
+        if (mainDiff !== 0) return mainDiff;
+
+        // ③ 副題（話数）の数値ソート
+        const subA = (a.sub_title || '').trim();
+        const subB = (b.sub_title || '').trim();
+        const numA = parseInt((subA.match(/\d+/) || [])[0] || '-1', 10);
+        const numB = parseInt((subB.match(/\d+/) || [])[0] || '-1', 10);
+
+        if (numA !== -1 && numB !== -1 && numA !== numB) {
+          return numA - numB;
+        }
+
+        const subDiff = subA.localeCompare(subB, 'ja', { numeric: true });
+        if (subDiff !== 0) return subDiff;
+
+        // ④ 同じ話数・タイトルの場合は出版年が新しい順
+        const yearA = parseInt(a.publication_year || '0', 10);
+        const yearB = parseInt(b.publication_year || '0', 10);
+        if (yearA !== yearB) return yearB - yearA;
+
+        return a.id - b.id;
+      });
   }, [books, query]);
 
   // 入力途中のサジェスチョン候補（著者名・作品名から最大6件生成）
@@ -462,7 +512,7 @@ export default function Home() {
                     className="p-3.5 sm:p-4 bg-card border border-border rounded-xl shadow-sm flex items-center justify-between gap-3 hover:border-foreground/40 transition-all"
                   >
                     <div className="min-w-0 flex-1 space-y-1">
-                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
+                      <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 min-w-0">
                         <h2 className="text-base sm:text-lg font-bold text-foreground leading-snug break-words">
                           {book.title}
                         </h2>
@@ -471,6 +521,29 @@ export default function Home() {
                             {book.sub_title}
                           </span>
                         )}
+
+                        {/* ★ 同名・同著者の別版が存在する（isDuplicate）場合のみタグを表示 */}
+                        {book.isDuplicate &&
+                          (book.kana_type || book.publisher || book.publication_year) && (
+                            <span
+                              className="text-xs px-2 py-0.5 rounded bg-muted text-muted-foreground font-normal border border-border shrink-0 max-w-full truncate"
+                              title={[
+                                book.kana_type,
+                                book.publication_year ? `${book.publication_year}年` : null,
+                                book.publisher,
+                              ]
+                                .filter(Boolean)
+                                .join(' / ')}
+                            >
+                              {[
+                                book.kana_type,
+                                book.publication_year ? `${book.publication_year}年` : null,
+                                book.publisher,
+                              ]
+                                .filter(Boolean)
+                                .join(' / ')}
+                            </span>
+                          )}
                       </div>
                       <p className="text-base font-medium text-foreground/80 leading-tight break-words flex flex-wrap items-center gap-2">
                         <span>{book.author}</span>

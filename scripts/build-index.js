@@ -120,6 +120,14 @@ async function main() {
       const subTitleKana = clean(row[5]);
       const originalTitle = clean(row[6]);
 
+      // ★ 新規追加フィールドの抽出
+      const kanaType = clean(row[9]); // 文字遣い (新字新仮名 / 旧字旧仮名 など)
+      const publisher = clean(row[28]); // 底本出版社名1
+      const rawPublicationYear = clean(row[29]); // 底本初版発行年1
+      const publicationYear = rawPublicationYear
+        ? rawPublicationYear.replace(/年/g, '').trim()
+        : null;
+
       const lastName = clean(row[15]);
       const firstName = clean(row[16]);
       const lastNameKana = clean(row[17]);
@@ -152,8 +160,13 @@ async function main() {
           // URLデータがない場合のみ上書き（データ欠損を防ぐ）
           if (!existingBook.zip_url) existingBook.zip_url = zipUrl || null;
           if (!existingBook.html_url) existingBook.html_url = htmlUrl || null;
+          // 新規フィールドのデータ欠損補正
+          if (!existingBook.kana_type && kanaType) existingBook.kana_type = kanaType || null;
+          if (!existingBook.publisher && publisher) existingBook.publisher = publisher || null;
+          if (!existingBook.publication_year && publicationYear)
+            existingBook.publication_year = publicationYear || null;
         } else {
-          // 新規登録
+          // 新規登録（既存の全フィールド ＋ 新規フィールド）
           booksMap.set(bookId, {
             id: bookId,
             title,
@@ -161,6 +174,9 @@ async function main() {
             sub_title: subTitle || null,
             sub_title_kana: subTitleKana || null,
             original_title: originalTitle || null,
+            kana_type: kanaType || null, // ★ 新規追加: 文字遣い
+            publisher: publisher || null, // ★ 新規追加: 底本出版社名1
+            publication_year: publicationYear || null, // ★ 新規追加: 底本初版発行年1
             author,
             author_birth: authorBirth || null,
             author_death: authorDeath || null,
