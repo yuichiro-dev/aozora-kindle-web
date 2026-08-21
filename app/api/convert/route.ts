@@ -1455,12 +1455,13 @@ ${bodyHtml}
   }
 
   const opf = `<?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="ja" xmlns:opf="http://www.idpf.org/2007/opf">
-  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="ja">
+  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
     <dc:identifier id="pub-id">${bookId}</dc:identifier>
     <dc:title>${safeTitle}</dc:title>
-    <dc:creator id="aut" opf:role="aut" opf:file-as="${safeAuthor}">${safeAuthor}</dc:creator>
-    <dc:publisher>${safeAuthor}</dc:publisher>
+    <dc:creator id="aut">${safeAuthor}</dc:creator>
+    <meta refines="#aut" property="role" scheme="marc:relators">aut</meta>
+    <meta refines="#aut" property="file-as">${safeAuthor}</meta>
     <dc:language>ja</dc:language>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}</meta>
     <meta property="page-progression-direction">rtl</meta>
@@ -1469,7 +1470,6 @@ ${bodyHtml}
   <manifest>
     <item id="style" href="style/style.css" media-type="text/css"/>
     <item id="p-001" href="xhtml/p-001.xhtml" media-type="application/xhtml+xml"/>
-    ${imageManifestItems}
   </manifest>
   <spine page-progression-direction="rtl">
     <itemref idref="p-001"/>
