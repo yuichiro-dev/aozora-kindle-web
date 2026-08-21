@@ -10,11 +10,14 @@ export interface Book {
   sub_title: string | null;
   sub_title_kana: string | null;
   original_title: string | null;
+  kana_type: string | null;
+  publisher: string | null;
+  publication_year: string | null;
   author: string;
   author_birth: string | null;
   author_death: string | null;
   author_kana: string;
-  author_en: string;
+  author_en: string | null;
   zip_url: string | null;
   html_url: string | null;
 }
