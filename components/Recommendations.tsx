@@ -367,16 +367,20 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
         {recommendations.map((item, idx) => (
           <div
             key={idx}
-            className="p-4 rounded-xl border bg-white border-stone-200 shadow-sm flex flex-col justify-between"
+            /* カードの背景をページ背景と同じ bg-background にする */
+            className="p-4 rounded-xl border border-border bg-background shadow-sm flex flex-col justify-between"
           >
             <div>
-              <h3 className="font-bold text-sm sm:text-base text-stone-800 mb-2.5">{item.title}</h3>
+              <h3 className="font-bold text-sm sm:text-base text-foreground mb-2.5">
+                {item.title}
+              </h3>
               <div className="flex flex-wrap gap-2">
                 {item.authors.map((author) => (
                   <button
                     key={author}
                     onClick={() => onSelectAuthor?.(author)}
-                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-white hover:bg-stone-900 hover:text-white border border-stone-300 text-stone-800 px-3 py-1.5 rounded-lg shadow-sm hover:shadow transition-all duration-150 cursor-pointer active:translate-y-0.5"
+                    /* ボタンは bg-card なので、背景（bg-background）からしっかり浮き上がる */
+                    className="inline-flex items-center gap-1.5 text-xs sm:text-sm font-bold bg-card hover:bg-primary hover:text-primary-foreground border border-border text-foreground px-3 py-1.5 rounded-lg shadow-sm transition-all duration-150 cursor-pointer active:translate-y-0.5"
                   >
                     <Search className="w-3.5 h-3.5 opacity-60" />
                     <span>{author}</span>

@@ -354,11 +354,11 @@ export default function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
       <Header />
-      <main className="min-h-screen bg-stone-50 p-4 md:p-10">
+      <main className="min-h-screen bg-background p-4 md:p-10">
         <div className="max-w-4xl mx-auto space-y-5">
           {/* 収録数・最終更新日時：検索時は非表示 */}
           <div className={`transition-all ${hasQuery ? 'hidden' : 'block pb-1'}`}>
-            <p className="text-xs sm:text-sm font-medium text-stone-700">
+            <p className="text-xs sm:text-sm font-medium text-foreground/80">
               {bookCount !== null && `収録数: ${bookCount.toLocaleString()}冊`}
               {lastUpdated && `（最終更新: ${lastUpdated}）`}
             </p>
@@ -366,8 +366,8 @@ export default function Home() {
 
           {/* 検索バー ＆ サジェスチョンコンテナ */}
           <div ref={searchContainerRef} className="relative group z-30">
-            <div className="relative bg-white border-2 border-stone-400 focus-within:border-stone-900 rounded-xl shadow-md flex items-center transition-colors">
-              <div className="pl-4 text-stone-500 shrink-0">
+            <div className="relative bg-card border-2 border-border focus-within:border-foreground rounded-xl shadow-md flex items-center transition-colors">
+              <div className="pl-4 text-muted-foreground shrink-0">
                 <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path
                     strokeLinecap="round"
@@ -390,14 +390,14 @@ export default function Home() {
                   setIsFocused(true);
                 }}
                 disabled={loading}
-                className="w-full pl-3 pr-2 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium text-stone-900 placeholder-stone-400 disabled:bg-stone-100"
+                className="w-full pl-3 pr-2 py-3 bg-transparent rounded-xl focus:outline-none text-base font-medium text-foreground placeholder:text-muted-foreground disabled:bg-muted"
               />
 
               {query.length > 0 && (
                 <button
                   type="button"
                   onClick={handleClear}
-                  className="pr-4 text-stone-400 hover:text-stone-800 transition-colors cursor-pointer shrink-0"
+                  className="pr-4 text-muted-foreground hover:text-foreground transition-colors cursor-pointer shrink-0"
                   aria-label="検索をクリアしてホームに戻る"
                 >
                   <X className="w-5 h-5" />
@@ -407,19 +407,19 @@ export default function Home() {
 
             {/* サジェスチョンドロップダウンメニュー */}
             {isFocused && suggestions.length > 0 && (
-              <div className="absolute left-0 right-0 top-full mt-2 bg-white border border-stone-300 rounded-xl shadow-xl overflow-hidden z-50 divide-y divide-stone-100">
+              <div className="absolute left-0 right-0 top-full mt-2 bg-card border border-border rounded-xl shadow-xl overflow-hidden z-50 divide-y divide-border">
                 {suggestions.map((item, idx) => (
                   <button
                     key={`${item.type}-${item.text}-${idx}`}
                     type="button"
                     onClick={() => handleSelectSuggestion(item.text)}
-                    className="w-full text-left px-4 py-3 hover:bg-stone-100 active:bg-stone-200 flex items-center gap-2.5 transition-colors"
+                    className="w-full text-left px-4 py-3 hover:bg-muted active:bg-muted/80 flex items-center gap-2.5 transition-colors"
                   >
                     <span className="text-sm shrink-0">{item.type === 'author' ? '👤' : '📖'}</span>
-                    <span className="text-sm sm:text-base font-bold text-stone-900 truncate">
+                    <span className="text-sm sm:text-base font-bold text-foreground truncate">
                       {item.text}
                     </span>
-                    <span className="text-xs font-medium text-stone-500 ml-auto shrink-0">
+                    <span className="text-xs font-medium text-muted-foreground ml-auto shrink-0">
                       {item.type === 'author' ? '作者' : '作品'}
                     </span>
                   </button>
@@ -428,7 +428,7 @@ export default function Home() {
             )}
           </div>
 
-          <p className="text-xs sm:text-sm mt-2 px-1 flex items-center gap-1.5 font-bold text-stone-900">
+          <p className="text-xs sm:text-sm mt-2 px-1 flex items-center gap-1.5 font-bold text-foreground">
             <span>「夏目漱石 こころ」のようにスペースを空けて作品名も絞り込めます</span>
           </p>
 
@@ -442,7 +442,7 @@ export default function Home() {
 
           {hasQuery && (
             <>
-              <div className="flex justify-between items-center text-sm font-bold text-stone-900">
+              <div className="flex justify-between items-center text-sm font-bold text-foreground">
                 <span>
                   {loading
                     ? 'データ読み込み中...'
@@ -459,23 +459,23 @@ export default function Home() {
                 {currentBooks.map((book, index) => (
                   <div
                     key={`${book.id}-${index}`}
-                    className="p-3.5 sm:p-4 bg-white border border-stone-300 rounded-xl shadow-sm flex items-center justify-between gap-3 hover:border-stone-400 transition-all"
+                    className="p-3.5 sm:p-4 bg-card border border-border rounded-xl shadow-sm flex items-center justify-between gap-3 hover:border-foreground/40 transition-all"
                   >
                     <div className="min-w-0 flex-1 space-y-1">
                       <div className="flex flex-wrap items-baseline gap-x-2 gap-y-0.5">
-                        <h2 className="text-base sm:text-lg font-bold text-stone-900 leading-snug break-words">
+                        <h2 className="text-base sm:text-lg font-bold text-foreground leading-snug break-words">
                           {book.title}
                         </h2>
                         {book.sub_title && (
-                          <span className="text-sm font-medium text-stone-800 leading-snug break-words">
+                          <span className="text-sm font-medium text-foreground/80 leading-snug break-words">
                             {book.sub_title}
                           </span>
                         )}
                       </div>
-                      <p className="text-base font-medium text-stone-800 leading-tight break-words flex flex-wrap items-center gap-2">
+                      <p className="text-base font-medium text-foreground/80 leading-tight break-words flex flex-wrap items-center gap-2">
                         <span>{book.author}</span>
                         {savedHistoryMap[String(book.id)] && (
-                          <span className="text-sm text-blue-700 font-normal">
+                          <span className="text-sm text-primary font-normal">
                             （前回保存: {formatDate(savedHistoryMap[String(book.id)])}）
                           </span>
                         )}
@@ -487,12 +487,12 @@ export default function Home() {
                       disabled={downloadingId === book.id || !book.zip_url}
                       className={`shrink-0 whitespace-nowrap px-5 py-2.5 sm:px-6 sm:py-3 rounded-lg font-bold text-base sm:text-lg transition-all duration-200 shadow-sm ${
                         !book.zip_url
-                          ? 'bg-stone-100 text-stone-400 border border-stone-200 cursor-not-allowed shadow-none'
+                          ? 'bg-muted text-muted-foreground border border-border cursor-not-allowed shadow-none'
                           : downloadingId === book.id
-                            ? 'bg-stone-600 text-white cursor-wait animate-pulse'
+                            ? 'bg-muted-foreground text-background cursor-wait animate-pulse'
                             : savedHistoryMap[String(book.id)]
-                              ? 'bg-blue-50 border border-blue-200 text-blue-700 hover:bg-blue-100 hover:border-blue-300 active:bg-blue-200 shadow-sm'
-                              : 'bg-stone-900 text-white hover:bg-stone-800 active:bg-black shadow'
+                              ? 'bg-success/10 border border-success/30 text-success hover:bg-success/20 active:bg-success/30'
+                              : 'bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] shadow'
                       }`}
                     >
                       {downloadingId === book.id
@@ -505,7 +505,7 @@ export default function Home() {
                 ))}
 
                 {!loading && currentBooks.length === 0 && (
-                  <div className="text-center py-10 font-medium text-base text-stone-800">
+                  <div className="text-center py-10 font-medium text-base text-foreground/80">
                     該当する作品が見つかりませんでした。
                   </div>
                 )}
@@ -516,17 +516,17 @@ export default function Home() {
                   <button
                     onClick={() => setCurrentPage((p) => Math.max(p - 1, 1))}
                     disabled={currentPage === 1}
-                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold text-stone-900 bg-white disabled:opacity-40"
+                    className="px-3 py-1.5 border border-border rounded-md text-sm font-bold text-foreground bg-card disabled:opacity-40"
                   >
                     前へ
                   </button>
-                  <span className="text-sm font-bold text-stone-900 px-2">
+                  <span className="text-sm font-bold text-foreground px-2">
                     {currentPage} / {totalPages}
                   </span>
                   <button
                     onClick={() => setCurrentPage((p) => Math.min(p + 1, totalPages))}
                     disabled={currentPage === totalPages}
-                    className="px-3 py-1.5 border border-stone-300 rounded-md text-sm font-bold text-stone-900 bg-white disabled:opacity-40"
+                    className="px-3 py-1.5 border border-border rounded-md text-sm font-bold text-foreground bg-card disabled:opacity-40"
                   >
                     次へ
                   </button>
@@ -535,7 +535,7 @@ export default function Home() {
             </>
           )}
 
-          <footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-stone-200 text-center text-xs text-[var(--color-text-muted)]">
+          <footer className="max-w-2xl mx-auto w-full mt-12 pt-6 border-t border-border text-center text-xs text-muted-foreground">
             <div className="flex items-center justify-center gap-2.5">
               <p>© {new Date().getFullYear()} 青空保存 to Kindle</p>
               <span className="opacity-40">|</span>
@@ -543,7 +543,7 @@ export default function Home() {
                 href="https://github.com/yuichiro-dev/aozora-kindle-web"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-stone-900 transition-colors"
+                className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
                 aria-label="GitHub Repository"
               >
                 <Code2 className="h-3.5 w-3.5" />
@@ -554,7 +554,7 @@ export default function Home() {
                 href="https://x.com/yuichiro1dev"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 hover:text-stone-900 transition-colors"
+                className="inline-flex items-center gap-1 hover:text-foreground transition-colors"
                 aria-label="X (Twitter)"
               >
                 <svg className="h-3.5 w-3.5 fill-current" viewBox="0 0 24 24">

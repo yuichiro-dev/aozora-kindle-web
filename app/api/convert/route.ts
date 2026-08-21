@@ -1456,24 +1456,23 @@ ${bodyHtml}
 
   const opf = `<?xml version="1.0" encoding="UTF-8"?>
 <package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="ja">
-  <metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
-    <dc:identifier id="pub-id">${bookId}</dc:identifier>
-    <dc:title>${safeTitle}</dc:title>
-    <dc:creator id="aut">${safeAuthor}</dc:creator>
-    <meta refines="#aut" property="role" scheme="marc:relators">aut</meta>
-    <meta refines="#aut" property="file-as">${safeAuthor}</meta>
-    <dc:language>ja</dc:language>
-    <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}</meta>
-    <meta property="page-progression-direction">rtl</meta>
-    <meta property="primary-writing-mode">vertical-rl</meta>
-  </metadata>
-  <manifest>
-    <item id="style" href="style/style.css" media-type="text/css"/>
-    <item id="p-001" href="xhtml/p-001.xhtml" media-type="application/xhtml+xml"/>
-  </manifest>
-  <spine page-progression-direction="rtl">
-    <itemref idref="p-001"/>
-  </spine>
+<metadata xmlns:dc="http://purl.org/dc/elements/1.1/">
+<dc:identifier id="pub-id">${bookId}</dc:identifier>
+<dc:title>${safeTitle}</dc:title>
+<dc:creator>${safeAuthor}</dc:creator>
+<dc:language>ja</dc:language>
+<meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}</meta>
+<meta property="page-progression-direction">rtl</meta>
+<meta property="primary-writing-mode">vertical-rl</meta>
+</metadata>
+<manifest>
+<item id="style" href="style/style.css" media-type="text/css"/>
+<item id="p-001" href="xhtml/p-001.xhtml" media-type="application/xhtml+xml"/>
+${imageManifestItems}
+</manifest>
+<spine page-progression-direction="rtl">
+<itemref idref="p-001"/>
+</spine>
 </package>`;
 
   zipFiles['item/standard.opf'] = strToU8(opf);

@@ -15,7 +15,7 @@ export default function BottomNav() {
 
   return (
     // マウス操作デバイス（PC）のときだけ非表示
-    <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-stone-200 [@media(pointer:fine)]:hidden z-50">
+    <nav className="fixed bottom-0 left-0 right-0 bg-background/95 backdrop-blur-sm border-t border-border [@media(pointer:fine)]:hidden z-50">
       <div className="flex items-center justify-around h-14 max-w-md mx-auto">
         {NAV_ITEMS.map((item) => {
           const Icon = item.icon;
@@ -26,7 +26,9 @@ export default function BottomNav() {
               key={item.href}
               href={item.href}
               className={`flex flex-col items-center justify-center flex-1 h-full gap-1 transition-colors ${
-                isActive ? 'text-stone-900 font-bold' : 'text-stone-400 hover:text-stone-600'
+                isActive
+                  ? 'text-foreground font-bold'
+                  : 'text-muted-foreground hover:text-foreground'
               }`}
             >
               <Icon className="h-5 w-5" />
