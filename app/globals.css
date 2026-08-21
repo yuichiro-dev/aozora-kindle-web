@@ -1,31 +1,70 @@
 @import 'tailwindcss';
 
+/* ★ Tailwind v4 で html.dark を検知させる設定 */
+@custom-variant dark (&:where(.dark, .dark *));
+
 :root {
-  /* ★ ベースフォントサイズを一括管理（標準16px → 18pxに拡大） */
   font-size: 18px;
 
-  /* 背景色と文字色（石目調のやさしい背景と濃い黒） */
-  --background: #fafaf9; /* stone-50 相当 */
-  --foreground: #1c1917; /* stone-900 相当 (濃い黒) */
+  /* ライトモード：Google検索の実配色 */
+  --background: #ffffff;
+  --foreground: #202124;
 
-  /* 文字色変数 */
-  --color-text-main: #1c1917;
-  --color-text-sub: #292524;
-  --color-text-muted: #a8a29e;
+  --card: #ffffff;
+  --border: #dfe1e5; /* 検索ボックスや罫線の色 */
+  --muted: #f1f3f4; /* タブ・チップなどの薄いグレー */
+  --muted-foreground: #70757a; /* URL・補足テキスト */
+
+  --success: #188038; /* Googleの標準グリーン（Light） */
+  --success-foreground: #ffffff;
+
+  --primary: #1a73e8; /* Googleブルー */
+  --primary-foreground: #ffffff;
+
+  --color-text-main: #202124;
+  --color-text-sub: #4d5156;
+  --color-text-muted: #70757a;
 }
 
+.dark {
+  /* ダークモードはそのままでOK。Googleのダーク配色と一致している */
+  --background: #202124;
+  --foreground: #e8eaed;
+
+  --card: #303134;
+  --border: #6b6f73;
+  --muted: #3c4043;
+  --muted-foreground: #9aa0a6;
+
+  --primary: #8ab4f8; /* ダーク時のGoogleブルーはやや明るいトーン */
+  --primary-foreground: #202124;
+
+  /* ダークモード用の明るいグリーン */
+  --success: #81c995; /* Googleの標準グリーン（Dark） */
+  --success-foreground: #202124;
+
+  --color-text-main: #e8eaed;
+  --color-text-sub: #bdc1c6;
+  --color-text-muted: #9aa0a6;
+}
+
+/* @theme でクラス名とCSS変数をマッピング */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-border: var(--border);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-success: var(--success);
+  --color-success-foreground: var(--success-foreground);
+
   --font-sans:
     -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Hiragino Sans', 'Yu Gothic UI',
     sans-serif;
 }
-
-/* 
-  ※端末のダークモード設定で自動的に背景が真っ黒に化けるのを防ぐため、
-  @media (prefers-color-scheme: dark) は削除しています。
-*/
 
 body {
   background: var(--background);

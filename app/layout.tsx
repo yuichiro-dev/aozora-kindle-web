@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from 'next';
 import './globals.css';
 import { Analytics } from '@vercel/analytics/react';
 import BottomNav from '@/components/BottomNav';
+import { ThemeProvider } from '@/components/ThemeProvider';
 
 const getMetadataBase = (): URL => {
   const rawUrl =
@@ -77,12 +78,14 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="ja">
-      <body className="min-h-screen flex flex-col bg-stone-50 text-stone-900">
-        {/* スマホ・タブレットは pb-16、PC（マウス操作）は pb-0 */}
-        <div className="flex-1 pb-16 [@media(pointer:fine)]:pb-0">{children}</div>
-        <Analytics />
-        <BottomNav />
+    <html lang="ja" suppressHydrationWarning>
+      <body className="min-h-screen flex flex-col bg-background text-foreground">
+        <ThemeProvider>
+          {/* スマホ・タブレットは pb-16、PC（マウス操作）は pb-0 */}
+          <div className="flex-1 pb-16 [@media(pointer:fine)]:pb-0">{children}</div>
+          <Analytics />
+          <BottomNav />
+        </ThemeProvider>
       </body>
     </html>
   );
