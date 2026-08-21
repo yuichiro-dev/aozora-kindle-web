@@ -1455,15 +1455,13 @@ ${bodyHtml}
   }
 
   const opf = `<?xml version="1.0" encoding="UTF-8"?>
-<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="ja">
+<package xmlns="http://www.idpf.org/2007/opf" version="3.0" unique-identifier="pub-id" xml:lang="ja" xmlns:opf="http://www.idpf.org/2007/opf">
   <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
     <dc:identifier id="pub-id">${bookId}</dc:identifier>
     <dc:title>${safeTitle}</dc:title>
-    <dc:creator id="creator" opf:role="aut">${safeAuthor}</dc:creator>
+    <dc:creator id="aut" opf:role="aut" opf:file-as="${safeAuthor}">${safeAuthor}</dc:creator>
     <dc:publisher>${safeAuthor}</dc:publisher>
     <dc:language>ja</dc:language>
-    <meta refines="#creator" property="role" scheme="marc:relators">aut</meta>
-    <meta refines="#creator" property="file-as">${safeAuthor}</meta>
     <meta property="dcterms:modified">${new Date().toISOString().replace(/\.\d+Z$/, 'Z')}</meta>
     <meta property="page-progression-direction">rtl</meta>
     <meta property="primary-writing-mode">vertical-rl</meta>
