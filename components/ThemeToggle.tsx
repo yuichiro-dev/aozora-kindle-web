@@ -4,13 +4,12 @@ import { useTheme } from 'next-themes';
 import { Sun, Moon } from 'lucide-react';
 import { useSyncExternalStore } from 'react';
 
-// マウント状態を監視するためのダミーサブスクライバ
 const emptySubscribe = () => () => {};
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  // resolvedTheme を取得する（'system' の時に実際の「light」か「dark」かを返してくれる）
+  const { theme, setTheme, resolvedTheme } = useTheme();
 
-  // クライアントサイドでのみ true になるフック（useEffectなしでハイドレーションを回避）
   const mounted = useSyncExternalStore(
     emptySubscribe,
     () => true,
@@ -19,13 +18,16 @@ export function ThemeToggle() {
 
   if (!mounted) return <div className="w-8 h-8" />;
 
+  // 判定を resolvedTheme に変更
+  const isDark = resolvedTheme === 'dark';
+
   return (
     <button
-      onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
+      onClick={() => setTheme(isDark ? 'light' : 'dark')}
       className="inline-flex items-center justify-center p-2 rounded-lg bg-muted text-foreground hover:bg-muted/80 transition-colors cursor-pointer"
       aria-label="テーマ切り替え"
     >
-      {theme === 'dark' ? (
+      {isDark ? (
         <Sun className="w-4 h-4 text-amber-400" />
       ) : (
         <Moon className="w-4 h-4 text-stone-700" />
