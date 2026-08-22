@@ -1,17 +1,7 @@
-// lib/epub/aozora/parser.ts
-
-const RUBY_PATTERN =
-  /｜([^《\n]+)《([^》\n]+)》|([\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF〆々〇ヶ]+)《([^》\n]+)》/g;
-
-const ANNOTATION_PATTERN = /［＃[^］]+］/g;
-
-const IMAGE_ANNOTATION_PATTERN =
-  /［＃(?:.+?図|挿絵|画像)（([^,、）]+)(?:[、,][^）]+)?）入る］/g;
+import { ANNOTATION_PATTERN, IMAGE_ANNOTATION_PATTERN, RUBY_PATTERN } from '../constants';
 
 function zenToHanDigits(str: string): string {
-  return str.replace(/[０-９]/g, (s) =>
-    String.fromCharCode(s.charCodeAt(0) - 0xfee0)
-  );
+  return str.replace(/[０-９]/g, (s) => String.fromCharCode(s.charCodeAt(0) - 0xfee0));
 }
 
 function escapeXml(str: string): string {
@@ -128,8 +118,7 @@ function blockTags(state: BlockState): {
 
     case 'chitsuki':
       return {
-        open:
-          '<div class="chitsuki_0" style="text-align:right; margin-right: 0em">',
+        open: '<div class="chitsuki_0" style="text-align:right; margin-right: 0em">',
         close: '</div>',
       };
 
@@ -361,9 +350,7 @@ function applyForwardReferenceAnnotations(line: string): string {
     /*
      * 「〜」は大見出し
      */
-    const headingMatch = body.match(
-      /^「(.+?)」は(同行|窓)?(大|中|小)見出し$/
-    );
+    const headingMatch = body.match(/^「(.+?)」は(同行|窓)?(大|中|小)見出し$/);
 
     if (headingMatch) {
       const target = headingMatch[1];
@@ -393,10 +380,7 @@ function applyForwardReferenceAnnotations(line: string): string {
         `${headingClass}:` +
         `${encodeURIComponent(renderedTarget)}]]`;
 
-      working =
-        working.slice(0, targetStart) +
-        replacement +
-        working.slice(index + raw.length);
+      working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
 
       continue;
     }
@@ -404,9 +388,7 @@ function applyForwardReferenceAnnotations(line: string): string {
     /*
      * 「〜」に「ママ」の注記
      */
-    const mamaRubyMatch = body.match(
-      /^「(.+?)」に「ママ」の注記$/
-    );
+    const mamaRubyMatch = body.match(/^「(.+?)」に「ママ」の注記$/);
 
     if (mamaRubyMatch) {
       const target = mamaRubyMatch[1];
@@ -415,16 +397,11 @@ function applyForwardReferenceAnnotations(line: string): string {
       if (before.endsWith(target)) {
         const targetStart = index - target.length;
 
-        const replacement =
-          `[[AOZORA_HTML:${encodeURIComponent(
-            `<ruby><rb>${escapeHtml(target)}</rb>` +
-              `<rp>（</rp><rt>ママ</rt><rp>）</rp></ruby>`
-          )}]]`;
+        const replacement = `[[AOZORA_HTML:${encodeURIComponent(
+          `<ruby><rb>${escapeHtml(target)}</rb>` + `<rp>（</rp><rt>ママ</rt><rp>）</rp></ruby>`
+        )}]]`;
 
-        working =
-          working.slice(0, targetStart) +
-          replacement +
-          working.slice(index + raw.length);
+        working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
 
         continue;
       }
@@ -455,14 +432,9 @@ function applyForwardReferenceAnnotations(line: string): string {
 
     const targetStart = index - target.length;
 
-    const replacement =
-      `[[AOZORA_INLINE:${style.className}:` +
-      `${encodeURIComponent(target)}]]`;
+    const replacement = `[[AOZORA_INLINE:${style.className}:` + `${encodeURIComponent(target)}]]`;
 
-    working =
-      working.slice(0, targetStart) +
-      replacement +
-      working.slice(index + raw.length);
+    working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
   }
 
   interface SimpleForwardRule {
@@ -514,10 +486,7 @@ function applyForwardReferenceAnnotations(line: string): string {
   ];
 
   for (const { re, getClassName } of simplePatterns) {
-    const annotationRe = new RegExp(
-      `［＃${re.source}］`,
-      'g'
-    );
+    const annotationRe = new RegExp(`［＃${re.source}］`, 'g');
 
     let m: RegExpExecArray | null;
 
@@ -532,14 +501,9 @@ function applyForwardReferenceAnnotations(line: string): string {
 
       const targetStart = start - rawTarget.length;
 
-      const replacement =
-        `[[AOZORA_INLINE:${className}:` +
-        `${encodeURIComponent(rawTarget)}]]`;
+      const replacement = `[[AOZORA_INLINE:${className}:` + `${encodeURIComponent(rawTarget)}]]`;
 
-      working =
-        working.slice(0, targetStart) +
-        replacement +
-        working.slice(start + m[0].length);
+      working = working.slice(0, targetStart) + replacement + working.slice(start + m[0].length);
 
       annotationRe.lastIndex = 0;
     }
@@ -554,20 +518,15 @@ function renderInline(line: string): string {
   /*
    * 画像注記
    */
-  working = working.replace(
-    IMAGE_ANNOTATION_PATTERN,
-    (_match, fileName) => {
-      const cleanFileName = fileName.trim();
+  working = working.replace(IMAGE_ANNOTATION_PATTERN, (_match, fileName) => {
+    const cleanFileName = fileName.trim();
 
-      return (
-        `[[AOZORA_HTML:${encodeURIComponent(
-          `<div class="illust">` +
-            `<img src="../images/${escapeXml(cleanFileName)}" alt="" />` +
-            `</div>`
-        )}]]`
-      );
-    }
-  );
+    return `[[AOZORA_HTML:${encodeURIComponent(
+      `<div class="illust">` +
+        `<img src="../images/${escapeXml(cleanFileName)}" alt="" />` +
+        `</div>`
+    )}]]`;
+  });
 
   /*
    * インライン文字サイズ
@@ -584,13 +543,11 @@ function renderInline(line: string): string {
 
       const size = sizeMap[n] ?? 'xx-large';
 
-      return (
-        `[[AOZORA_HTML:${encodeURIComponent(
-          `<span class="dai${n}" style="font-size: ${size};">` +
-            `${renderInline(content)}` +
-            `</span>`
-        )}]]`
-      );
+      return `[[AOZORA_HTML:${encodeURIComponent(
+        `<span class="dai${n}" style="font-size: ${size};">` +
+          `${renderInline(content)}` +
+          `</span>`
+      )}]]`;
     }
   );
 
@@ -606,13 +563,11 @@ function renderInline(line: string): string {
 
       const size = sizeMap[n] ?? 'xx-small';
 
-      return (
-        `[[AOZORA_HTML:${encodeURIComponent(
-          `<span class="sho${n}" style="font-size: ${size};">` +
-            `${renderInline(content)}` +
-            `</span>`
-        )}]]`
-      );
+      return `[[AOZORA_HTML:${encodeURIComponent(
+        `<span class="sho${n}" style="font-size: ${size};">` +
+          `${renderInline(content)}` +
+          `</span>`
+      )}]]`;
     }
   );
 
@@ -864,18 +819,13 @@ function renderInline(line: string): string {
 
     const contentStart = startIndex + startToken.length;
 
-    const endIndex = working.indexOf(
-      endToken,
-      contentStart
-    );
+    const endIndex = working.indexOf(endToken, contentStart);
 
     if (endIndex === -1) continue;
 
     const before = working.slice(0, startIndex);
     const content = working.slice(contentStart, endIndex);
-    const after = working.slice(
-      endIndex + endToken.length
-    );
+    const after = working.slice(endIndex + endToken.length);
 
     const rendered =
       range.className === 'warichu'
@@ -884,10 +834,7 @@ function renderInline(line: string): string {
           `${renderInline(content)}` +
           `</${range.tag}>`;
 
-    working =
-      before +
-      `[[AOZORA_HTML:${encodeURIComponent(rendered)}]]` +
-      after;
+    working = before + `[[AOZORA_HTML:${encodeURIComponent(rendered)}]]` + after;
   }
 
   /*
@@ -901,31 +848,15 @@ function renderInline(line: string): string {
       let html = '';
 
       if (className === 'tcy') {
-        html =
-          `<span class="tcy">` +
-          `${applyRubyAndEscape(target)}` +
-          `</span>`;
+        html = `<span class="tcy">` + `${applyRubyAndEscape(target)}` + `</span>`;
       } else if (className === 'superscript') {
-        html =
-          `<sup class="superscript">` +
-          `${applyRubyAndEscape(target)}` +
-          `</sup>`;
+        html = `<sup class="superscript">` + `${applyRubyAndEscape(target)}` + `</sup>`;
       } else if (className === 'subscript') {
-        html =
-          `<sub class="subscript">` +
-          `${applyRubyAndEscape(target)}` +
-          `</sub>`;
+        html = `<sub class="subscript">` + `${applyRubyAndEscape(target)}` + `</sub>`;
       } else if (className === 'caption') {
-        html =
-          `<span class="caption">` +
-          `${applyRubyAndEscape(target)}` +
-          `</span>`;
-      } else if (
-        className.startsWith('dai') ||
-        className.startsWith('sho')
-      ) {
-        const n =
-          Number(className.replace(/\D/g, '')) || 1;
+        html = `<span class="caption">` + `${applyRubyAndEscape(target)}` + `</span>`;
+      } else if (className.startsWith('dai') || className.startsWith('sho')) {
+        const n = Number(className.replace(/\D/g, '')) || 1;
 
         const isDai = className.startsWith('dai');
 
@@ -939,19 +870,14 @@ function renderInline(line: string): string {
               2: 'x-small',
             };
 
-        const size =
-          sizeMap[n] ??
-          (isDai ? 'xx-large' : 'xx-small');
+        const size = sizeMap[n] ?? (isDai ? 'xx-large' : 'xx-small');
 
         html =
           `<span class="${className}" style="font-size: ${size};">` +
           `${applyRubyAndEscape(target)}` +
           `</span>`;
       } else {
-        html =
-          `<em class="${className}">` +
-          `${applyRubyAndEscape(target)}` +
-          `</em>`;
+        html = `<em class="${className}">` + `${applyRubyAndEscape(target)}` + `</em>`;
       }
 
       return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
@@ -965,30 +891,18 @@ function renderInline(line: string): string {
     /\[\[AOZORA_HEADING:([^:]+):([^:]+):([^\]]+)\]\]/g,
     (_match, tag, className, encodedTarget) =>
       `[[AOZORA_HTML:${encodeURIComponent(
-        `<${tag} class="${className}">` +
-          `${decodeURIComponent(encodedTarget)}` +
-          `</${tag}>`
+        `<${tag} class="${className}">` + `${decodeURIComponent(encodedTarget)}` + `</${tag}>`
       )}]]`
   );
 
   /*
    * 未対応注記を可視化
    */
-  working = working.replace(
-    ANNOTATION_PATTERN,
-    (raw) => {
-      console.warn(
-        '[Aozora] unsupported inline annotation:',
-        raw
-      );
+  working = working.replace(ANNOTATION_PATTERN, (raw) => {
+    console.warn('[Aozora] unsupported inline annotation:', raw);
 
-      return (
-        `[[AOZORA_HTML:${encodeURIComponent(
-          `<span class="notes">${escapeHtml(raw)}</span>`
-        )}]]`
-      );
-    }
-  );
+    return `[[AOZORA_HTML:${encodeURIComponent(`<span class="notes">${escapeHtml(raw)}</span>`)}]]`;
+  });
 
   /*
    * 生テキストだけをルビ化 + HTML escape
@@ -999,24 +913,18 @@ function renderInline(line: string): string {
    * AOZORA_HTML を復元
    */
   while (working.includes('[[AOZORA_HTML:')) {
-    working = working.replace(
-      /\[\[AOZORA_HTML:([^\]]+)\]\]/g,
-      (_match, encodedHtml) =>
-        decodeURIComponent(encodedHtml)
+    working = working.replace(/\[\[AOZORA_HTML:([^\]]+)\]\]/g, (_match, encodedHtml) =>
+      decodeURIComponent(encodedHtml)
     );
   }
 
   return working;
 }
 
-function parseBlockStart(
-  annotation: string
-): BlockState | null {
+function parseBlockStart(annotation: string): BlockState | null {
   const cleanAnno = zenToHanDigits(annotation);
 
-  const indent = cleanAnno.match(
-    /^ここから(\d+)字下げ$/
-  );
+  const indent = cleanAnno.match(/^ここから(\d+)字下げ$/);
 
   if (indent) {
     return {
@@ -1025,9 +933,7 @@ function parseBlockStart(
     };
   }
 
-  const burasageOtsu = cleanAnno.match(
-    /^ここから(\d+)字下げ、折り返して(\d+)字下げ$/
-  );
+  const burasageOtsu = cleanAnno.match(/^ここから(\d+)字下げ、折り返して(\d+)字下げ$/);
 
   if (burasageOtsu) {
     return {
@@ -1037,9 +943,7 @@ function parseBlockStart(
     };
   }
 
-  const burasageTentsuki = cleanAnno.match(
-    /^ここから改行天付き、折り返して(\d+)字下げ$/
-  );
+  const burasageTentsuki = cleanAnno.match(/^ここから改行天付き、折り返して(\d+)字下げ$/);
 
   if (burasageTentsuki) {
     return {
@@ -1055,9 +959,7 @@ function parseBlockStart(
     };
   }
 
-  const chiyoseBlock = cleanAnno.match(
-    /^ここから地から(\d+)字上げ$/
-  );
+  const chiyoseBlock = cleanAnno.match(/^ここから地から(\d+)字上げ$/);
 
   if (chiyoseBlock) {
     return {
@@ -1066,9 +968,7 @@ function parseBlockStart(
     };
   }
 
-  const jizumeBlock = cleanAnno.match(
-    /^ここから(\d+)字詰め$/
-  );
+  const jizumeBlock = cleanAnno.match(/^ここから(\d+)字詰め$/);
 
   if (jizumeBlock) {
     return {
@@ -1077,9 +977,7 @@ function parseBlockStart(
     };
   }
 
-  const daiBlock = cleanAnno.match(
-    /^ここから(\d+)段階大きな文字$/
-  );
+  const daiBlock = cleanAnno.match(/^ここから(\d+)段階大きな文字$/);
 
   if (daiBlock) {
     return {
@@ -1088,9 +986,7 @@ function parseBlockStart(
     };
   }
 
-  const shoBlock = cleanAnno.match(
-    /^ここから(\d+)段階小さな文字$/
-  );
+  const shoBlock = cleanAnno.match(/^ここから(\d+)段階小さな文字$/);
 
   if (shoBlock) {
     return {
@@ -1105,14 +1001,10 @@ function parseBlockStart(
     };
   }
 
-  const heading = cleanAnno.match(
-    /^ここから(大|中|小)見出し$/
-  );
+  const heading = cleanAnno.match(/^ここから(大|中|小)見出し$/);
 
   if (heading) {
-    const info = headingInfo(
-      `${heading[1]}見出し`
-    );
+    const info = headingInfo(`${heading[1]}見出し`);
 
     if (!info) return null;
 
@@ -1271,12 +1163,8 @@ function isBlockEnd(annotation: string): boolean {
   const cleanAnno = zenToHanDigits(annotation);
 
   return (
-    /^ここで(大|中|小)見出し終わり$/.test(
-      cleanAnno
-    ) ||
-    /^ここで\d+字下げ終わり$/.test(
-      cleanAnno
-    ) ||
+    /^ここで(大|中|小)見出し終わり$/.test(cleanAnno) ||
+    /^ここで\d+字下げ終わり$/.test(cleanAnno) ||
     cleanAnno === 'ここで字下げ終わり' ||
     cleanAnno === 'ここで地付き終わり' ||
     cleanAnno === 'ここで字上げ終わり' ||
@@ -1305,25 +1193,14 @@ function isBlockEnd(annotation: string): boolean {
   );
 }
 
-function blockEndType(
-  annotation: string
-): BlockState['type'] | null {
+function blockEndType(annotation: string): BlockState['type'] | null {
   const cleanAnno = zenToHanDigits(annotation);
 
-  if (
-    /ここで(大|中|小)見出し終わり$/.test(
-      cleanAnno
-    )
-  ) {
+  if (/ここで(大|中|小)見出し終わり$/.test(cleanAnno)) {
     return 'heading';
   }
 
-  if (
-    /ここで\d+字下げ終わり$/.test(
-      cleanAnno
-    ) ||
-    cleanAnno === 'ここで字下げ終わり'
-  ) {
+  if (/ここで\d+字下げ終わり$/.test(cleanAnno) || cleanAnno === 'ここで字下げ終わり') {
     return null;
   }
 
@@ -1356,9 +1233,7 @@ function blockEndType(
   }
 
   if (cleanAnno.includes('傍線終わり')) {
-    return cleanAnno.includes('左に')
-      ? 'overline'
-      : 'underline';
+    return cleanAnno.includes('左に') ? 'overline' : 'underline';
   }
 
   if (cleanAnno === 'ここで太字終わり') {
@@ -1381,36 +1256,22 @@ function blockEndType(
 }
 
 const CHITSUKI_INLINE = /［＃地付き］/;
-const CHIYOSE_INLINE =
-  /［＃地から(\d+|[０-９]+)字上げ］/;
+const CHIYOSE_INLINE = /［＃地から(\d+|[０-９]+)字上げ］/;
 
-function tryRenderTrailingAlignment(
-  line: string
-): string[] | null {
+function tryRenderTrailingAlignment(line: string): string[] | null {
   const cleanLine = zenToHanDigits(line);
 
-  const chitsukiMatch =
-    cleanLine.match(CHITSUKI_INLINE);
+  const chitsukiMatch = cleanLine.match(CHITSUKI_INLINE);
 
-  const chiyoseMatch =
-    cleanLine.match(CHIYOSE_INLINE);
+  const chiyoseMatch = cleanLine.match(CHIYOSE_INLINE);
 
-  const candidates = [
-    chitsukiMatch,
-    chiyoseMatch,
-  ].filter(
-    (m): m is RegExpMatchArray => m !== null
-  );
+  const candidates = [chitsukiMatch, chiyoseMatch].filter((m): m is RegExpMatchArray => m !== null);
 
   if (candidates.length === 0) {
     return null;
   }
 
-  const match = candidates.sort(
-    (a, b) =>
-      (a.index ?? 0) -
-      (b.index ?? 0)
-  )[0];
+  const match = candidates.sort((a, b) => (a.index ?? 0) - (b.index ?? 0))[0];
 
   const index = match.index ?? -1;
 
@@ -1419,25 +1280,16 @@ function tryRenderTrailingAlignment(
   }
 
   const prefix = cleanLine.slice(0, index);
-  const suffix = cleanLine.slice(
-    index + match[0].length
-  );
+  const suffix = cleanLine.slice(index + match[0].length);
 
-  const isChiyose =
-    match === chiyoseMatch;
+  const isChiyose = match === chiyoseMatch;
 
-  const amount = isChiyose
-    ? Number(
-        (chiyoseMatch as RegExpMatchArray)[1]
-      )
-    : 0;
+  const amount = isChiyose ? Number((chiyoseMatch as RegExpMatchArray)[1]) : 0;
 
   const out: string[] = [];
 
   if (prefix.trim() !== '') {
-    out.push(
-      `<p>${renderInline(prefix)}</p>`
-    );
+    out.push(`<p>${renderInline(prefix)}</p>`);
   }
 
   out.push(
@@ -1455,23 +1307,13 @@ function renderNormalLine(line: string): string {
 
   let inlineIndent = 0;
 
-  const inlineIndentMatches = [
-    ...working.matchAll(
-      /［＃(\d+)字下げ］/g
-    ),
-  ];
+  const inlineIndentMatches = [...working.matchAll(/［＃(\d+)字下げ］/g)];
 
   for (const match of inlineIndentMatches) {
-    inlineIndent = Math.max(
-      inlineIndent,
-      Number(match[1])
-    );
+    inlineIndent = Math.max(inlineIndent, Number(match[1]));
   }
 
-  working = working.replace(
-    /［＃\d+字下げ］/g,
-    ''
-  );
+  working = working.replace(/［＃\d+字下げ］/g, '');
 
   const content = renderInline(working);
 
@@ -1479,19 +1321,14 @@ function renderNormalLine(line: string): string {
     return '<p><br/></p>';
   }
 
-  if (
-    content.trim().startsWith('<div')
-  ) {
+  if (content.trim().startsWith('<div')) {
     return content;
   }
 
   let result = `<p>${content}</p>`;
 
   if (inlineIndent > 0) {
-    result =
-      `<div class="jisage-${inlineIndent}">` +
-      result +
-      `</div>`;
+    result = `<div class="jisage-${inlineIndent}">` + result + `</div>`;
   }
 
   return result;
@@ -1501,26 +1338,19 @@ function renderNormalLine(line: string): string {
  * 青空文庫の Shift_JIS TXT を
  * EPUB 用 HTML に変換する。
  */
-export function parseAozoraTxtToHtml(
-  rawTxt: string
-): string {
+export function parseAozoraTxtToHtml(rawTxt: string): string {
   const lines = rawTxt.split(/\r?\n/);
 
   /*
    * 青空文庫 TXT のヘッダー部分を除去。
    */
-  const dividerRegex =
-    /^[-―─]{10,}\s*$/;
+  const dividerRegex = /^[-―─]{10,}\s*$/;
 
   let firstDividerIdx = -1;
   let secondDividerIdx = -1;
 
   for (let i = 0; i < lines.length; i++) {
-    if (
-      dividerRegex.test(
-        lines[i].trim()
-      )
-    ) {
+    if (dividerRegex.test(lines[i].trim())) {
       if (firstDividerIdx === -1) {
         firstDividerIdx = i;
       } else {
@@ -1537,88 +1367,52 @@ export function parseAozoraTxtToHtml(
         ? firstDividerIdx + 1
         : 0;
 
-  const bodyLines =
-    lines.slice(bodyStart);
+  const bodyLines = lines.slice(bodyStart);
 
-  const htmlResult: string[] = [
-    '<div class="main"><div class="chapter">',
-  ];
+  const htmlResult: string[] = ['<div class="main"><div class="chapter">'];
 
   const blockStack: BlockState[] = [];
 
   let inPageCenter = false;
   let inToc = false;
 
-  const closeBlock = (
-    expectedType: BlockState['type'] | null
-  ) => {
+  const closeBlock = (expectedType: BlockState['type'] | null) => {
     if (blockStack.length === 0) {
-      console.warn(
-        '[Aozora] block end without start:',
-        expectedType
-      );
+      console.warn('[Aozora] block end without start:', expectedType);
       return;
     }
 
-    const top =
-      blockStack[blockStack.length - 1];
+    const top = blockStack[blockStack.length - 1];
 
-    const isIndentFamily =
-      top.type === 'indent' ||
-      top.type === 'burasage';
+    const isIndentFamily = top.type === 'indent' || top.type === 'burasage';
 
-    if (
-      expectedType &&
-      top.type !== expectedType &&
-      !(
-        expectedType === null &&
-        isIndentFamily
-      )
-    ) {
-      console.warn(
-        '[Aozora] mismatched block end:',
-        {
-          expected: expectedType,
-          actual: top.type,
-        }
-      );
+    if (expectedType && top.type !== expectedType && !(expectedType === null && isIndentFamily)) {
+      console.warn('[Aozora] mismatched block end:', {
+        expected: expectedType,
+        actual: top.type,
+      });
 
       return;
     }
 
     blockStack.pop();
 
-    htmlResult.push(
-      blockTags(top).close
-    );
+    htmlResult.push(blockTags(top).close);
   };
 
-  for (
-    let i = 0;
-    i < bodyLines.length;
-    i++
-  ) {
+  for (let i = 0; i < bodyLines.length; i++) {
     const line = bodyLines[i];
     const trimmed = line.trim();
 
     /*
      * 目次
      */
-    if (
-      trimmed.includes(
-        '［＃ここから目次］'
-      ) ||
-      trimmed.includes('［＃目次］')
-    ) {
+    if (trimmed.includes('［＃ここから目次］') || trimmed.includes('［＃目次］')) {
       inToc = true;
       continue;
     }
 
-    if (
-      trimmed.includes(
-        '［＃ここで目次終わり］'
-      )
-    ) {
+    if (trimmed.includes('［＃ここで目次終わり］')) {
       inToc = false;
       continue;
     }
@@ -1631,25 +1425,15 @@ export function parseAozoraTxtToHtml(
      * ページ左右中央
      */
     if (
-      trimmed.includes(
-        '［＃ページの左右中央］'
-      ) ||
-      trimmed.includes(
-        '［＃ここからページの左右中央］'
-      )
+      trimmed.includes('［＃ページの左右中央］') ||
+      trimmed.includes('［＃ここからページの左右中央］')
     ) {
       inPageCenter = true;
-      htmlResult.push(
-        '<div class="page-center">'
-      );
+      htmlResult.push('<div class="page-center">');
       continue;
     }
 
-    if (
-      trimmed.includes(
-        '［＃ここでページの左右中央終わり］'
-      )
-    ) {
+    if (trimmed.includes('［＃ここでページの左右中央終わり］')) {
       if (inPageCenter) {
         htmlResult.push('</div>');
         inPageCenter = false;
@@ -1661,19 +1445,13 @@ export function parseAozoraTxtToHtml(
     /*
      * 改ページ
      */
-    if (
-      trimmed === '［＃改ページ］' ||
-      trimmed === '［＃改丁］' ||
-      trimmed === '［＃改見開き］'
-    ) {
+    if (trimmed === '［＃改ページ］' || trimmed === '［＃改丁］' || trimmed === '［＃改見開き］') {
       if (inPageCenter) {
         htmlResult.push('</div>');
         inPageCenter = false;
       }
 
-      htmlResult.push(
-        '<div class="page-break"></div>'
-      );
+      htmlResult.push('<div class="page-break"></div>');
 
       continue;
     }
@@ -1682,9 +1460,7 @@ export function parseAozoraTxtToHtml(
      * 改段
      */
     if (trimmed === '［＃改段］') {
-      htmlResult.push(
-        '<span class="notes">［＃改段］</span>'
-      );
+      htmlResult.push('<span class="notes">［＃改段］</span>');
 
       continue;
     }
@@ -1692,19 +1468,15 @@ export function parseAozoraTxtToHtml(
     /*
      * 単独行画像
      */
-    const standaloneImageMatch =
-      trimmed.match(
-        /^［＃(?:.+?図|挿絵|画像)（([^,、）]+)(?:[、,][^）]+)?）入る］$/
-      );
+    IMAGE_ANNOTATION_PATTERN.lastIndex = 0; // /g フラグのインデックスリセット
+    const imageMatch = IMAGE_ANNOTATION_PATTERN.exec(trimmed);
 
-    if (standaloneImageMatch) {
-      const fileName =
-        standaloneImageMatch[1].trim();
+    // 1行丸ごと挿絵注記の場合
+    if (imageMatch && trimmed === imageMatch[0]) {
+      const fileName = imageMatch[1].trim();
 
       htmlResult.push(
-        `<div class="illust">` +
-          `<img src="../images/${escapeXml(fileName)}" alt="" />` +
-          `</div>`
+        `<div class="illust">` + `<img src="../images/${escapeXml(fileName)}" alt="" />` + `</div>`
       );
 
       continue;
@@ -1713,28 +1485,15 @@ export function parseAozoraTxtToHtml(
     /*
      * 単独行のブロック注記
      */
-    const annotations = [
-      ...trimmed.matchAll(
-        ANNOTATION_PATTERN
-      ),
-    ].map(
-      (m) => m[0].slice(2, -1)
-    );
+    const annotations = [...trimmed.matchAll(ANNOTATION_PATTERN)].map((m) => m[0].slice(2, -1));
 
-    if (
-      annotations.length === 1 &&
-      trimmed ===
-        `［＃${annotations[0]}］`
-    ) {
-      const annotation =
-        annotations[0];
+    if (annotations.length === 1 && trimmed === `［＃${annotations[0]}］`) {
+      const annotation = annotations[0];
 
-      const state =
-        parseBlockStart(annotation);
+      const state = parseBlockStart(annotation);
 
       if (state) {
-        const { open } =
-          blockTags(state);
+        const { open } = blockTags(state);
 
         htmlResult.push(open);
         blockStack.push(state);
@@ -1742,24 +1501,15 @@ export function parseAozoraTxtToHtml(
         continue;
       }
 
-      if (
-        isBlockEnd(annotation)
-      ) {
-        closeBlock(
-          blockEndType(annotation)
-        );
+      if (isBlockEnd(annotation)) {
+        closeBlock(blockEndType(annotation));
 
         continue;
       }
 
-      console.warn(
-        '[Aozora] unsupported block annotation:',
-        trimmed
-      );
+      console.warn('[Aozora] unsupported block annotation:', trimmed);
 
-      htmlResult.push(
-        `<span class="notes">${escapeHtml(trimmed)}</span>`
-      );
+      htmlResult.push(`<span class="notes">${escapeHtml(trimmed)}</span>`);
 
       continue;
     }
@@ -1767,49 +1517,22 @@ export function parseAozoraTxtToHtml(
     /*
      * 「〜」は大見出し
      */
-    const headingForward =
-      line.match(
-        /［＃「(.+?)」は(同行|窓)?(大|中|小)見出し］/
-      ) ?? null;
+    const headingForward = line.match(/［＃「(.+?)」は(同行|窓)?(大|中|小)見出し］/) ?? null;
 
     if (headingForward) {
-      const [
-        ,
-        target,
-        formType,
-        levelText,
-      ] = headingForward;
+      const [, target, formType, levelText] = headingForward;
 
-      const info =
-        headingInfo(
-          `${levelText}見出し`
-        );
+      const info = headingInfo(`${levelText}見出し`);
 
-      if (
-        info &&
-        line.trim().endsWith(
-          headingForward[0]
-        )
-      ) {
-        const targetStart =
-          line.lastIndexOf(target);
+      if (info && line.trim().endsWith(headingForward[0])) {
+        const targetStart = line.lastIndexOf(target);
 
         if (targetStart >= 0) {
-          const prefix =
-            line.slice(
-              0,
-              targetStart
-            );
+          const prefix = line.slice(0, targetStart);
 
-          const indentMatch =
-            zenToHanDigits(prefix).match(
-              /［＃(\d+)字下げ］/
-            );
+          const indentMatch = zenToHanDigits(prefix).match(/［＃(\d+)字下げ］/);
 
-          const indent =
-            indentMatch
-              ? Number(indentMatch[1])
-              : 0;
+          const indent = indentMatch ? Number(indentMatch[1]) : 0;
 
           const headingClass =
             formType === '同行'
@@ -1819,20 +1542,12 @@ export function parseAozoraTxtToHtml(
                 : info.className;
 
           const renderedHeading =
-            `<${info.tag} class="${headingClass}">` +
-            `${renderInline(target)}` +
-            `</${info.tag}>`;
+            `<${info.tag} class="${headingClass}">` + `${renderInline(target)}` + `</${info.tag}>`;
 
           if (indent > 0) {
-            htmlResult.push(
-              `<div class="jisage-${indent}">` +
-                renderedHeading +
-                `</div>`
-            );
+            htmlResult.push(`<div class="jisage-${indent}">` + renderedHeading + `</div>`);
           } else {
-            htmlResult.push(
-              renderedHeading
-            );
+            htmlResult.push(renderedHeading);
           }
 
           continue;
@@ -1843,36 +1558,24 @@ export function parseAozoraTxtToHtml(
     /*
      * ［＃大見出し］〜［＃大見出し終わり］
      */
-    const headingOpenClose =
-      trimmed.match(
-        /^［＃((?:同行|窓)?(大|中|小)見出し)］(.+)［＃\1終わり］$/
-      );
+    const headingOpenClose = trimmed.match(
+      /^［＃((?:同行|窓)?(大|中|小)見出し)］(.+)［＃\1終わり］$/
+    );
 
     if (headingOpenClose) {
-      const [
-        ,
-        fullLevel,
-        levelChar,
-        content,
-      ] = headingOpenClose;
+      const [, fullLevel, levelChar, content] = headingOpenClose;
 
-      const info =
-        headingInfo(
-          `${levelChar}見出し`
-        );
+      const info = headingInfo(`${levelChar}見出し`);
 
       if (info) {
-        const className =
-          fullLevel.startsWith('同行')
-            ? `dogyo-${info.className}`
-            : fullLevel.startsWith('窓')
-              ? `mado-${info.className}`
-              : info.className;
+        const className = fullLevel.startsWith('同行')
+          ? `dogyo-${info.className}`
+          : fullLevel.startsWith('窓')
+            ? `mado-${info.className}`
+            : info.className;
 
         htmlResult.push(
-          `<${info.tag} class="${className}">` +
-            `${renderInline(content)}` +
-            `</${info.tag}>`
+          `<${info.tag} class="${className}">` + `${renderInline(content)}` + `</${info.tag}>`
         );
 
         continue;
@@ -1882,15 +1585,10 @@ export function parseAozoraTxtToHtml(
     /*
      * 地付き / 字上げ
      */
-    const alignmentResult =
-      tryRenderTrailingAlignment(
-        line
-      );
+    const alignmentResult = tryRenderTrailingAlignment(line);
 
     if (alignmentResult) {
-      htmlResult.push(
-        ...alignmentResult
-      );
+      htmlResult.push(...alignmentResult);
 
       continue;
     }
@@ -1898,8 +1596,7 @@ export function parseAozoraTxtToHtml(
     /*
      * 通常行
      */
-    const rendered =
-      renderNormalLine(line);
+    const rendered = renderNormalLine(line);
 
     htmlResult.push(rendered);
   }
@@ -1907,29 +1604,19 @@ export function parseAozoraTxtToHtml(
   /*
    * EOF で閉じ忘れたブロックを閉じる
    */
-  while (
-    blockStack.length > 0
-  ) {
-    const state =
-      blockStack.pop()!;
+  while (blockStack.length > 0) {
+    const state = blockStack.pop()!;
 
-    console.warn(
-      '[Aozora] unclosed block at EOF:',
-      state
-    );
+    console.warn('[Aozora] unclosed block at EOF:', state);
 
-    htmlResult.push(
-      blockTags(state).close
-    );
+    htmlResult.push(blockTags(state).close);
   }
 
   if (inPageCenter) {
     htmlResult.push('</div>');
   }
 
-  htmlResult.push(
-    '</div></div>'
-  );
+  htmlResult.push('</div></div>');
 
   return htmlResult.join('');
 }
