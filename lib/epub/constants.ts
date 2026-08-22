@@ -13,5 +13,4 @@ export const RUBY_PATTERN =
 
 export const ANNOTATION_PATTERN = /［＃[^］]+］/g;
 
-export const IMAGE_ANNOTATION_PATTERN =
-  /［＃(?:.+?図|挿絵|画像)（([^,、）]+)(?:[、,][^）]+)?）入る］/g;
+export const IMAGE_ANNOTATION_PATTERN = /［＃.+?（([^,、）]+)(?:[、,][^）]+)?）入る］/g;
