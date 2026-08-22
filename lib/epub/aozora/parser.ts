@@ -408,6 +408,52 @@ function applyForwardReferenceAnnotations(line: string): string {
     }
 
     /*
+     * 「〜」はローマ数字（面区点情報の有無に関わらず対応）
+     */
+    const romanMatch = body.match(/^「(.+?)」はローマ数字(?:、.+)?$/);
+
+    if (romanMatch) {
+      const target = romanMatch[1];
+      const before = working.slice(0, index);
+
+      if (before.endsWith(target)) {
+        const targetStart = index - target.length;
+
+        const ROMAN_MAP: Record<string, string> = {
+          '1': 'Ⅰ',
+          '2': 'Ⅱ',
+          '3': 'Ⅲ',
+          '4': 'Ⅳ',
+          '5': 'Ⅴ',
+          '6': 'Ⅵ',
+          '7': 'Ⅶ',
+          '8': 'Ⅷ',
+          '9': 'Ⅸ',
+          '10': 'Ⅹ',
+          '11': 'Ⅺ',
+          '12': 'Ⅻ',
+          I: 'Ⅰ',
+          II: 'Ⅱ',
+          III: 'Ⅲ',
+          IV: 'Ⅳ',
+          V: 'Ⅴ',
+          VI: 'Ⅵ',
+          VII: 'Ⅶ',
+          VIII: 'Ⅷ',
+          IX: 'Ⅸ',
+          X: 'Ⅹ',
+        };
+
+        const normalizedKey = zenToHanDigits(target.trim()).toUpperCase();
+        const romanChar = ROMAN_MAP[normalizedKey] ?? target;
+
+        working = working.slice(0, targetStart) + romanChar + working.slice(index + raw.length);
+
+        continue;
+      }
+    }
+
+    /*
      * 「〜」の左に傍点 / 「〜」に傍点
      */
     const leftMatch = body.match(/^「(.+?)」の左に(.+)$/);
