@@ -6,9 +6,11 @@ import { MAX_REQUESTS } from '@/lib/epub/constants';
 
 import { checkRateLimit, getClientIp } from '@/lib/epub/security';
 
-import { fetchAozoraZip } from '@/lib/epub/fetchAozora';
+import { fetchAozoraZip, fetchGaijiImages, buildGaijiImageMap } from '@/lib/epub/fetchAozora';
 
 import { extractDataFromZip } from '@/lib/epub/zip';
+
+import { GAIJI_PATTERN } from '@/lib/epub/aozora/inline';
 
 import { parseAozoraTxtToHtml } from '@/lib/epub/aozora/parser';
 
@@ -72,9 +74,31 @@ export async function POST(req: NextRequest) {
 
     const { text, images } = extractDataFromZip(zipBuffer);
 
-    const bodyHtml = parseAozoraTxtToHtml(text);
+    const jisCodes = [...text.matchAll(GAIJI_PATTERN)]
+      .map((m) => m[2])
+      .filter((code): code is string => Boolean(code));
 
-    const epub = buildEpubBuffer(book.title || '無題', book.author || '作者不明', bodyHtml, images);
+    const gaijiImages = await fetchGaijiImages(jisCodes);
+    const gaijiImageMap = buildGaijiImageMap(gaijiImages);
+
+    const bodyHtml = parseAozoraTxtToHtml(text, gaijiImageMap);
+
+    // GaijiImage 型から ExtractedImage 型への変換処理
+    const gaijiAsExtractedImages = gaijiImages.map((img) => ({
+      name: img.filename,
+      data: new Uint8Array(img.data),
+      mediaType: img.mediaType,
+    }));
+
+    console.log('【EPUB同梱画像一覧】:', [
+      ...images.map((i) => i.name),
+      ...gaijiAsExtractedImages.map((i) => i.name),
+    ]);
+
+    const epub = buildEpubBuffer(book.title || '無題', book.author || '作者不明', bodyHtml, [
+      ...images,
+      ...gaijiAsExtractedImages,
+    ]);
 
     return new NextResponse(epub as unknown as BodyInit, {
       status: 200,

@@ -109,3 +109,66 @@ export async function fetchAozoraZip(urlStr: string, timeout = 15000): Promise<B
     return buffer;
   }
 }
+
+export interface GaijiImage {
+  jisCode: string;
+  filename: string;
+  data: Buffer;
+  mediaType: string;
+}
+
+/**
+ * 本文中に出現する外字のJISコード一覧を受け取り、
+ * aozora.gr.jp から画像を並列取得する。
+ * 重複コードは1回だけ取得し、取得に失敗したものは結果に含めない
+ * （呼び出し側の resolveGaiji がテキスト近似にフォールバックする）。
+ */
+export async function fetchGaijiImages(jisCodes: string[]): Promise<GaijiImage[]> {
+  const uniqueCodes = [...new Set(jisCodes)];
+
+  const results = await Promise.all(
+    uniqueCodes.map(async (jisCode): Promise<GaijiImage | null> => {
+      const match = jisCode.match(/(\d+)-(\d+)-(\d+)/);
+      if (!match) return null;
+
+      const [, m, k, t] = match;
+      const men = Number(m);
+      const ku = String(Number(k)).padStart(2, '0');
+      const ten = String(Number(t)).padStart(2, '0');
+
+      // 青空文庫の2パターンのURL（面番号そのまま 1-88 / 水準コード加算 31-88）
+      const altMen = men === 1 ? 31 : men === 2 ? 42 : men;
+
+      const candidateUrls = [
+        `https://www.aozora.gr.jp/gaiji/${men}-${ku}/${men}-${ku}-${ten}.png`,
+        `https://www.aozora.gr.jp/gaiji/${altMen}-${ku}/${altMen}-${ku}-${ten}.png`,
+      ];
+
+      for (const url of candidateUrls) {
+        try {
+          const data = await fetchAozoraZip(url);
+          // EPUB内のファイル名は混乱を防ぐため jisCode ベースで統一
+          const filename = `gaiji-${jisCode.replace(/[^\d-]/g, '')}.png`;
+
+          return { jisCode, filename, data, mediaType: 'image/png' };
+        } catch {
+          // 最初のURLで失敗したら次の候補URLを試す
+          continue;
+        }
+      }
+
+      console.warn('[Aozora] gaiji image fetch failed for all candidates:', jisCode);
+      return null;
+    })
+  );
+
+  return results.filter((r): r is GaijiImage => r !== null);
+}
+
+/**
+ * fetchGaijiImages の結果から、resolveGaiji が使う
+ * 「JISコード → ファイル名」の Map を組み立てる。
+ */
+export function buildGaijiImageMap(images: GaijiImage[]): Map<string, string> {
+  return new Map(images.map((img) => [img.jisCode, img.filename]));
+}

@@ -302,6 +302,13 @@ rt {
   font-size: 0.6em;
 }
 
+.kaeriten {
+  font-size: 0.5em;
+  vertical-align: sub;
+  line-height: 1;
+  font-family: serif;
+}
+
 .keigakomi {
   border: solid 1px;
   padding: 0.5em;
