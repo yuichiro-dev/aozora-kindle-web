@@ -1,7 +1,15 @@
 import { MetadataRoute } from 'next';
+import { getAllGenreAuthors } from '@/lib/genres';
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
+  const authorPages: MetadataRoute.Sitemap = getAllGenreAuthors().map((author) => ({
+    url: `${baseUrl}/authors/${encodeURIComponent(author)}`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.6,
+  }));
 
   return [
     {
@@ -16,5 +24,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'weekly',
       priority: 0.5,
     },
+    ...authorPages,
   ];
 }
