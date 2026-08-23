@@ -7,6 +7,8 @@ import AuthorBookList from '@/components/AuthorBookList';
 import Header from '@/components/Header';
 import Link from 'next/link';
 
+const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL || 'http://localhost:3000';
+
 interface Book {
   id: number;
   title: string;
@@ -93,8 +95,13 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
     '@context': 'https://schema.org',
     '@type': 'BreadcrumbList',
     itemListElement: [
-      { '@type': 'ListItem', position: 1, name: 'ホーム', item: '/' },
-      { '@type': 'ListItem', position: 2, name: author, item: `/authors/${slug}` },
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: SITE_URL },
+      {
+        '@type': 'ListItem',
+        position: 2,
+        name: author,
+        item: `${SITE_URL}/authors/${slug}`,
+      },
     ],
   };
 

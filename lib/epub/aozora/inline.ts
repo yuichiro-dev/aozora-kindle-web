@@ -377,8 +377,6 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
 
   working = applyForwardReferenceAnnotations(working);
 
-  working = applyForwardReferenceAnnotations(working);
-
   /*
    * 画像注記
    */
@@ -854,6 +852,7 @@ export function resolveGaiji(line: string, gaijiImages: Map<string, string>): st
       }
     }
 
-    return escapeHtml(approximateGaijiText(description));
+    const altText = approximateGaijiText(description);
+    return `[[AOZORA_HTML:${encodeURIComponent(escapeHtml(altText))}]]`;
   });
 }
