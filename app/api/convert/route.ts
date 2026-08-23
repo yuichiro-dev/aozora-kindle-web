@@ -90,11 +90,6 @@ export async function POST(req: NextRequest) {
       mediaType: img.mediaType,
     }));
 
-    console.log('【EPUB同梱画像一覧】:', [
-      ...images.map((i) => i.name),
-      ...gaijiAsExtractedImages.map((i) => i.name),
-    ]);
-
     const epub = buildEpubBuffer(book.title || '無題', book.author || '作者不明', bodyHtml, [
       ...images,
       ...gaijiAsExtractedImages,
