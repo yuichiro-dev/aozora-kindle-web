@@ -1,6 +1,6 @@
 import { ANNOTATION_PATTERN, IMAGE_ANNOTATION_PATTERN, RUBY_PATTERN } from '../constants';
 
-import { escapeHtml, zenToHanDigits } from '../escape';
+import { escapeHtml, escapeXml, zenToHanDigits } from '../escape';
 
 import { headingInfo } from './headings';
 
@@ -10,22 +10,10 @@ const FORWARD_EMPHASIS: Array<{
   suffix: string;
   className: InlineStyle;
 }> = [
-  {
-    suffix: '傍点',
-    className: 'sesame_dot',
-  },
-  {
-    suffix: '白ゴマ傍点',
-    className: 'white_sesame_dot',
-  },
-  {
-    suffix: '丸傍点',
-    className: 'black_circle',
-  },
-  {
-    suffix: '白丸傍点',
-    className: 'white_circle',
-  },
+  { suffix: '傍点', className: 'sesame_dot' },
+  { suffix: '白ゴマ傍点', className: 'white_sesame_dot' },
+  { suffix: '丸傍点', className: 'black_circle' },
+  { suffix: '白丸傍点', className: 'white_circle' },
   {
     suffix: '黒三角傍点',
     className: 'black_up-pointing_triangle',
@@ -34,44 +22,20 @@ const FORWARD_EMPHASIS: Array<{
     suffix: '白三角傍点',
     className: 'white_up-pointing_triangle',
   },
-  {
-    suffix: '二重丸傍点',
-    className: 'bullseye',
-  },
-  {
-    suffix: '蛇の目傍点',
-    className: 'fisheye',
-  },
-  {
-    suffix: 'ばつ傍点',
-    className: 'saltire',
-  },
+  { suffix: '二重丸傍点', className: 'bullseye' },
+  { suffix: '蛇の目傍点', className: 'fisheye' },
+  { suffix: 'ばつ傍点', className: 'saltire' },
 ];
 
 const FORWARD_UNDERLINES: Array<{
   suffix: string;
   className: InlineStyle;
 }> = [
-  {
-    suffix: '傍線',
-    className: 'underline_solid',
-  },
-  {
-    suffix: '二重傍線',
-    className: 'underline_double',
-  },
-  {
-    suffix: '鎖線',
-    className: 'underline_dotted',
-  },
-  {
-    suffix: '破線',
-    className: 'underline_dashed',
-  },
-  {
-    suffix: '波線',
-    className: 'underline_wave',
-  },
+  { suffix: '傍線', className: 'underline_solid' },
+  { suffix: '二重傍線', className: 'underline_double' },
+  { suffix: '鎖線', className: 'underline_dotted' },
+  { suffix: '破線', className: 'underline_dashed' },
+  { suffix: '波線', className: 'underline_wave' },
 ];
 
 const LEFT_EMPHASIS: Array<{
@@ -154,12 +118,14 @@ export function applyRubyAndEscape(text: string): string {
     result += escapeHtml(text.slice(lastIndex, index));
 
     const rubyBase = match[1] ?? match[3];
-
     const rubyText = match[2] ?? match[4];
 
-    result += `<ruby>${escapeHtml(rubyBase)}<rp>（</rp><rt>${escapeHtml(
-      rubyText
-    )}</rt><rp>）</rp></ruby>`;
+    result +=
+      `<ruby>${escapeHtml(rubyBase)}` +
+      `<rp>（</rp>` +
+      `<rt>${escapeHtml(rubyText)}</rt>` +
+      `<rp>）</rp>` +
+      `</ruby>`;
 
     lastIndex = index + match[0].length;
   }
@@ -178,33 +144,28 @@ function applyForwardReferenceAnnotations(line: string): string {
     const match = matches[i];
 
     const raw = match[0];
-
     const index = match.index ?? -1;
 
-    if (index < 0) {
-      continue;
-    }
+    if (index < 0) continue;
 
     const body = raw.slice(2, -1);
 
+    /*
+     * 「〜」は大見出し
+     */
     const headingMatch = body.match(/^「(.+?)」は(同行|窓)?(大|中|小)見出し$/);
 
     if (headingMatch) {
       const target = headingMatch[1];
-
       const formType = headingMatch[2];
 
       const info = headingInfo(`${headingMatch[3]}見出し`);
 
-      if (!info) {
-        continue;
-      }
+      if (!info) continue;
 
       const before = working.slice(0, index);
 
-      if (!before.endsWith(target)) {
-        continue;
-      }
+      if (!before.endsWith(target)) continue;
 
       const targetStart = index - target.length;
 
@@ -217,93 +178,239 @@ function applyForwardReferenceAnnotations(line: string): string {
             ? `mado-${info.className}`
             : info.className;
 
-      const replacement = `[[AOZORA_HEADING:${info.tag}:${headingClass}:${encodeURIComponent(
-        renderedTarget
-      )}]]`;
+      const replacement =
+        `[[AOZORA_HEADING:${info.tag}:` +
+        `${headingClass}:` +
+        `${encodeURIComponent(renderedTarget)}]]`;
 
       working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
 
       continue;
     }
 
-    const mama = body.match(/^「(.+?)」に「ママ」の注記$/);
+    /*
+     * 「〜」に「ママ」の注記
+     */
+    const mamaRubyMatch = body.match(/^「(.+?)」に「ママ」の注記$/);
 
-    if (mama) {
-      const target = mama[1];
-
+    if (mamaRubyMatch) {
+      const target = mamaRubyMatch[1];
       const before = working.slice(0, index);
 
       if (before.endsWith(target)) {
         const targetStart = index - target.length;
 
         const replacement = `[[AOZORA_HTML:${encodeURIComponent(
-          `<ruby><rb>${escapeHtml(target)}</rb><rp>（</rp><rt>ママ</rt><rp>）</rp></ruby>`
+          `<ruby><rb>${escapeHtml(target)}</rb>` + `<rp>（</rp><rt>ママ</rt><rp>）</rp></ruby>`
         )}]]`;
 
         working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+
+        continue;
       }
-
-      continue;
     }
 
-    const left = body.match(/^「(.+?)」の左に(.+)$/);
+    /*
+     * 「〜」はローマ数字（面区点情報の有無に関わらず対応）
+     */
+    const romanMatch = body.match(/^「(.+?)」はローマ数字(?:、.+)?$/);
 
-    const normal = body.match(/^「(.+?)」に(.+)$/);
+    if (romanMatch) {
+      const target = romanMatch[1];
+      const before = working.slice(0, index);
 
-    const target = left?.[1] ?? normal?.[1];
+      if (before.endsWith(target)) {
+        const targetStart = index - target.length;
 
-    const styleName = left?.[2] ?? normal?.[2];
+        const ROMAN_MAP: Record<string, string> = {
+          '1': 'Ⅰ',
+          '2': 'Ⅱ',
+          '3': 'Ⅲ',
+          '4': 'Ⅳ',
+          '5': 'Ⅴ',
+          '6': 'Ⅵ',
+          '7': 'Ⅶ',
+          '8': 'Ⅷ',
+          '9': 'Ⅸ',
+          '10': 'Ⅹ',
+          '11': 'Ⅺ',
+          '12': 'Ⅻ',
+          I: 'Ⅰ',
+          II: 'Ⅱ',
+          III: 'Ⅲ',
+          IV: 'Ⅳ',
+          V: 'Ⅴ',
+          VI: 'Ⅵ',
+          VII: 'Ⅶ',
+          VIII: 'Ⅷ',
+          IX: 'Ⅸ',
+          X: 'Ⅹ',
+        };
 
-    if (!target || !styleName) {
-      continue;
+        const normalizedKey = zenToHanDigits(target.trim()).toUpperCase();
+        const romanChar = ROMAN_MAP[normalizedKey] ?? target;
+
+        working = working.slice(0, targetStart) + romanChar + working.slice(index + raw.length);
+
+        continue;
+      }
     }
+
+    /*
+     * 「〜」の左に傍点 / 「〜」に傍点
+     */
+    const leftMatch = body.match(/^「(.+?)」の左に(.+)$/);
+    const normalMatch = body.match(/^「(.+?)」に(.+)$/);
+
+    const target = leftMatch?.[1] ?? normalMatch?.[1];
+    const styleName = leftMatch?.[2] ?? normalMatch?.[2];
+
+    if (!target || !styleName) continue;
 
     const style = (
-      left ? [...LEFT_EMPHASIS, ...LEFT_UNDERLINES] : [...FORWARD_EMPHASIS, ...FORWARD_UNDERLINES]
+      leftMatch
+        ? [...LEFT_EMPHASIS, ...LEFT_UNDERLINES]
+        : [...FORWARD_EMPHASIS, ...FORWARD_UNDERLINES]
     ).find((item) => item.suffix === styleName);
 
-    if (!style) {
-      continue;
-    }
+    if (!style) continue;
 
     const before = working.slice(0, index);
 
-    if (!before.endsWith(target)) {
-      continue;
-    }
+    if (!before.endsWith(target)) continue;
 
     const targetStart = index - target.length;
 
-    const replacement = `[[AOZORA_INLINE:${style.className}:${encodeURIComponent(target)}]]`;
+    const replacement = `[[AOZORA_INLINE:${style.className}:` + `${encodeURIComponent(target)}]]`;
 
     working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+  }
+
+  interface SimpleForwardRule {
+    re: RegExp;
+    getClassName: (match: RegExpExecArray) => string;
+  }
+
+  const simplePatterns: SimpleForwardRule[] = [
+    {
+      re: /「(.+?)」は太字/,
+      getClassName: () => 'futoji',
+    },
+    {
+      re: /「(.+?)」は斜体/,
+      getClassName: () => 'shatai',
+    },
+    {
+      re: /「(.+?)」は縦中横/,
+      getClassName: () => 'tcy',
+    },
+    {
+      re: /「(.+?)」は行右小書き/,
+      getClassName: () => 'superscript',
+    },
+    {
+      re: /「(.+?)」は行左小書き/,
+      getClassName: () => 'subscript',
+    },
+    {
+      re: /「(.+?)」は上付き小文字/,
+      getClassName: () => 'superscript',
+    },
+    {
+      re: /「(.+?)」は下付き小文字/,
+      getClassName: () => 'subscript',
+    },
+    {
+      re: /「(.+?)」は([０-９\d]+)段階大きな文字/,
+      getClassName: (m) => `dai${m[2]}`,
+    },
+    {
+      re: /「(.+?)」は([０-９\d]+)段階小さな文字/,
+      getClassName: (m) => `sho${m[2]}`,
+    },
+    {
+      re: /「(.+?)」はキャプション/,
+      getClassName: () => 'caption',
+    },
+  ];
+
+  for (const { re, getClassName } of simplePatterns) {
+    const annotationRe = new RegExp(`［＃${re.source}］`, 'g');
+
+    let m: RegExpExecArray | null;
+
+    while ((m = annotationRe.exec(working)) !== null) {
+      const rawTarget = m[1];
+      const className = getClassName(m);
+
+      const start = m.index;
+      const before = working.slice(0, start);
+
+      // ★ ルビ《...》が挟まっていてもマッチする関数を使用
+      const matchedText = matchTargetAllowingRuby(before, rawTarget);
+
+      if (!matchedText) continue;
+
+      const targetStart = start - matchedText.length;
+
+      // 実際にマッチしたルビ込みのテキストに対してクラスを適用
+      const replacement = `[[AOZORA_INLINE:${className}:` + `${encodeURIComponent(matchedText)}]]`;
+
+      working = working.slice(0, targetStart) + replacement + working.slice(start + m[0].length);
+
+      annotationRe.lastIndex = 0;
+    }
   }
 
   return working;
 }
 
-export function renderInline(line: string): string {
-  let working = applyForwardReferenceAnnotations(line);
+export function renderInline(line: string, gaijiImages: Map<string, string> = new Map()): string {
+  let working = resolveGaiji(line, gaijiImages);
+  /*
+   * JISコードのない約物注記（例: ※［＃感嘆符三つ、626-10］など）の安全な置換
+   */
+  working = working.replace(/※?［＃([^、］]+)[、,]\s*\d+-\d+］/g, (_match, description) => {
+    const altText = approximateGaijiText(description);
+    return `[[AOZORA_HTML:${encodeURIComponent(escapeHtml(altText))}]]`;
+  });
 
-  working = working.replace(
-    IMAGE_ANNOTATION_PATTERN,
-    (_match, fileName) =>
-      `[[AOZORA_HTML:${encodeURIComponent(
-        `<div class="illust"><img src="../images/${escapeHtml(
-          String(fileName).trim()
-        )}" alt="" /></div>`
-      )}]]`
-  );
+  working = applyForwardReferenceAnnotations(working);
 
+  working = applyForwardReferenceAnnotations(working);
+
+  /*
+   * 画像注記
+   */
+  working = working.replace(IMAGE_ANNOTATION_PATTERN, (_match, fileName) => {
+    const cleanFileName = fileName.trim();
+
+    return `[[AOZORA_HTML:${encodeURIComponent(
+      `<div class="illust">` +
+        `<img src="../images/${escapeXml(cleanFileName)}" alt="" />` +
+        `</div>`
+    )}]]`;
+  });
+
+  /*
+   * インライン文字サイズ
+   */
   working = working.replace(
     /［＃(\d+)段階大きな文字］([\s\S]+?)［＃大きな文字終わり］/g,
     (_m, digits, content) => {
       const n = Number(digits);
 
-      const size = n === 1 ? 'large' : n === 2 ? 'x-large' : 'xx-large';
+      const sizeMap: Record<number, string> = {
+        1: 'large',
+        2: 'x-large',
+      };
+
+      const size = sizeMap[n] ?? 'xx-large';
 
       return `[[AOZORA_HTML:${encodeURIComponent(
-        `<span class="dai${n}" style="font-size:${size};">${renderInline(content)}</span>`
+        `<span class="dai${n}" style="font-size: ${size};">` +
+          `${renderInline(content, gaijiImages)}` +
+          `</span>`
       )}]]`;
     }
   );
@@ -313,15 +420,30 @@ export function renderInline(line: string): string {
     (_m, digits, content) => {
       const n = Number(digits);
 
-      const size = n === 1 ? 'small' : n === 2 ? 'x-small' : 'xx-small';
+      const sizeMap: Record<number, string> = {
+        1: 'small',
+        2: 'x-small',
+      };
+
+      const size = sizeMap[n] ?? 'xx-small';
 
       return `[[AOZORA_HTML:${encodeURIComponent(
-        `<span class="sho${n}" style="font-size:${size};">${renderInline(content)}</span>`
+        `<span class="sho${n}" style="font-size: ${size};">` +
+          `${renderInline(content, gaijiImages)}` +
+          `</span>`
       )}]]`;
     }
   );
 
-  const rangePatterns = [
+  /*
+   * 範囲指定型の注記
+   */
+  const rangePatterns: Array<{
+    start: string;
+    end: string;
+    className: string;
+    tag?: string;
+  }> = [
     {
       start: '傍点',
       end: '傍点終わり',
@@ -378,6 +500,61 @@ export function renderInline(line: string): string {
     },
 
     {
+      start: '左に傍点',
+      end: '左に傍点終わり',
+      className: 'sesame_dot_after',
+      tag: 'em',
+    },
+    {
+      start: '左に白ゴマ傍点',
+      end: '左に白ゴマ傍点終わり',
+      className: 'white_sesame_dot_after',
+      tag: 'em',
+    },
+    {
+      start: '左に丸傍点',
+      end: '左に丸傍点終わり',
+      className: 'black_circle_after',
+      tag: 'em',
+    },
+    {
+      start: '左に白丸傍点',
+      end: '左に白丸傍点終わり',
+      className: 'white_circle_after',
+      tag: 'em',
+    },
+    {
+      start: '左に黒三角傍点',
+      end: '左に黒三角傍点終わり',
+      className: 'black_up-pointing_triangle_after',
+      tag: 'em',
+    },
+    {
+      start: '左に白三角傍点',
+      end: '左に白三角傍点終わり',
+      className: 'white_up-pointing_triangle_after',
+      tag: 'em',
+    },
+    {
+      start: '左に二重丸傍点',
+      end: '左に二重丸傍点終わり',
+      className: 'bullseye_after',
+      tag: 'em',
+    },
+    {
+      start: '左に蛇の目傍点',
+      end: '左に蛇の目傍点終わり',
+      className: 'fisheye_after',
+      tag: 'em',
+    },
+    {
+      start: '左にばつ傍点',
+      end: '左にばつ傍点終わり',
+      className: 'saltire_after',
+      tag: 'em',
+    },
+
+    {
       start: '傍線',
       end: '傍線終わり',
       className: 'underline_solid',
@@ -409,15 +586,33 @@ export function renderInline(line: string): string {
     },
 
     {
-      start: '左に傍点',
-      end: '左に傍点終わり',
-      className: 'sesame_dot_after',
-      tag: 'em',
-    },
-    {
       start: '左に傍線',
       end: '左に傍線終わり',
       className: 'overline_solid',
+      tag: 'em',
+    },
+    {
+      start: '左に二重傍線',
+      end: '左に二重傍線終わり',
+      className: 'overline_double',
+      tag: 'em',
+    },
+    {
+      start: '左に鎖線',
+      end: '左に鎖線終わり',
+      className: 'overline_dotted',
+      tag: 'em',
+    },
+    {
+      start: '左に破線',
+      end: '左に破線終わり',
+      className: 'overline_dashed',
+      tag: 'em',
+    },
+    {
+      start: '左に波線',
+      end: '左に波線終わり',
+      className: 'overline_wave',
       tag: 'em',
     },
 
@@ -463,6 +658,7 @@ export function renderInline(line: string): string {
       className: 'subscript',
       tag: 'sub',
     },
+
     {
       start: '割り注',
       end: '割り注終わり',
@@ -479,37 +675,35 @@ export function renderInline(line: string): string {
 
   for (const range of rangePatterns) {
     const startToken = `［＃${range.start}］`;
-
     const endToken = `［＃${range.end}］`;
 
     const startIndex = working.indexOf(startToken);
 
-    if (startIndex === -1) {
-      continue;
-    }
+    if (startIndex === -1) continue;
 
     const contentStart = startIndex + startToken.length;
 
     const endIndex = working.indexOf(endToken, contentStart);
 
-    if (endIndex === -1) {
-      continue;
-    }
+    if (endIndex === -1) continue;
 
     const before = working.slice(0, startIndex);
-
     const content = working.slice(contentStart, endIndex);
-
     const after = working.slice(endIndex + endToken.length);
 
     const rendered =
       range.className === 'warichu'
-        ? `<span class="warichu">（${renderInline(content)}）</span>`
-        : `<${range.tag} class="${range.className}">${renderInline(content)}</${range.tag}>`;
+        ? `<span class="warichu">（${renderInline(content, gaijiImages)}）</span>`
+        : `<${range.tag} class="${range.className}">` +
+          `${renderInline(content, gaijiImages)}` +
+          `</${range.tag}>`;
 
     working = before + `[[AOZORA_HTML:${encodeURIComponent(rendered)}]]` + after;
   }
 
+  /*
+   * AOZORA_INLINE
+   */
   working = working.replace(
     /\[\[AOZORA_INLINE:([^:\]]+):([^\]]+)\]\]/g,
     (_match, className, encodedTarget) => {
@@ -518,37 +712,78 @@ export function renderInline(line: string): string {
       let html = '';
 
       if (className === 'tcy') {
-        html = `<span class="tcy">${applyRubyAndEscape(target)}</span>`;
+        html = `<span class="tcy">` + `${applyRubyAndEscape(target)}` + `</span>`;
       } else if (className === 'superscript') {
-        html = `<sup class="superscript">${applyRubyAndEscape(target)}</sup>`;
+        html = `<sup class="superscript">` + `${applyRubyAndEscape(target)}` + `</sup>`;
       } else if (className === 'subscript') {
-        html = `<sub class="subscript">${applyRubyAndEscape(target)}</sub>`;
+        html = `<sub class="subscript">` + `${applyRubyAndEscape(target)}` + `</sub>`;
       } else if (className === 'caption') {
-        html = `<span class="caption">${applyRubyAndEscape(target)}</span>`;
+        html = `<span class="caption">` + `${applyRubyAndEscape(target)}` + `</span>`;
+      } else if (className.startsWith('dai') || className.startsWith('sho')) {
+        const n = Number(className.replace(/\D/g, '')) || 1;
+
+        const isDai = className.startsWith('dai');
+
+        const sizeMap: Record<number, string> = isDai
+          ? {
+              1: 'large',
+              2: 'x-large',
+            }
+          : {
+              1: 'small',
+              2: 'x-small',
+            };
+
+        const size = sizeMap[n] ?? (isDai ? 'xx-large' : 'xx-small');
+
+        html =
+          `<span class="${className}" style="font-size: ${size};">` +
+          `${applyRubyAndEscape(target)}` +
+          `</span>`;
       } else {
-        html = `<em class="${className}">${applyRubyAndEscape(target)}</em>`;
+        html = `<em class="${className}">` + `${applyRubyAndEscape(target)}` + `</em>`;
       }
 
       return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
     }
   );
 
+  /*
+   * 見出しプレースホルダー
+   */
   working = working.replace(
     /\[\[AOZORA_HEADING:([^:]+):([^:]+):([^\]]+)\]\]/g,
     (_match, tag, className, encodedTarget) =>
       `[[AOZORA_HTML:${encodeURIComponent(
-        `<${tag} class="${className}">${decodeURIComponent(encodedTarget)}</${tag}>`
+        `<${tag} class="${className}">` + `${decodeURIComponent(encodedTarget)}` + `</${tag}>`
       )}]]`
   );
 
+  /*
+   * 漢文の返り点注記 (［＃レ］, ［＃一］, ［＃二］, ［＃上］, ［＃下］ など)
+   */
+  working = working.replace(/［＃([一二三四上下甲乙丙丁レ]+)］/g, (_match, kaeriten) => {
+    const html = `<sub class="kaeriten">${escapeHtml(kaeriten)}</sub>`;
+    return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
+  });
+
+  /*
+   * 未対応注記を可視化
+   */
   working = working.replace(ANNOTATION_PATTERN, (raw) => {
     console.warn('[Aozora] unsupported inline annotation:', raw);
 
     return `[[AOZORA_HTML:${encodeURIComponent(`<span class="notes">${escapeHtml(raw)}</span>`)}]]`;
   });
 
+  /*
+   * 生テキストだけをルビ化 + HTML escape
+   */
   working = applyRubyAndEscape(working);
 
+  /*
+   * AOZORA_HTML を復元
+   */
   while (working.includes('[[AOZORA_HTML:')) {
     working = working.replace(/\[\[AOZORA_HTML:([^\]]+)\]\]/g, (_match, encodedHtml) =>
       decodeURIComponent(encodedHtml)
@@ -556,4 +791,69 @@ export function renderInline(line: string): string {
   }
 
   return working;
+}
+/**
+ * target の各文字の直後にルビ注記（《…》）が挟まっていても
+ * 前方一致とみなし、実際にマッチした（ルビ込みの）部分文字列を返す。
+ * 一致しなければ null。
+ */
+export function matchTargetAllowingRuby(before: string, target: string): string | null {
+  const escapedChars = [...target].map((ch) => ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
+  const pattern = escapedChars.join('(?:《[^》]*》)?') + '(?:《[^》]*》)?';
+  const regex = new RegExp(pattern + '$');
+  const match = before.match(regex);
+
+  return match ? match[0] : null;
+}
+
+/**
+ * 外字注記のパターン。
+ * 例1: ※［＃感嘆符三つ、626-10］                          → JISコード無し
+ * 例2: ※［＃「てへん+劣」、第3水準1-84-77、361-9］          → JISコード（水準-区-点）あり
+ */
+export const GAIJI_PATTERN = /※?［＃(.+?)[、,]\s*(?:第[34]水準)?(\d+-\d+-\d+)(?:[、,][^］]+)*］/g;
+/**
+ * JISコードが無い外字（活字の説明のみ）をテキストで近似する。
+ * よくあるパターン以外は説明文をそのまま角括弧で見える化する。
+ */
+export function approximateGaijiText(description: string): string {
+  const countMatch = description.match(/^(.+?)(二つ|三つ|四つ)$/);
+
+  if (countMatch) {
+    const charMap: Record<string, string> = {
+      感嘆符: '！',
+      疑問符: '？',
+    };
+    const countMap: Record<string, number> = { 二つ: 2, 三つ: 3, 四つ: 4 };
+    const base = charMap[countMatch[1]];
+    const count = countMap[countMatch[2]];
+
+    if (base && count) {
+      return base.repeat(count);
+    }
+  }
+
+  return `〔${description}〕`;
+}
+
+/**
+ * 外字注記を解決する。
+ * gaijiImages は「JISコード → EPUB内の画像ファイル名」のマップ
+ * （fetchAozora.ts の fetchGaijiImages で事前に取得済みのもの）。
+ * ネットワークアクセスはここでは行わない（純粋関数として保つため）。
+ */
+export function resolveGaiji(line: string, gaijiImages: Map<string, string>): string {
+  return line.replace(GAIJI_PATTERN, (_match, description: string, jisCode?: string) => {
+    if (jisCode) {
+      const filename = gaijiImages.get(jisCode);
+
+      if (filename) {
+        const imgTag = `<img class="gaiji-inline" src="../images/${escapeHtml(filename)}" alt="${escapeHtml(description)}"/>`;
+
+        return `[[AOZORA_HTML:${encodeURIComponent(imgTag)}]]`;
+      }
+    }
+
+    return escapeHtml(approximateGaijiText(description));
+  });
 }

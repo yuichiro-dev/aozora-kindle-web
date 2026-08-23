@@ -9,7 +9,7 @@ export const MAX_TEXT_BYTES = 10 * 1024 * 1024;
 export const MAX_COMPRESSION_RATIO = 50;
 
 export const RUBY_PATTERN =
-  /｜([^《\n]+)《([^》\n]+)》|([\u4E00-\u9FFF\u3400-\u4DBF\uF900-\uFAFF〆々〇ヶ]+)《([^》\n]+)》/g;
+  /｜(.+?)《(.+?)》|((?:[\u3005\u3400-\u9FFF\uF900-\uFAFF]|\[\[AOZORA_HTML:[^\]]+\]\])+)《(.+?)》/g;
 
 export const ANNOTATION_PATTERN = /［＃[^］]+］/g;
 
