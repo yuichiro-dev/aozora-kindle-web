@@ -5,6 +5,7 @@ import booksData from '@/public/books.json';
 import { getAllGenreAuthors, getGenresForAuthor, normalizeAuthorName } from '@/lib/genres';
 import AuthorBookList from '@/components/AuthorBookList';
 import Header from '@/components/Header';
+import Link from 'next/link';
 
 interface Book {
   id: number;
@@ -88,6 +89,15 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
     },
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: 'ホーム', item: '/' },
+      { '@type': 'ListItem', position: 2, name: author, item: `/authors/${slug}` },
+    ],
+  };
+
   return (
     <>
       <Header />
@@ -96,7 +106,18 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+        />
         <div className="max-w-4xl mx-auto space-y-5">
+          <nav className="text-xs text-muted-foreground" aria-label="パンくずリスト">
+            <Link href="/" className="hover:underline">
+              ホーム
+            </Link>
+            <span className="mx-1">›</span>
+            <span>{author}</span>
+          </nav>
           <h1 className="text-xl font-bold text-foreground">
             {author}の作品一覧（青空文庫 → Kindle変換）
           </h1>
