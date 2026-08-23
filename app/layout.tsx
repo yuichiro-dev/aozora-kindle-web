@@ -65,6 +65,9 @@ export const metadata: Metadata = {
     locale: 'ja_JP',
     type: 'website',
   },
+  alternates: {
+    canonical: '/',
+  },
   twitter: {
     card: 'summary_large_image',
     title: '青空保存 to Kindle | 青空文庫を保存してKindleで読む',
@@ -80,6 +83,31 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="ja" suppressHydrationWarning>
       <body className="min-h-screen flex flex-col bg-background text-foreground">
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@graph': [
+                {
+                  '@type': 'WebSite',
+                  name: '青空保存 to Kindle',
+                  url: metadataBaseUrl.toString(),
+                  inLanguage: 'ja',
+                  description: '青空文庫の作品を縦書きEPUBに変換してKindleへ保存するツール。',
+                },
+                {
+                  '@type': 'WebApplication',
+                  name: '青空保存 to Kindle',
+                  url: metadataBaseUrl.toString(),
+                  applicationCategory: 'UtilitiesApplication',
+                  operatingSystem: 'Any',
+                  offers: { '@type': 'Offer', price: '0', priceCurrency: 'JPY' },
+                },
+              ],
+            }),
+          }}
+        />
         <ThemeProvider>
           {/* スマホ・タブレットは pb-16、PC（マウス操作）は pb-0 */}
           <div className="flex-1 pb-16 [@media(pointer:fine)]:pb-0">{children}</div>

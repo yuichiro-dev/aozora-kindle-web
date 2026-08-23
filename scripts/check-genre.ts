@@ -1,5 +1,5 @@
 import books from '../public/books.json' with { type: 'json' };
-import { GENRE_GROUPS } from '../components/Recommendations';
+import { GENRE_GROUPS } from '../lib/genres';
 
 const normalize = (str?: string | null) =>
   str ? str.replace(/[\s\u3000・.,-]+/g, '').toLowerCase() : '';
