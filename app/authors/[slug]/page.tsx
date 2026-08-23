@@ -24,7 +24,7 @@ function findBooksByAuthor(author: string): Book[] {
 }
 
 export function generateStaticParams() {
-  return getAllGenreAuthors().map((author) => ({ slug: encodeURIComponent(author) }));
+  return getAllGenreAuthors().map((author) => ({ slug: author }));
 }
 
 export async function generateMetadata({
@@ -50,7 +50,7 @@ export async function generateMetadata({
     title,
     description,
     alternates: {
-      canonical: `/authors/${slug}`,
+      canonical: `/authors/${encodeURIComponent(slug)}`,
     },
     openGraph: {
       title,
@@ -100,7 +100,7 @@ export default async function AuthorPage({ params }: { params: Promise<{ slug: s
         '@type': 'ListItem',
         position: 2,
         name: author,
-        item: `${SITE_URL}/authors/${slug}`,
+        item: `${SITE_URL}/authors/${encodeURIComponent(slug)}`,
       },
     ],
   };
