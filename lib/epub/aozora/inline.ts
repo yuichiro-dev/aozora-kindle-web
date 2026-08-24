@@ -778,7 +778,7 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
         html = `<span class="tcy">` + `${applyRubyAndEscape(target)}` + `</span>`;
       } else if (className === 'keigakomi') {
         html = `<span class="keigakomi">` + `${applyRubyAndEscape(target)}` + `</span>`;
-      } else if (className === 'yokogumi') { 
+      } else if (className === 'yokogumi') {
         html = `<span class="yokogumi">` + `${applyRubyAndEscape(target)}` + `</span>`;
       } else if (className === 'superscript') {
         html = `<sup class="superscript">` + `${applyRubyAndEscape(target)}` + `</sup>`;
@@ -833,7 +833,7 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
     const html = `<sub class="kaeriten">${escapeHtml(kaeriten)}</sub>`;
     return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
   });
-/*
+  /*
    * 孤立・浮遊した各種「終了注記」の安全なクリーンアップ
    * （開始注記とのペアが外れたり単独で残った「ここで〜終わり」を画面露出・エラー化させない）
    */
