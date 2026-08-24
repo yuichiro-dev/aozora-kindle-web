@@ -1,136 +1,96 @@
-import { zenToHanDigits } from '../escape';
-
-import { headingInfo } from './headings';
-
+import { parseJapaneseOrArabicNumber, zenToHanDigits } from '../escape';
 import type { BlockState } from '../types';
-
 
 export function parseBlockStart(annotation: string): BlockState | null {
   const cleanAnno = zenToHanDigits(annotation);
 
-  // --- 既存の単一判定 ---
-  const indent = cleanAnno.match(/^ここから(\d+)字下げ$/);
-  if (indent) {
-    return { type: 'indent', className: `jisage-${Number(indent[1])}` };
+  // 「ここから」があってもなくても解析できるようにプレフィックスを除去
+  const body = cleanAnno.replace(/^ここから/, '').trim();
+
+  // 1. 天から〜字下げ
+  const tenIndent = body.match(/^天から([０-９\d一二三四五六七八九十]+)字下げ$/);
+  if (tenIndent) {
+    const n = parseJapaneseOrArabicNumber(tenIndent[1]);
+    if (n > 0) return { type: 'indent', className: `jisage-${n}` };
   }
 
-  const burasageOtsu = cleanAnno.match(/^ここから(\d+)字下げ、折り返して(\d+)字下げ$/);
+  // 2. 〜字下げ
+  const indent = body.match(/^([０-９\d一二三四五六七八九十]+)字下げ$/);
+  if (indent) {
+    const n = parseJapaneseOrArabicNumber(indent[1]);
+    if (n > 0) return { type: 'indent', className: `jisage-${n}` };
+  }
+
+  // 3. ぶら下げ (〜字下げ、折り返して〜字下げ)
+  const burasageOtsu = body.match(
+    /^([０-９\d一二三四五六七八九十]+)字下げ、折り返して([０-９\d一二三四五六七八九十]+)字下げ$/
+  );
   if (burasageOtsu) {
     return {
       type: 'burasage',
-      amount: Number(burasageOtsu[1]),
-      wrapIndent: Number(burasageOtsu[2]),
+      amount: parseJapaneseOrArabicNumber(burasageOtsu[1]),
+      wrapIndent: parseJapaneseOrArabicNumber(burasageOtsu[2]),
     };
   }
 
-  const burasageTentsuki = cleanAnno.match(/^ここから改行天付き、折り返して(\d+)字下げ$/);
+  // 4. 改行天付きぶら下げ
+  const burasageTentsuki = body.match(
+    /^(?:改行)?天付き、折り返して([０-９\d一二三四五六七八九十]+)字下げ$/
+  );
   if (burasageTentsuki) {
-    return { type: 'burasage', amount: 0, wrapIndent: Number(burasageTentsuki[1]) };
+    return {
+      type: 'burasage',
+      amount: 0,
+      wrapIndent: parseJapaneseOrArabicNumber(burasageTentsuki[1]),
+    };
   }
 
-  if (cleanAnno === 'ここから地付き') return { type: 'chitsuki' };
+  if (body === '地付き') return { type: 'chitsuki' };
 
-  const chiyose = cleanAnno.match(/^ここから地から(\d+)字上げ$/);
-  if (chiyose) return { type: 'chiyose', amount: Number(chiyose[1]) };
+  const chiyose = body.match(/^地から([０-９\d一二三四五六七八九十]+)字上げ$/);
+  if (chiyose) return { type: 'chiyose', amount: parseJapaneseOrArabicNumber(chiyose[1]) };
 
-  const jizume = cleanAnno.match(/^ここから(\d+)字詰め$/);
-  if (jizume) return { type: 'jizume', amount: Number(jizume[1]) };
+  const jizume = body.match(/^([０-９\d一二三四五六七八九十]+)字詰め$/);
+  if (jizume) return { type: 'jizume', amount: parseJapaneseOrArabicNumber(jizume[1]) };
 
-  const dai = cleanAnno.match(/^ここから(\d+)段階大きな文字$/);
-  if (dai) return { type: 'dai', amount: Number(dai[1]) };
+  const dai = body.match(/^([０-９\d一二三四五六七八九十]+)段階大きな文字$/);
+  if (dai) return { type: 'dai', amount: parseJapaneseOrArabicNumber(dai[1]) };
 
-  const sho = cleanAnno.match(/^ここから(\d+)段階小さな文字$/);
-  if (sho) return { type: 'sho', amount: Number(sho[1]) };
+  const sho = body.match(/^([０-９\d一二三四五六七八九十]+)段階小さな文字$/);
+  if (sho) return { type: 'sho', amount: parseJapaneseOrArabicNumber(sho[1]) };
 
-  if (cleanAnno === 'ここからキャプション') return { type: 'caption' };
+  if (body === 'キャプション') return { type: 'caption' };
+  if (body === '罫囲み' || body === '枠囲み') return { type: 'keigakomi', className: 'keigakomi' };
+  if (body === '横組み') return { type: 'yokogumi', className: 'yokogumi' };
 
-  const heading = cleanAnno.match(/^ここから(大|中|小)見出し$/);
-  if (heading) {
-    const info = headingInfo(`${heading[1]}見出し`);
-    if (info) {
-      return {
-        type: 'heading',
-        level: info.level,
-        tag: info.tag,
-        className: info.className,
-      };
-    }
-  }
-
-  const emphasis: Record<string, string> = {
-    ここから傍点: 'sesame_dot',
-    ここから白ゴマ傍点: 'white_sesame_dot',
-    ここから丸傍点: 'black_circle',
-    ここから白丸傍点: 'white_circle',
-    ここから黒三角傍点: 'black_up-pointing_triangle',
-    ここから白三角傍点: 'white_up-pointing_triangle',
-    ここから二重丸傍点: 'bullseye',
-    ここから蛇の目傍点: 'fisheye',
-    ここからばつ傍点: 'saltire',
-  };
-  if (emphasis[cleanAnno]) return { type: 'emphasis', className: emphasis[cleanAnno] };
-
-  const underline: Record<string, string> = {
-    ここから傍線: 'underline_solid',
-    ここから二重傍線: 'underline_double',
-    ここから鎖線: 'underline_dotted',
-    ここから破線: 'underline_dashed',
-    ここから波線: 'underline_wave',
-  };
-  if (underline[cleanAnno]) return { type: 'underline', className: underline[cleanAnno] };
-
-  if (cleanAnno === 'ここから左に傍点') return { type: 'emphasis', className: 'sesame_dot_after' };
-  if (cleanAnno === 'ここから左に傍線') return { type: 'overline', className: 'overline_solid' };
-  if (cleanAnno === 'ここから太字') return { type: 'bold', className: 'futoji' };
-  if (cleanAnno === 'ここから斜体') return { type: 'italic', className: 'shatai' };
-  if (cleanAnno === 'ここから罫囲み') return { type: 'keigakomi', className: 'keigakomi' };
-  if (cleanAnno === 'ここから横組み') return { type: 'yokogumi', className: 'yokogumi' };
-
-  // --- ★ 複合ブロック注記の分解解析 (フォールバック) ---
-  if (cleanAnno.startsWith('ここから') && cleanAnno.includes('、')) {
-    const body = cleanAnno.replace(/^ここから/, '').trim();
+  // 複合指定 (例: ２字下げ、２２字詰め、罫囲み)
+  if (body.includes('、')) {
     const parts = body.split(/[、,]/).map((p) => p.trim());
     const classes: string[] = [];
 
     for (const part of parts) {
-      const partIndent = part.match(/(\d+)字下げ/);
+      const partIndent = part.match(/([０-９\d一二三四五六七八九十]+)字下げ/);
       if (partIndent) {
-        classes.push(`jisage-${partIndent[1]}`);
+        classes.push(`jisage-${parseJapaneseOrArabicNumber(partIndent[1])}`);
         continue;
       }
-
-      const partJizume = part.match(/(\d+)字詰め/);
+      const partJizume = part.match(/([０-９\d一二三四五六七八九十]+)字詰め/);
       if (partJizume) {
-        classes.push(`jizume_${partJizume[1]}`);
+        classes.push(`jizume_${parseJapaneseOrArabicNumber(partJizume[1])}`);
         continue;
       }
-
       if (part === '罫囲み' || part === '枠囲み') {
         classes.push('keigakomi');
         continue;
       }
-
       if (part === '横組み') {
         classes.push('yokogumi');
-        continue;
-      }
-
-      if (part === '太字') {
-        classes.push('futoji');
-        continue;
-      }
-
-      if (part === '斜体') {
-        classes.push('shatai');
         continue;
       }
     }
 
     if (classes.length > 0) {
-      return {
-        type: 'composite',
-        classes,
-      };
+      return { type: 'composite', classes };
     }
   }
 
@@ -139,72 +99,25 @@ export function parseBlockStart(annotation: string): BlockState | null {
 
 export function isBlockEnd(annotation: string): boolean {
   const a = zenToHanDigits(annotation);
-
-  return (
-    /^ここで(大|中|小)見出し終わり$/.test(a) ||
-    /^ここで\d+字下げ.*終わり$/.test(a) ||
-    a.startsWith('ここで') ||
-    a.endsWith('終わり') ||
-    a.endsWith('おわり')
-  );
+  return a.startsWith('ここで') || a.endsWith('終わり') || a.endsWith('おわり');
 }
 
-export function blockEndType(annotation: string): BlockState['type'] | null {
-  const a = zenToHanDigits(annotation);
-
-  if (/ここで(大|中|小)見出し終わり$/.test(a)) return 'heading';
-  if (/ここで\d+字下げ.*終わり$/.test(a) || a === 'ここで字下げ終わり') return null;
-
-  // 複合指定の終了（例: ［＃ここで字下げ、罫囲み終わり］）は型チェックを緩和
-  if (a.startsWith('ここで') && a.includes('、')) return null;
-
-  if (a === 'ここで地付き終わり') return 'chitsuki';
-  if (a === 'ここで字上げ終わり') return 'chiyose';
-  if (a === 'ここで字詰め終わり') return 'jizume';
-  if (a === 'ここで大きな文字終わり') return 'dai';
-  if (a === 'ここで小さな文字終わり') return 'sho';
-  if (a === 'ここでキャプション終わり') return 'caption';
-  if (a.includes('傍点終わり')) return 'emphasis';
-  if (a.includes('傍線終わり')) return a.includes('左に') ? 'overline' : 'underline';
-  if (a === 'ここで太字終わり') return 'bold';
-  if (a === 'ここで斜体終わり') return 'italic';
-  if (a === 'ここで罫囲み終わり') return 'keigakomi';
-  if (a === 'ここで横組み終わり') return 'yokogumi';
-
+export function blockEndType(): BlockState['type'] | null {
   return null;
 }
 
-export function blockTags(state: BlockState): {
-  open: string;
-  close: string;
-} {
+export function blockTags(state: BlockState): { open: string; close: string } {
   switch (state.type) {
     case 'composite':
       return {
         open: `<div class="${(state.classes ?? []).join(' ')}">`,
         close: '</div>',
       };
-
-    case 'heading':
+    case 'indent':
       return {
-        open: `<${state.tag} class="${state.className}">`,
-        close: `</${state.tag}>`,
-      };
-
-    case 'chitsuki':
-      return {
-        open: '<div class="chitsuki_0" style="text-align:right; margin-right: 0em">',
+        open: `<div class="${state.className}">`,
         close: '</div>',
       };
-
-    case 'chiyose': {
-      const n = state.amount ?? 0;
-      return {
-        open: `<div class="chitsuki_${n}" style="text-align:right; margin-right: ${n}em">`,
-        close: '</div>',
-      };
-    }
-
     case 'burasage': {
       const wrap = state.wrapIndent ?? 0;
       const indent = state.amount ?? 0;
@@ -213,7 +126,6 @@ export function blockTags(state: BlockState): {
         close: '</div>',
       };
     }
-
     case 'jizume': {
       const n = state.amount ?? 0;
       return {
@@ -221,7 +133,6 @@ export function blockTags(state: BlockState): {
         close: '</div>',
       };
     }
-
     case 'dai': {
       const n = state.amount ?? 1;
       const size = n === 1 ? 'large' : n === 2 ? 'x-large' : 'xx-large';
@@ -230,7 +141,6 @@ export function blockTags(state: BlockState): {
         close: '</div>',
       };
     }
-
     case 'sho': {
       const n = state.amount ?? 1;
       const size = n === 1 ? 'small' : n === 2 ? 'x-small' : 'xx-small';
@@ -239,13 +149,8 @@ export function blockTags(state: BlockState): {
         close: '</div>',
       };
     }
-
     case 'caption':
-      return {
-        open: '<div class="caption">',
-        close: '</div>',
-      };
-
+      return { open: '<div class="caption">', close: '</div>' };
     case 'emphasis':
     case 'underline':
     case 'overline':
@@ -253,16 +158,8 @@ export function blockTags(state: BlockState): {
     case 'italic':
     case 'keigakomi':
     case 'yokogumi':
-    case 'indent':
-      return {
-        open: `<div class="${state.className}">`,
-        close: '</div>',
-      };
-
+      return { open: `<div class="${state.className}">`, close: '</div>' };
     default:
-      return {
-        open: '',
-        close: '',
-      };
+      return { open: '<div>', close: '</div>' };
   }
 }

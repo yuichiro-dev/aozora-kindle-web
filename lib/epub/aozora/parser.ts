@@ -1,6 +1,6 @@
 import { ANNOTATION_PATTERN, IMAGE_ANNOTATION_PATTERN } from '../constants';
 
-import { escapeHtml, escapeXml, zenToHanDigits } from '../escape';
+import { escapeXml, parseJapaneseOrArabicNumber, zenToHanDigits } from '../escape';
 
 import { blockEndType, blockTags, isBlockEnd, parseBlockStart } from './blocks';
 
@@ -42,8 +42,7 @@ function tryRenderTrailingAlignment(
 
   const isChiyose = match === chiyoseMatch;
 
-  const amount = isChiyose ? Number((chiyoseMatch as RegExpMatchArray)[1]) : 0;
-
+  const amount = isChiyose ? parseJapaneseOrArabicNumber((chiyoseMatch as RegExpMatchArray)[1]) : 0;
   const out: string[] = [];
 
   if (prefix.trim() !== '') {
@@ -68,7 +67,7 @@ function renderNormalLine(line: string, gaijiImages: Map<string, string>): strin
   const inlineIndentMatches = [...working.matchAll(/［＃(\d+)字下げ］/g)];
 
   for (const match of inlineIndentMatches) {
-    inlineIndent = Math.max(inlineIndent, Number(match[1]));
+    inlineIndent = Math.max(inlineIndent, parseJapaneseOrArabicNumber(match[1]));
   }
 
   working = working.replace(/［＃\d+字下げ］/g, '');
@@ -245,47 +244,46 @@ export function parseAozoraTxtToHtml(
     }
 
     /*
-     * 単独行のブロック注記（または単発注記）
+     * ブロック注記（単独行・複合注記・スペース付き注記）
      */
     const annotations = [...trimmed.matchAll(ANNOTATION_PATTERN)].map((m) => m[0].slice(2, -1));
+    const isAnnotationOnlyLine = trimmed.replace(ANNOTATION_PATTERN, '').trim() === '';
 
-    if (annotations.length === 1 && trimmed === `［＃${annotations[0]}］`) {
-      const annotation = annotations[0];
+    if (annotations.length > 0 && isAnnotationOnlyLine) {
+      let handled = false;
 
-      // 1. ブロック開始（「ここから〜」）の判定
-      const state = parseBlockStart(annotation);
+      for (const annotation of annotations) {
+        // 1. ブロック終了（「ここで〜終わり」）
+        if (isBlockEnd(annotation)) {
+          closeBlock(blockEndType()); // ★ 引数なしで呼び出し
+          handled = true;
+          continue;
+        }
 
-      if (state) {
-        const { open } = blockTags(state);
-        htmlResult.push(open);
-        blockStack.push(state);
-        continue; // ★ 必ず continue して後続の renderNormalLine に流さない！
+        // 2. ブロック開始の判定
+        const state = parseBlockStart(annotation);
+
+        if (state) {
+          // もし直前が字下げ/ぶら下げブロックで、閉じタグのないまま新しい字下げ注記が来たら
+          // 自動で前の字下げブロックをポップして閉じる（スタック蓄積の防止）
+          if (blockStack.length > 0 && (state.type === 'indent' || state.type === 'burasage')) {
+            const top = blockStack[blockStack.length - 1];
+            if (top.type === 'indent' || top.type === 'burasage') {
+              closeBlock(null);
+            }
+          }
+
+          const { open } = blockTags(state);
+          htmlResult.push(open);
+          blockStack.push(state);
+          handled = true;
+          continue;
+        }
       }
 
-      // 2. ブロック終了（「ここで〜終わり」）の判定
-      if (isBlockEnd(annotation)) {
-        closeBlock(blockEndType(annotation));
-        continue; // ★ 必ず continue して後続の renderNormalLine に流さない！
-      }
-
-      // 3. 単発の1行注記（［＃２字下げ］、［＃罫囲み］など）の場合
-      // ※ parseBlockStart も isBlockEnd も null/false だった場合
-      const cleanAnno = zenToHanDigits(annotation);
-      if (
-        /^\d+字下げ/.test(cleanAnno) ||
-        /ぶら下げ/.test(cleanAnno) ||
-        cleanAnno === '地付き' ||
-        cleanAnno === '罫囲み' ||
-        cleanAnno === '横組み'
-      ) {
-        // 単発注記行そのものは HTML 本文に出力させない（スキップする）
+      if (handled) {
         continue;
       }
-
-      // 4. 上記いずれにも当てはまらない未対応注記
-      console.warn('[Aozora] unsupported block annotation:', trimmed);
-      htmlResult.push(`<span class="notes">${escapeHtml(trimmed)}</span>`);
-      continue;
     }
 
     /*
@@ -306,7 +304,7 @@ export function parseAozoraTxtToHtml(
 
           const indentMatch = zenToHanDigits(prefix).match(/［＃(\d+)字下げ］/);
 
-          const indent = indentMatch ? Number(indentMatch[1]) : 0;
+          const indent = indentMatch ? parseJapaneseOrArabicNumber(indentMatch[1]) : 0;
 
           const headingClass =
             formType === '同行'
@@ -336,7 +334,9 @@ export function parseAozoraTxtToHtml(
      */
     const leadingIndentMatch = trimmed.match(/^［＃([\d０-９]+)字下げ］/);
     const afterIndent = leadingIndentMatch ? trimmed.slice(leadingIndentMatch[0].length) : trimmed;
-    const leadingIndent = leadingIndentMatch ? Number(zenToHanDigits(leadingIndentMatch[1])) : 0;
+    const leadingIndent = leadingIndentMatch
+      ? parseJapaneseOrArabicNumber(leadingIndentMatch[1])
+      : 0;
 
     const headingOpenClose = afterIndent.match(
       /^［＃((?:同行|窓)?(大|中|小)見出し)］(.+?)［＃\1終わり］/
@@ -359,19 +359,11 @@ export function parseAozoraTxtToHtml(
           `${renderInline(content, gaijiImages)}` +
           `</${info.tag}>`;
 
-        // 閉じタグ直後に余計な文字（誤記由来）が残っていたら、そのまま別段落として出力する
-        const matchEnd = (headingOpenClose.index ?? 0) + headingOpenClose[0].length;
-        const trailing = afterIndent.slice(matchEnd);
-
         htmlResult.push(
           leadingIndent > 0
             ? `<div class="jisage-${leadingIndent}">${renderedHeading}</div>`
             : renderedHeading
         );
-
-        if (trailing.trim() !== '') {
-          htmlResult.push(`<p>${renderInline(trailing, gaijiImages)}</p>`);
-        }
 
         continue;
       }

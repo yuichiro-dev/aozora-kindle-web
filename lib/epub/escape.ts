@@ -22,8 +22,16 @@ export function parseJapaneseOrArabicNumber(str: string): number {
   if (!isNaN(num)) return num;
 
   const kanjiMap: Record<string, number> = {
-    一: 1, 二: 2, 三: 3, 四: 4, 五: 5,
-    六: 6, 七: 7, 八: 8, 九: 9, 十: 10,
+    一: 1,
+    二: 2,
+    三: 3,
+    四: 4,
+    五: 5,
+    六: 6,
+    七: 7,
+    八: 8,
+    九: 9,
+    十: 10,
   };
 
   if (str === '十') return 10;
