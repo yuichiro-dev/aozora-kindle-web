@@ -10,8 +10,7 @@
     "lint": "eslint",
     "build-index": "node scripts/build-index.js",
     "format": "prettier --write .",
-    "check-genre": "tsx scripts/check-genre.ts",
-    "collect-aozora-errors": "tsx scripts/collect-aozora-errors.ts"
+    "check-genre": "tsx scripts/check-genre.ts"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
