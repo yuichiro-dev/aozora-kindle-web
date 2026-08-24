@@ -13,14 +13,8 @@ const FORWARD_EMPHASIS: Array<{
   { suffix: '白ゴマ傍点', className: 'white_sesame_dot' },
   { suffix: '丸傍点', className: 'black_circle' },
   { suffix: '白丸傍点', className: 'white_circle' },
-  {
-    suffix: '黒三角傍点',
-    className: 'black_up-pointing_triangle',
-  },
-  {
-    suffix: '白三角傍点',
-    className: 'white_up-pointing_triangle',
-  },
+  { suffix: '黒三角傍点', className: 'black_up-pointing_triangle' },
+  { suffix: '白三角傍点', className: 'white_up-pointing_triangle' },
   { suffix: '二重丸傍点', className: 'bullseye' },
   { suffix: '蛇の目傍点', className: 'fisheye' },
   { suffix: 'ばつ傍点', className: 'saltire' },
@@ -41,68 +35,26 @@ const LEFT_EMPHASIS: Array<{
   suffix: string;
   className: InlineStyle;
 }> = [
-  {
-    suffix: '傍点',
-    className: 'sesame_dot_after',
-  },
-  {
-    suffix: '白ゴマ傍点',
-    className: 'white_sesame_dot_after',
-  },
-  {
-    suffix: '丸傍点',
-    className: 'black_circle_after',
-  },
-  {
-    suffix: '白丸傍点',
-    className: 'white_circle_after',
-  },
-  {
-    suffix: '黒三角傍点',
-    className: 'black_up-pointing_triangle_after',
-  },
-  {
-    suffix: '白三角傍点',
-    className: 'white_up-pointing_triangle_after',
-  },
-  {
-    suffix: '二重丸傍点',
-    className: 'bullseye_after',
-  },
-  {
-    suffix: '蛇の目傍点',
-    className: 'fisheye_after',
-  },
-  {
-    suffix: 'ばつ傍点',
-    className: 'saltire_after',
-  },
+  { suffix: '傍点', className: 'sesame_dot_after' },
+  { suffix: '白ゴマ傍点', className: 'white_sesame_dot_after' },
+  { suffix: '丸傍点', className: 'black_circle_after' },
+  { suffix: '白丸傍点', className: 'white_circle_after' },
+  { suffix: '黒三角傍点', className: 'black_up-pointing_triangle_after' },
+  { suffix: '白三角傍点', className: 'white_up-pointing_triangle_after' },
+  { suffix: '二重丸傍点', className: 'bullseye_after' },
+  { suffix: '蛇の目傍点', className: 'fisheye_after' },
+  { suffix: 'ばつ傍点', className: 'saltire_after' },
 ];
 
 const LEFT_UNDERLINES: Array<{
   suffix: string;
   className: InlineStyle;
 }> = [
-  {
-    suffix: '傍線',
-    className: 'overline_solid',
-  },
-  {
-    suffix: '二重傍線',
-    className: 'overline_double',
-  },
-  {
-    suffix: '鎖線',
-    className: 'overline_dotted',
-  },
-  {
-    suffix: '破線',
-    className: 'overline_dashed',
-  },
-  {
-    suffix: '波線',
-    className: 'overline_wave',
-  },
+  { suffix: '傍線', className: 'overline_solid' },
+  { suffix: '二重傍線', className: 'overline_double' },
+  { suffix: '鎖線', className: 'overline_dotted' },
+  { suffix: '破線', className: 'overline_dashed' },
+  { suffix: '波線', className: 'overline_wave' },
 ];
 
 export function applyRubyAndEscape(text: string): string {
@@ -150,7 +102,7 @@ function applyForwardReferenceAnnotations(line: string): string {
     const body = raw.slice(2, -1);
 
     /*
-     * 「〜」は大見出し
+     * 「〜」は大見出し / 中見出し / 小見出し
      */
     const headingMatch = body.match(/^「(.+?)」は(同行|窓)?(大|中|小)見出し$/);
 
@@ -162,14 +114,6 @@ function applyForwardReferenceAnnotations(line: string): string {
 
       if (!info) continue;
 
-      const before = working.slice(0, index);
-
-      if (!before.endsWith(target)) continue;
-
-      const targetStart = index - target.length;
-
-      const renderedTarget = applyRubyAndEscape(target);
-
       const headingClass =
         formType === '同行'
           ? `dogyo-${info.className}`
@@ -177,40 +121,177 @@ function applyForwardReferenceAnnotations(line: string): string {
             ? `mado-${info.className}`
             : info.className;
 
-      const replacement =
-        `[[AOZORA_HEADING:${info.tag}:` +
-        `${headingClass}:` +
-        `${encodeURIComponent(renderedTarget)}]]`;
+      const before = working.slice(0, index);
 
-      working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+      if (before.endsWith(target)) {
+        const targetStart = index - target.length;
+        const renderedTarget = applyRubyAndEscape(target);
+        const replacement = `[[AOZORA_HEADING:${info.tag}:${headingClass}:${encodeURIComponent(renderedTarget)}]]`;
+        working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+      } else {
+        const renderedTarget = applyRubyAndEscape(target);
+        const replacement = `[[AOZORA_HEADING:${info.tag}:${headingClass}:${encodeURIComponent(renderedTarget)}]]`;
+        working = working.slice(0, index) + replacement + working.slice(index + raw.length);
+      }
 
       continue;
     }
 
     /*
-     * 「〜」に「ママ」の注記
+ * ママ・校正・注記関係
+ *
+ * 重要:
+ * 「〜」はママ の「〜」の中には、
+ *
+ *   ［＃レ］
+ *   ［＃一］
+ *   ［＃二］
+ *
+ * など、別の注記が入ることがある。
+ *
+ * 例:
+ *   ［＃「潮風洗［＃レ］熱夏如［＃レ］秋［＃一］」はママ］
+ *
+ * ここで返り点を先にHTML化すると target が
+ *
+ *   潮風洗[[AOZORA_HTML:...]]
+ *
+ * になってしまい、本文との一致判定が壊れる。
+ *
+ * したがって、target と before の比較では
+ * 「内部注記を除去した文字列」を使う。
+ */
+const mamaRubyMatch = body.match(
+  /^(?:ルビの)?「([\s\S]+?)」(?:\s*に\s*「ママ」の注記|はママ|に「.+?」の注記|の左に「.+?」の注記|の左に「.+?」のルビ)$/
+);
+
+if (mamaRubyMatch) {
+  const target = mamaRubyMatch[1];
+  const before = working.slice(0, index);
+
+  /*
+   * target に含まれる注記を除去した比較用文字列。
+   *
+   * 例:
+   *
+   *   潮風洗［＃レ］熱夏如［＃レ］秋［＃一］
+   *
+   * →
+   *
+   *   潮風洗熱夏如秋
+   */
+  const plainTarget = target
+    .replace(ANNOTATION_PATTERN, '')
+    .replace(/\[\[AOZORA_(?:HTML|INLINE):.*?\]\]/g, '');
+
+  /*
+   * before 側も同様に注記を除去する。
+   *
+   * これにより、返り点がすでにプレースホルダー化されていても
+   * 「潮風洗熱夏如秋」で一致判定できる。
+   */
+  const plainBefore = before
+    .replace(ANNOTATION_PATTERN, '')
+    .replace(/\[\[AOZORA_(?:HTML|INLINE):.*?\]\]/g, '');
+
+  if (plainBefore.endsWith(plainTarget)) {
+    /*
+     * 比較用文字列ではなく、元の before から
+     * 「最後の plainTarget に対応する範囲」を探す。
+     *
+     * target に注記が含まれているため、
+     * target.length を単純に index から引いてはいけない。
      */
-    const mamaRubyMatch = body.match(/^「(.+?)」に「ママ」の注記$/);
+    let plainCount = 0;
+    let targetStart = before.length;
 
-    if (mamaRubyMatch) {
-      const target = mamaRubyMatch[1];
-      const before = working.slice(0, index);
+    for (let p = before.length - 1; p >= 0; p--) {
+      const chunk = before.slice(p);
 
-      if (before.endsWith(target)) {
-        const targetStart = index - target.length;
+      /*
+       * プレースホルダーの途中を1文字として数えない。
+       */
+      const placeholderMatch = chunk.match(
+        /^\[\[AOZORA_(?:HTML|INLINE):.*?\]\]/
+      );
 
-        const replacement = `[[AOZORA_HTML:${encodeURIComponent(
-          `<ruby><rb>${escapeHtml(target)}</rb>` + `<rp>（</rp><rt>ママ</rt><rp>）</rp></ruby>`
-        )}]]`;
-
-        working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
-
+      if (placeholderMatch) {
+        p -= placeholderMatch[0].length - 1;
         continue;
+      }
+
+      plainCount++;
+
+      if (plainCount >= plainTarget.length) {
+        targetStart = p;
+        break;
       }
     }
 
     /*
-     * 「〜」はローマ数字（面区点情報の有無に関わらず対応）
+     * 万一、正確な位置を求められなかった場合は
+     * ママ注記だけを削除して本文を壊さない。
+     */
+    if (targetStart < 0 || targetStart > before.length) {
+      working =
+        working.slice(0, index) +
+        working.slice(index + raw.length);
+
+      continue;
+    }
+
+    /*
+     * 元の target を取得する。
+     *
+     * ここには ［＃レ］などの注記が残っているので、
+     * 後段の返り点処理をそのまま利用できる。
+     */
+    const originalTarget = before.slice(targetStart);
+
+    const replacement = `[[AOZORA_HTML:${encodeURIComponent(
+      `<ruby><rb>${escapeHtml(originalTarget)}</rb><rp>（</rp><rt>ママ</rt><rp>）</rp></ruby>`
+    )}]]`;
+
+    working =
+      working.slice(0, targetStart) +
+      replacement +
+      working.slice(index + raw.length);
+  } else {
+    /*
+     * 本文中に対応する target がない場合は、
+     * ママ注記だけを削除する。
+     */
+    working =
+      working.slice(0, index) +
+      working.slice(index + raw.length);
+  }
+
+  continue;
+}
+
+    /*
+     * 「〜」に「×」の傍記（伏字）
+     */
+    const fusejiMatch = body.match(/^「(.+?)」に「(.+?)」の傍記$/);
+
+    if (fusejiMatch) {
+      const target = fusejiMatch[1];
+      const mark = fusejiMatch[2];
+      const before = working.slice(0, index);
+
+      if (before.endsWith(target)) {
+        const targetStart = index - target.length;
+        const replacement = `[[AOZORA_HTML:${encodeURIComponent(
+          `<span class="fuseji" title="傍記: ${escapeHtml(mark)}">${escapeHtml(target)}</span>`
+        )}]]`;
+        working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+      }
+
+      continue;
+    }
+
+    /*
+     * 「〜」はローマ数字
      */
     const romanMatch = body.match(/^「(.+?)」はローマ数字(?:、.+)?$/);
 
@@ -220,30 +301,11 @@ function applyForwardReferenceAnnotations(line: string): string {
 
       if (before.endsWith(target)) {
         const targetStart = index - target.length;
-
         const ROMAN_MAP: Record<string, string> = {
-          '1': 'Ⅰ',
-          '2': 'Ⅱ',
-          '3': 'Ⅲ',
-          '4': 'Ⅳ',
-          '5': 'Ⅴ',
-          '6': 'Ⅵ',
-          '7': 'Ⅶ',
-          '8': 'Ⅷ',
-          '9': 'Ⅸ',
-          '10': 'Ⅹ',
-          '11': 'Ⅺ',
-          '12': 'Ⅻ',
-          I: 'Ⅰ',
-          II: 'Ⅱ',
-          III: 'Ⅲ',
-          IV: 'Ⅳ',
-          V: 'Ⅴ',
-          VI: 'Ⅵ',
-          VII: 'Ⅶ',
-          VIII: 'Ⅷ',
-          IX: 'Ⅸ',
-          X: 'Ⅹ',
+          '1': 'Ⅰ', '2': 'Ⅱ', '3': 'Ⅲ', '4': 'Ⅳ', '5': 'Ⅴ',
+          '6': 'Ⅵ', '7': 'Ⅶ', '8': 'Ⅷ', '9': 'Ⅸ', '10': 'Ⅹ',
+          '11': 'Ⅺ', '12': 'Ⅻ', I: 'Ⅰ', II: 'Ⅱ', III: 'Ⅲ',
+          IV: 'Ⅳ', V: 'Ⅴ', VI: 'Ⅵ', VII: 'Ⅶ', VIII: 'Ⅷ', IX: 'Ⅸ', X: 'Ⅹ',
         };
 
         const normalizedKey = zenToHanDigits(target.trim()).toUpperCase();
@@ -256,10 +318,10 @@ function applyForwardReferenceAnnotations(line: string): string {
     }
 
     /*
-     * 「〜」の左に傍点 / 「〜」に傍点
+     * 「〜」の左に傍点 / 「〜」に傍点 / 「〜」は傍点
      */
     const leftMatch = body.match(/^「(.+?)」の左に(.+)$/);
-    const normalMatch = body.match(/^「(.+?)」に(.+)$/);
+    const normalMatch = body.match(/^「(.+?)」[には](.+)$/);
 
     const target = leftMatch?.[1] ?? normalMatch?.[1];
     const styleName = leftMatch?.[2] ?? normalMatch?.[2];
@@ -276,13 +338,15 @@ function applyForwardReferenceAnnotations(line: string): string {
 
     const before = working.slice(0, index);
 
-    if (!before.endsWith(target)) continue;
-
-    const targetStart = index - target.length;
-
-    const replacement = `[[AOZORA_INLINE:${style.className}:` + `${encodeURIComponent(target)}]]`;
-
-    working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+    if (before.endsWith(target)) {
+      const targetStart = before.lastIndexOf(target);
+      const replacement = `[[AOZORA_INLINE:${style.className}:${encodeURIComponent(target)}]]`;
+      working = working.slice(0, targetStart) + replacement + working.slice(index + raw.length);
+    } else {
+      const renderedTarget = applyRubyAndEscape(target);
+      const replacement = `[[AOZORA_HTML:${encodeURIComponent(`<em class="${style.className}">${renderedTarget}</em>`)}]]`;
+      working = working.slice(0, index) + replacement + working.slice(index + raw.length);
+    }
   }
 
   interface SimpleForwardRule {
@@ -291,54 +355,18 @@ function applyForwardReferenceAnnotations(line: string): string {
   }
 
   const simplePatterns: SimpleForwardRule[] = [
-    {
-      re: /「(.+?)」は罫囲み/,
-      getClassName: () => 'keigakomi',
-    },
-    {
-      re: /「(.+?)」は枠囲み/,
-      getClassName: () => 'keigakomi',
-    },
-    {
-      re: /「(.+?)」は太字/,
-      getClassName: () => 'futoji',
-    },
-    {
-      re: /「(.+?)」は斜体/,
-      getClassName: () => 'shatai',
-    },
-    {
-      re: /「(.+?)」は縦中横/,
-      getClassName: () => 'tcy',
-    },
-    {
-      re: /「(.+?)」は行右小書き/,
-      getClassName: () => 'superscript',
-    },
-    {
-      re: /「(.+?)」は行左小書き/,
-      getClassName: () => 'subscript',
-    },
-    {
-      re: /「(.+?)」は上付き小文字/,
-      getClassName: () => 'superscript',
-    },
-    {
-      re: /「(.+?)」は下付き小文字/,
-      getClassName: () => 'subscript',
-    },
-    {
-      re: /「(.+?)」は([０-９\d]+)段階大きな文字/,
-      getClassName: (m) => `dai${m[2]}`,
-    },
-    {
-      re: /「(.+?)」は([０-９\d]+)段階小さな文字/,
-      getClassName: (m) => `sho${m[2]}`,
-    },
-    {
-      re: /「(.+?)」はキャプション/,
-      getClassName: () => 'caption',
-    },
+    { re: /「(.+?)」は罫囲み/, getClassName: () => 'keigakomi' },
+    { re: /「(.+?)」は枠囲み/, getClassName: () => 'keigakomi' },
+    { re: /「(.+?)」は太字/, getClassName: () => 'futoji' },
+    { re: /「(.+?)」は斜体/, getClassName: () => 'shatai' },
+    { re: /「(.+?)」は縦中横/, getClassName: () => 'tcy' },
+    { re: /「(.+?)」は横組み/, getClassName: () => 'yokogumi' },
+    { re: /「(.+?)」は(?:行右|上付き)?小書き/, getClassName: () => 'superscript' },
+    { re: /「(.+?)」は指数/, getClassName: () => 'superscript' },
+    { re: /「(.+?)」は(?:行左|下付き)小書き/, getClassName: () => 'subscript' },
+    { re: /「(.+?)」は([０-９\d一二三]+)段階大きな文字/, getClassName: (m) => `dai${parseJapaneseOrArabicNumber(m[2])}` },
+    { re: /「(.+?)」は([０-９\d一二三]+)段階小さな文字/, getClassName: (m) => `sho${parseJapaneseOrArabicNumber(m[2])}` },
+    { re: /「(.+?)」はキャプション/, getClassName: () => 'caption' },
   ];
 
   for (const { re, getClassName } of simplePatterns) {
@@ -353,17 +381,16 @@ function applyForwardReferenceAnnotations(line: string): string {
       const start = m.index;
       const before = working.slice(0, start);
 
-      // ★ ルビ《...》が挟まっていてもマッチする関数を使用
-      const matchedText = matchTargetAllowingRuby(before, rawTarget);
+      let matchedText = matchTargetAllowingRuby(before, rawTarget);
 
-      if (!matchedText) continue;
-
-      const targetStart = start - matchedText.length;
-
-      // 実際にマッチしたルビ込みのテキストに対してクラスを適用
-      const replacement = `[[AOZORA_INLINE:${className}:` + `${encodeURIComponent(matchedText)}]]`;
-
-      working = working.slice(0, targetStart) + replacement + working.slice(start + m[0].length);
+      if (matchedText) {
+        const targetStart = start - matchedText.length;
+        const replacement = `[[AOZORA_INLINE:${className}:${encodeURIComponent(matchedText)}]]`;
+        working = working.slice(0, targetStart) + replacement + working.slice(start + m[0].length);
+      } else {
+        const replacement = `[[AOZORA_INLINE:${className}:${encodeURIComponent(rawTarget)}]]`;
+        working = working.slice(0, start) + replacement + working.slice(start + m[0].length);
+      }
 
       annotationRe.lastIndex = 0;
     }
@@ -373,9 +400,29 @@ function applyForwardReferenceAnnotations(line: string): string {
 }
 
 export function renderInline(line: string, gaijiImages: Map<string, string> = new Map()): string {
-  let working = resolveGaiji(line, gaijiImages);
+  let working = zenToHanDigits(line);
+  working = resolveGaiji(working, gaijiImages);
+
   /*
-   * 1. 範囲指定「天から〜字下げ」...「天から〜字下げ終わり」
+   * 地上げ（地から◯字上げ / 地より◯字上げ）の全自動インライン置換（全角・半角完全対応）
+   */
+  working = working.replace(
+  /［＃地(?:から|より)([0-9０-９一二三四五六七八九十]+)字上げ］/g,
+  (_match, numStr) => {
+    const n = parseJapaneseOrArabicNumber(numStr);
+
+    if (!Number.isFinite(n) || n <= 0) {
+      return '';
+    }
+
+    return `[[AOZORA_HTML:${encodeURIComponent(
+      `<div class="chitsuki chitsuki-${n}" style="text-align:right;margin-right:${n}em"><br/></div>`
+    )}]]`;
+  }
+);
+
+  /*
+   * 1. 範囲指定「天から〜字下げ」
    */
   working = working.replace(
     /［＃(?:ここから)?天から([０-９\d一二三四五六七八九十]+)字下げ］([\s\S]+?)［＃(?:ここで)?天から\1字下げ終わり］/g,
@@ -388,15 +435,16 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
   );
 
   /*
-   * 2. 単発「天から〜字下げ」（例: ［＃天から２字下げ］, ［＃天から五字下げ］）
+   * 2. 単発「天から〜字下げ」
    */
   working = working.replace(/［＃天から([０-９\d一二三四五六七八九十]+)字下げ］/g, (_m, numStr) => {
     const n = parseJapaneseOrArabicNumber(numStr);
     if (n <= 0) return '';
     return `[[AOZORA_HTML:<div class="jisage-${n}">]]`;
   });
+
   /*
-   * JISコードのない約物注記（例: ※［＃感嘆符三つ、626-10］など）の安全な置換
+   * JISコードのない約物注記
    */
   working = working.replace(/※?［＃([^、］]+)[、,]\s*\d+-\d+］/g, (_match, description) => {
     const altText = approximateGaijiText(description);
@@ -412,57 +460,44 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
     const cleanFileName = fileName.trim();
 
     return `[[AOZORA_HTML:${encodeURIComponent(
-      `<div class="illust">` +
-        `<img src="../images/${escapeXml(cleanFileName)}" alt="" />` +
-        `</div>`
+      `<div class="illust"><img src="../images/${escapeXml(cleanFileName)}" alt="" /></div>`
     )}]]`;
   });
 
   /*
-   * インライン文字サイズ
+   * 単発の「ここから太字」「1段階小さな文字」などの開始注記の単体HTMLタグ化
    */
-  working = working.replace(
-    /［＃(\d+)段階大きな文字］([\s\S]+?)［＃大きな文字終わり］/g,
-    (_m, digits, content) => {
-      const n = Number(digits);
-
-      const sizeMap: Record<number, string> = {
-        1: 'large',
-        2: 'x-large',
-      };
-
-      const size = sizeMap[n] ?? 'xx-large';
-
-      return `[[AOZORA_HTML:${encodeURIComponent(
-        `<span class="dai${n}" style="font-size: ${size};">` +
-          `${renderInline(content, gaijiImages)}` +
-          `</span>`
-      )}]]`;
-    }
-  );
+  working = working.replace(/［＃(?:ここから)?太字］/g, `[[AOZORA_HTML:${encodeURIComponent('<strong class="futoji">')}]]`);
+  working = working.replace(/［＃ここで太字終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</strong>')}]]`);
+  working = working.replace(/［＃(?:ここから)?斜体］/g, `[[AOZORA_HTML:${encodeURIComponent('<em class="shatai">')}]]`);
+  working = working.replace(/［＃ここで斜体終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</em>')}]]`);
+  working = working.replace(/［＃(?:ここから)?横組み］/g, `[[AOZORA_HTML:${encodeURIComponent('<span class="yokogumi">')}]]`);
+  working = working.replace(/［＃ここで横組み終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</span>')}]]`);
+  working = working.replace(/［＃(?:ここから)?キャプション］/g, `[[AOZORA_HTML:${encodeURIComponent('<figcaption class="caption">')}]]`);
+  working = working.replace(/［＃ここでキャプション終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</figcaption>')}]]`);
+  working = working.replace(/［＃(?:ここから)?罫囲み］/g, `[[AOZORA_HTML:${encodeURIComponent('<div class="keigakomi">')}]]`);
+  working = working.replace(/［＃ここで罫囲み終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</div>')}]]`);
 
   working = working.replace(
-    /［＃(\d+)段階小さな文字］([\s\S]+?)［＃小さな文字終わり］/g,
-    (_m, digits, content) => {
-      const n = Number(digits);
-
-      const sizeMap: Record<number, string> = {
-        1: 'small',
-        2: 'x-small',
-      };
-
-      const size = sizeMap[n] ?? 'xx-small';
-
-      return `[[AOZORA_HTML:${encodeURIComponent(
-        `<span class="sho${n}" style="font-size: ${size};">` +
-          `${renderInline(content, gaijiImages)}` +
-          `</span>`
-      )}]]`;
+    /［＃(?:ここから)?([０-９\d一二三四五六七八九十]+段階)?大きな文字］/g,
+    (_m, numStr) => {
+      const n = numStr ? parseJapaneseOrArabicNumber(numStr.replace('段階', '')) : 1;
+      return `[[AOZORA_HTML:${encodeURIComponent(`<span class="dai${n}">`)}]]`;
     }
   );
+  working = working.replace(/［＃ここで(?:[０-９\d一二三四五六七八九十]+段階)?大きな文字終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</span>')}]]`);
+
+  working = working.replace(
+    /［＃(?:ここから)?([０-９\d一二三四五六七八九十]+段階)?小さな文字］/g,
+    (_m, numStr) => {
+      const n = numStr ? parseJapaneseOrArabicNumber(numStr.replace('段階', '')) : 1;
+      return `[[AOZORA_HTML:${encodeURIComponent(`<small class="sho${n}">`)}]]`;
+    }
+  );
+  working = working.replace(/［＃ここで(?:[０-９\d一二三四五六七八九十]+段階)?小さな文字終わり］/g, `[[AOZORA_HTML:${encodeURIComponent('</small>')}]]`);
 
   /*
-   * 範囲指定型の注記
+   * 範囲指定型の注記（ペア型）
    */
   const rangePatterns: Array<{
     start: string;
@@ -470,258 +505,57 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
     className: string;
     tag?: string;
   }> = [
-    {
-      start: '罫囲み',
-      end: '罫囲み終わり',
-      className: 'keigakomi',
-      tag: 'span',
-    },
-    {
-      start: '横組み',
-      end: '横組み終わり',
-      className: 'yokogumi',
-      tag: 'span',
-    },
-    {
-      start: '傍点',
-      end: '傍点終わり',
-      className: 'sesame_dot',
-      tag: 'em',
-    },
-    {
-      start: '白ゴマ傍点',
-      end: '白ゴマ傍点終わり',
-      className: 'white_sesame_dot',
-      tag: 'em',
-    },
-    {
-      start: '丸傍点',
-      end: '丸傍点終わり',
-      className: 'black_circle',
-      tag: 'em',
-    },
-    {
-      start: '白丸傍点',
-      end: '白丸傍点終わり',
-      className: 'white_circle',
-      tag: 'em',
-    },
-    {
-      start: '黒三角傍点',
-      end: '黒三角傍点終わり',
-      className: 'black_up-pointing_triangle',
-      tag: 'em',
-    },
-    {
-      start: '白三角傍点',
-      end: '白三角傍点終わり',
-      className: 'white_up-pointing_triangle',
-      tag: 'em',
-    },
-    {
-      start: '二重丸傍点',
-      end: '二重丸傍点終わり',
-      className: 'bullseye',
-      tag: 'em',
-    },
-    {
-      start: '蛇の目傍点',
-      end: '蛇の目傍点終わり',
-      className: 'fisheye',
-      tag: 'em',
-    },
-    {
-      start: 'ばつ傍点',
-      end: 'ばつ傍点終わり',
-      className: 'saltire',
-      tag: 'em',
-    },
+    { start: '罫囲み', end: '罫囲み終わり', className: 'keigakomi', tag: 'span' },
+    { start: '横組み', end: '横組み終わり', className: 'yokogumi', tag: 'span' },
+    { start: '傍点', end: '傍点終わり', className: 'sesame_dot', tag: 'em' },
+    { start: '白ゴマ傍点', end: '白ゴマ傍点終わり', className: 'white_sesame_dot', tag: 'em' },
+    { start: '丸傍点', end: '丸傍点終わり', className: 'black_circle', tag: 'em' },
+    { start: '白丸傍点', end: '白丸傍点終わり', className: 'white_circle', tag: 'em' },
+    { start: '黒三角傍点', end: '黒三角傍点終わり', className: 'black_up-pointing_triangle', tag: 'em' },
+    { start: '白三角傍点', end: '白三角傍点終わり', className: 'white_up-pointing_triangle', tag: 'em' },
+    { start: '二重丸傍点', end: '二重丸傍点終わり', className: 'bullseye', tag: 'em' },
+    { start: '蛇の目傍点', end: '蛇の目傍点終わり', className: 'fisheye', tag: 'em' },
+    { start: 'ばつ傍点', end: 'ばつ傍点終わり', className: 'saltire', tag: 'em' },
 
-    {
-      start: '左に傍点',
-      end: '左に傍点終わり',
-      className: 'sesame_dot_after',
-      tag: 'em',
-    },
-    {
-      start: '左に白ゴマ傍点',
-      end: '左に白ゴマ傍点終わり',
-      className: 'white_sesame_dot_after',
-      tag: 'em',
-    },
-    {
-      start: '左に丸傍点',
-      end: '左に丸傍点終わり',
-      className: 'black_circle_after',
-      tag: 'em',
-    },
-    {
-      start: '左に白丸傍点',
-      end: '左に白丸傍点終わり',
-      className: 'white_circle_after',
-      tag: 'em',
-    },
-    {
-      start: '左に黒三角傍点',
-      end: '左に黒三角傍点終わり',
-      className: 'black_up-pointing_triangle_after',
-      tag: 'em',
-    },
-    {
-      start: '左に白三角傍点',
-      end: '左に白三角傍点終わり',
-      className: 'white_up-pointing_triangle_after',
-      tag: 'em',
-    },
-    {
-      start: '左に二重丸傍点',
-      end: '左に二重丸傍点終わり',
-      className: 'bullseye_after',
-      tag: 'em',
-    },
-    {
-      start: '左に蛇の目傍点',
-      end: '左に蛇の目傍点終わり',
-      className: 'fisheye_after',
-      tag: 'em',
-    },
-    {
-      start: '左にばつ傍点',
-      end: '左にばつ傍点終わり',
-      className: 'saltire_after',
-      tag: 'em',
-    },
+    { start: '左に傍点', end: '左に傍点終わり', className: 'sesame_dot_after', tag: 'em' },
+    { start: '左に白ゴマ傍点', end: '左に白ゴマ傍点終わり', className: 'white_sesame_dot_after', tag: 'em' },
+    { start: '左に丸傍点', end: '左に丸傍点終わり', className: 'black_circle_after', tag: 'em' },
+    { start: '左に白丸傍点', end: '左に白丸傍点終わり', className: 'white_circle_after', tag: 'em' },
+    { start: '左に黒三角傍点', end: '左に黒三角傍点終わり', className: 'black_up-pointing_triangle_after', tag: 'em' },
+    { start: '左に白三角傍点', end: '左に白三角傍点終わり', className: 'white_up-pointing_triangle_after', tag: 'em' },
+    { start: '左に二重丸傍点', end: '左に二重丸傍点終わり', className: 'bullseye_after', tag: 'em' },
+    { start: '左に蛇の目傍点', end: '左に蛇の目傍点終わり', className: 'fisheye_after', tag: 'em' },
+    { start: '左にばつ傍点', end: '左にばつ傍点終わり', className: 'saltire_after', tag: 'em' },
 
-    {
-      start: '傍線',
-      end: '傍線終わり',
-      className: 'underline_solid',
-      tag: 'em',
-    },
-    {
-      start: '二重傍線',
-      end: '二重傍線終わり',
-      className: 'underline_double',
-      tag: 'em',
-    },
-    {
-      start: '鎖線',
-      end: '鎖線終わり',
-      className: 'underline_dotted',
-      tag: 'em',
-    },
-    {
-      start: '破線',
-      end: '破線終わり',
-      className: 'underline_dashed',
-      tag: 'em',
-    },
-    {
-      start: '波線',
-      end: '波線終わり',
-      className: 'underline_wave',
-      tag: 'em',
-    },
+    { start: '傍線', end: '傍線終わり', className: 'underline_solid', tag: 'em' },
+    { start: '二重傍線', end: '二重傍線終わり', className: 'underline_double', tag: 'em' },
+    { start: '鎖線', end: '鎖線終わり', className: 'underline_dotted', tag: 'em' },
+    { start: '破線', end: '破線終わり', className: 'underline_dashed', tag: 'em' },
+    { start: '波線', end: '波線終わり', className: 'underline_wave', tag: 'em' },
 
-    {
-      start: '左に傍線',
-      end: '左に傍線終わり',
-      className: 'overline_solid',
-      tag: 'em',
-    },
-    {
-      start: '左に二重傍線',
-      end: '左に二重傍線終わり',
-      className: 'overline_double',
-      tag: 'em',
-    },
-    {
-      start: '左に鎖線',
-      end: '左に鎖線終わり',
-      className: 'overline_dotted',
-      tag: 'em',
-    },
-    {
-      start: '左に破線',
-      end: '左に破線終わり',
-      className: 'overline_dashed',
-      tag: 'em',
-    },
-    {
-      start: '左に波線',
-      end: '左に波線終わり',
-      className: 'overline_wave',
-      tag: 'em',
-    },
+    { start: '左に傍線', end: '左に傍線終わり', className: 'overline_solid', tag: 'em' },
+    { start: '左に二重傍線', end: '左に二重傍線終わり', className: 'overline_double', tag: 'em' },
+    { start: '左に鎖線', end: '左に鎖線終わり', className: 'overline_dotted', tag: 'em' },
+    { start: '左に破線', end: '左に破線終わり', className: 'overline_dashed', tag: 'em' },
+    { start: '左に波線', end: '左に波線終わり', className: 'overline_wave', tag: 'em' },
 
-    {
-      start: '太字',
-      end: '太字終わり',
-      className: 'futoji',
-      tag: 'span',
-    },
-    {
-      start: '斜体',
-      end: '斜体終わり',
-      className: 'shatai',
-      tag: 'span',
-    },
-    {
-      start: '縦中横',
-      end: '縦中横終わり',
-      className: 'tcy',
-      tag: 'span',
-    },
-    {
-      start: '行右小書き',
-      end: '行右小書き終わり',
-      className: 'superscript',
-      tag: 'sup',
-    },
-    {
-      start: '行左小書き',
-      end: '行左小書き終わり',
-      className: 'subscript',
-      tag: 'sub',
-    },
-    {
-      start: '上付き小文字',
-      end: '上付き小文字終わり',
-      className: 'superscript',
-      tag: 'sup',
-    },
-    {
-      start: '下付き小文字',
-      end: '下付き小文字終わり',
-      className: 'subscript',
-      tag: 'sub',
-    },
+    { start: '太字', end: '太字終わり', className: 'futoji', tag: 'span' },
+    { start: '斜体', end: '斜体終わり', className: 'shatai', tag: 'span' },
+    { start: '縦中横', end: '縦中横終わり', className: 'tcy', tag: 'span' },
+    { start: '行右小書き', end: '行右小書き終わり', className: 'superscript', tag: 'sup' },
+    { start: '行左小書き', end: '行左小書き終わり', className: 'subscript', tag: 'sub' },
+    { start: '上付き小文字', end: '上付き小文字終わり', className: 'superscript', tag: 'sup' },
+    { start: '下付き小文字', end: '下付き小文字終わり', className: 'subscript', tag: 'sub' },
 
-    {
-      start: '割り注',
-      end: '割り注終わり',
-      className: 'warichu',
-      tag: 'span',
-    },
-    {
-      start: 'キャプション',
-      end: 'キャプション終わり',
-      className: 'caption',
-      tag: 'span',
-    },
-    {
-      start: '横組み',
-      end: '横組み終わり',
-      className: 'yokogumi',
-      tag: 'span',
-    },
+    { start: '割り注', end: '割り注終わり', className: 'warichu', tag: 'span' },
+    { start: 'キャプション', end: 'キャプション終わり', className: 'caption', tag: 'span' },
+    { start: '同行中見出し', end: '同行中見出し終わり', className: 'inline-heading', tag: 'span' },
   ];
 
   for (const range of rangePatterns) {
     const startCandidates = [`［＃${range.start}］`, `［＃ここから${range.start}］`];
     const endCandidates = [`［＃${range.end}］`, `［＃ここで${range.start}終わり］`];
 
-    // 同一種類の装飾が同じ行に複数あってもすべて処理できるよう while にする
     while (true) {
       let startToken = '';
       let startIndex = -1;
@@ -765,7 +599,7 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
   }
 
   /*
-   * AOZORA_INLINE
+   * AOZORA_INLINE の復元
    */
   working = working.replace(
     /\[\[AOZORA_INLINE:([^:\]]+):([^\]]+)\]\]/g,
@@ -775,40 +609,29 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
       let html = '';
 
       if (className === 'tcy') {
-        html = `<span class="tcy">` + `${applyRubyAndEscape(target)}` + `</span>`;
+        html = `<span class="tcy">${applyRubyAndEscape(target)}</span>`;
       } else if (className === 'keigakomi') {
-        html = `<span class="keigakomi">` + `${applyRubyAndEscape(target)}` + `</span>`;
+        html = `<span class="keigakomi">${applyRubyAndEscape(target)}</span>`;
       } else if (className === 'yokogumi') {
-        html = `<span class="yokogumi">` + `${applyRubyAndEscape(target)}` + `</span>`;
+        html = `<span class="yokogumi">${applyRubyAndEscape(target)}</span>`;
       } else if (className === 'superscript') {
-        html = `<sup class="superscript">` + `${applyRubyAndEscape(target)}` + `</sup>`;
+        html = `<sup class="superscript">${applyRubyAndEscape(target)}</sup>`;
       } else if (className === 'subscript') {
-        html = `<sub class="subscript">` + `${applyRubyAndEscape(target)}` + `</sub>`;
+        html = `<sub class="subscript">${applyRubyAndEscape(target)}</sub>`;
       } else if (className === 'caption') {
-        html = `<span class="caption">` + `${applyRubyAndEscape(target)}` + `</span>`;
+        html = `<span class="caption">${applyRubyAndEscape(target)}</span>`;
       } else if (className.startsWith('dai') || className.startsWith('sho')) {
         const n = Number(className.replace(/\D/g, '')) || 1;
-
         const isDai = className.startsWith('dai');
-
         const sizeMap: Record<number, string> = isDai
-          ? {
-              1: 'large',
-              2: 'x-large',
-            }
-          : {
-              1: 'small',
-              2: 'x-small',
-            };
+          ? { 1: 'large', 2: 'x-large' }
+          : { 1: 'small', 2: 'x-small' };
 
         const size = sizeMap[n] ?? (isDai ? 'xx-large' : 'xx-small');
 
-        html =
-          `<span class="${className}" style="font-size: ${size};">` +
-          `${applyRubyAndEscape(target)}` +
-          `</span>`;
+        html = `<span class="${className}" style="font-size: ${size};">${applyRubyAndEscape(target)}</span>`;
       } else {
-        html = `<em class="${className}">` + `${applyRubyAndEscape(target)}` + `</em>`;
+        html = `<em class="${className}">${applyRubyAndEscape(target)}</em>`;
       }
 
       return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
@@ -816,39 +639,77 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
   );
 
   /*
-   * 見出しプレースホルダー
+   * 見出しプレースホルダー (AOZORA_HEADING) の復元
    */
   working = working.replace(
     /\[\[AOZORA_HEADING:([^:]+):([^:]+):([^\]]+)\]\]/g,
     (_match, tag, className, encodedTarget) =>
       `[[AOZORA_HTML:${encodeURIComponent(
-        `<${tag} class="${className}">` + `${decodeURIComponent(encodedTarget)}` + `</${tag}>`
+        `<${tag} class="${className}">${decodeURIComponent(encodedTarget)}</${tag}>`
       )}]]`
   );
 
   /*
-   * 漢文の返り点注記 (［＃レ］, ［＃一］, ［＃二］, ［＃上］, ［＃下］ など)
+   * 漢文の返り点注記
    */
-  working = working.replace(/［＃([一二三四上下甲乙丙丁レ]+)］/g, (_match, kaeriten) => {
-    const html = `<sub class="kaeriten">${escapeHtml(kaeriten)}</sub>`;
+
+
+  /*
+   * 本文中の注記記号
+   */
+  working = working.replace(/［＃（(.+?)）］/g, (_match, noteMark) => {
+    const html = `<sup class="note-mark">（${escapeHtml(noteMark)}）</sup>`;
     return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
   });
+
   /*
-   * 孤立・浮遊した各種「終了注記」の安全なクリーンアップ
-   * （開始注記とのペアが外れたり単独で残った「ここで〜終わり」を画面露出・エラー化させない）
+   * 単体の見出し略記注記（［＃大］, ［＃中］, ［＃小］）の除去
+   */
+  working = working.replace(/［＃[大中小]］/g, '');
+
+  /*
+   * 底本・校正・現代語訳・文字指示・図省略注記の消去
+   */
+  working = working.replace(/［＃(?:[ルる][ビび]の)?(?:「.+?」は)?底本では.+?］/g, '');
+  working = working.replace(/［＃「.+?[頁ページ]」は.+?］/g, '');
+  working = working.replace(/［＃図(?:が入るが)?省略.*?］/g, '');
+  working = working.replace(/［＃底本の親本では.*?］/g, '');
+  working = working.replace(/［＃現代語訳.+?］/g, '');
+  working = working.replace(/［＃.+?に(?:鋭|曲|平息|帯気)アクセント.*?］/g, '');
+  working = working.replace(/［＃.+?は(?:小書き片仮名|上ドット付き|下ドット付き).*?］/g, '');
+
+  /*
+   * レイアウト指示・残余ブロック注記の安全な一括消去
+   */
+  working = working.replace(
+    /［＃(?:ここから|ここまで|ここで)?(?:地[からより])?(?:[０-９\d一二三四五六七八九十]+字)?(?:下げ|上げ|詰め|天付き|地付き|改ページ|改丁|改行|改段|改見開き|段組|本文終わり|ページの左右中央|大見出し|中見出し|小見出し|右寄せ|左寄せ).*?］/g,
+    ''
+  );
+
+  /*
+   * 孤立した「終了注記」の消去
    */
   const UNPAIRED_END_ANNOTATION =
-    /［＃(?:ここで)?(?:横組み|太字|斜体|傍点|傍線|縦中横|割り注|キャプション|字下げ|地付き|字上げ|字詰め|大きな文字|小さな文字|罫囲み|枠囲み|(?:大|中|小)?見出し)(?:終わり|おわり)］/g;
+    /［＃(?:ここで)?(?:横組み|太字|斜体|傍点|傍線|縦中横|割り注|キャプション|字下げ|地付き|字上げ|字詰め|段組|大きな文字|小さな文字|罫囲み|枠囲み|行右小書き|行左小書き|(?:大|中|小)?見出し)(?:終わり|おわり)］/g;
 
   working = working.replace(UNPAIRED_END_ANNOTATION, '');
+
   /*
-   * 未対応注記を可視化
+   * 未対応注記の可視化ログ出力（ANNOTATION_PATTERN）
    */
   working = working.replace(ANNOTATION_PATTERN, (raw) => {
     console.warn('[Aozora] unsupported inline annotation:', raw);
-
     return `[[AOZORA_HTML:${encodeURIComponent(`<span class="notes">${escapeHtml(raw)}</span>`)}]]`;
   });
+
+  working = working.replace(
+  /［＃([一二三四五六七八九十上下甲乙丙丁レ]+)］/g,
+  (_match, kaeriten) => {
+    const html = `<sub class="kaeriten">${escapeHtml(kaeriten)}</sub>`;
+
+    return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
+  }
+);
 
   /*
    * 生テキストだけをルビ化 + HTML escape
@@ -866,11 +727,7 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
 
   return working;
 }
-/**
- * target の各文字の直後にルビ注記（《…》）が挟まっていても
- * 前方一致とみなし、実際にマッチした（ルビ込みの）部分文字列を返す。
- * 一致しなければ null。
- */
+
 export function matchTargetAllowingRuby(before: string, target: string): string | null {
   const escapedChars = [...target].map((ch) => ch.replace(/[.*+?^${}()|[\]\\]/g, '\\$&'));
   const pattern = escapedChars.join('(?:《[^》]*》)?') + '(?:《[^》]*》)?';
@@ -880,16 +737,8 @@ export function matchTargetAllowingRuby(before: string, target: string): string 
   return match ? match[0] : null;
 }
 
-/**
- * 外字注記のパターン。
- * 例1: ※［＃感嘆符三つ、626-10］                          → JISコード無し
- * 例2: ※［＃「てへん+劣」、第3水準1-84-77、361-9］          → JISコード（水準-区-点）あり
- */
 export const GAIJI_PATTERN = /※?［＃(.+?)[、,]\s*(?:第[34]水準)?(\d+-\d+-\d+)(?:[、,][^］]+)*］/g;
-/**
- * JISコードが無い外字（活字の説明のみ）をテキストで近似する。
- * よくあるパターン以外は説明文をそのまま角括弧で見える化する。
- */
+
 export function approximateGaijiText(description: string): string {
   const countMatch = description.match(/^(.+?)(二つ|三つ|四つ)$/);
 
@@ -910,12 +759,6 @@ export function approximateGaijiText(description: string): string {
   return `〔${description}〕`;
 }
 
-/**
- * 外字注記を解決する。
- * gaijiImages は「JISコード → EPUB内の画像ファイル名」のマップ
- * （fetchAozora.ts の fetchGaijiImages で事前に取得済みのもの）。
- * ネットワークアクセスはここでは行わない（純粋関数として保つため）。
- */
 export function resolveGaiji(line: string, gaijiImages: Map<string, string>): string {
   return line.replace(GAIJI_PATTERN, (_match, description: string, jisCode?: string) => {
     if (jisCode) {

@@ -10,67 +10,22 @@ import { renderInline } from './inline';
 
 import type { BlockState } from '../types';
 
-const CHITSUKI_INLINE = /［＃地付き］/;
-const CHIYOSE_INLINE = /［＃地から(\d+|[０-９]+)字上げ］/;
-
-function tryRenderTrailingAlignment(
-  line: string,
-  gaijiImages: Map<string, string>
-): string[] | null {
-  const cleanLine = zenToHanDigits(line);
-
-  const chitsukiMatch = cleanLine.match(CHITSUKI_INLINE);
-
-  const chiyoseMatch = cleanLine.match(CHIYOSE_INLINE);
-
-  const candidates = [chitsukiMatch, chiyoseMatch].filter((m): m is RegExpMatchArray => m !== null);
-
-  if (candidates.length === 0) {
-    return null;
-  }
-
-  const match = candidates.sort((a, b) => (a.index ?? 0) - (b.index ?? 0))[0];
-
-  const index = match.index ?? -1;
-
-  if (index < 0) {
-    return null;
-  }
-
-  const prefix = cleanLine.slice(0, index);
-  const suffix = cleanLine.slice(index + match[0].length);
-
-  const isChiyose = match === chiyoseMatch;
-
-  const amount = isChiyose ? parseJapaneseOrArabicNumber((chiyoseMatch as RegExpMatchArray)[1]) : 0;
-  const out: string[] = [];
-
-  if (prefix.trim() !== '') {
-    out.push(`<p>${renderInline(prefix, gaijiImages)}</p>`);
-  }
-
-  out.push(
-    `<div class="chitsuki_${amount}" ` +
-      `style="text-align:right; margin-right: ${amount}em">` +
-      `${renderInline(suffix, gaijiImages)}` +
-      `</div>`
-  );
-
-  return out;
-}
-
 function renderNormalLine(line: string, gaijiImages: Map<string, string>): string {
   let working = zenToHanDigits(line);
 
   let inlineIndent = 0;
 
-  const inlineIndentMatches = [...working.matchAll(/［＃(\d+)字下げ］/g)];
+  const inlineIndentPattern =
+  /［＃([0-9０-９一二三四五六七八九十]+)字下げ］/g;
 
-  for (const match of inlineIndentMatches) {
-    inlineIndent = Math.max(inlineIndent, parseJapaneseOrArabicNumber(match[1]));
-  }
+for (const match of working.matchAll(inlineIndentPattern)) {
+  inlineIndent = Math.max(
+    inlineIndent,
+    parseJapaneseOrArabicNumber(match[1])
+  );
+}
 
-  working = working.replace(/［＃\d+字下げ］/g, '');
+working = working.replace(inlineIndentPattern, '');
 
   const content = renderInline(working, gaijiImages);
 
@@ -91,20 +46,12 @@ function renderNormalLine(line: string, gaijiImages: Map<string, string>): strin
   return result;
 }
 
-/**
- * 青空文庫の Shift_JIS TXT を
- * EPUB 用 HTML に変換する。
- * gaijiImages は「JISコード → EPUB内の画像ファイル名」のマップ（省略時は外字画像を使わずテキスト近似のみ）。
- */
 export function parseAozoraTxtToHtml(
   rawTxt: string,
   gaijiImages: Map<string, string> = new Map()
 ): string {
   const lines = rawTxt.split(/\r?\n/);
 
-  /*
-   * 青空文庫 TXT のヘッダー部分を除去。
-   */
   const dividerRegex = /^[-―─]{10,}\s*$/;
 
   let firstDividerIdx = -1;
@@ -204,35 +151,63 @@ export function parseAozoraTxtToHtml(
     }
 
     /*
-     * 改ページ
+     * 改ページ・改丁・改見開き・改頁（すべての表記ゆれを網羅）
      */
-    if (trimmed === '［＃改ページ］' || trimmed === '［＃改丁］' || trimmed === '［＃改見開き］') {
+    if (
+      trimmed === '［＃改ページ］' ||
+      trimmed === '［＃改頁］' ||
+      trimmed === '［＃改丁］' ||
+      trimmed === '［＃改見開き］'
+    ) {
       if (inPageCenter) {
         htmlResult.push('</div>');
         inPageCenter = false;
       }
 
       htmlResult.push('<div class="page-break"></div>');
-
       continue;
     }
 
     /*
-     * 改段
+     * 改段・段組
      */
     if (trimmed === '［＃改段］') {
       htmlResult.push('<span class="notes">［＃改段］</span>');
+      continue;
+    }
 
+    if (trimmed.includes('［＃ここから') && trimmed.includes('段組］')) {
+      htmlResult.push('<div class="multicolumn">');
+      continue;
+    }
+
+    if (trimmed.includes('［＃ここで段組終わり］') || trimmed.includes('［＃段組終わり］')) {
+      htmlResult.push('</div>');
       continue;
     }
 
     /*
-     * 単独行画像
+     * 単独行画像（汎用判定＋既存パターン）
      */
-    IMAGE_ANNOTATION_PATTERN.lastIndex = 0; // /g フラグのインデックスリセット
+    const generalImageMatch = trimmed.match(
+      /^［＃.*?[（(]([a-zA-Z0-9_\-]+\.(?:png|jpg|jpeg|gif))[）].*?］$/
+    );
+
+    if (generalImageMatch) {
+      const fileName = generalImageMatch[1].trim();
+
+      htmlResult.push(
+        `<div class="illust">` +
+          `<img src="../images/${escapeXml(fileName)}" alt="挿絵・外字" />` +
+          `</div>`
+      );
+
+      continue;
+    }
+
+    IMAGE_ANNOTATION_PATTERN.lastIndex = 0;
     const imageMatch = IMAGE_ANNOTATION_PATTERN.exec(trimmed);
 
-    // 1行丸ごと挿絵注記の場合
     if (imageMatch && trimmed === imageMatch[0]) {
       const fileName = imageMatch[1].trim();
 
@@ -244,7 +219,7 @@ export function parseAozoraTxtToHtml(
     }
 
     /*
-     * ブロック注記（単独行・複合注記・スペース付き注記）
+     * ブロック注記
      */
     const annotations = [...trimmed.matchAll(ANNOTATION_PATTERN)].map((m) => m[0].slice(2, -1));
     const isAnnotationOnlyLine = trimmed.replace(ANNOTATION_PATTERN, '').trim() === '';
@@ -253,19 +228,15 @@ export function parseAozoraTxtToHtml(
       let handled = false;
 
       for (const annotation of annotations) {
-        // 1. ブロック終了（「ここで〜終わり」）
         if (isBlockEnd(annotation)) {
-          closeBlock(blockEndType()); // ★ 引数なしで呼び出し
+          closeBlock(blockEndType());
           handled = true;
           continue;
         }
 
-        // 2. ブロック開始の判定
         const state = parseBlockStart(annotation);
 
         if (state) {
-          // もし直前が字下げ/ぶら下げブロックで、閉じタグのないまま新しい字下げ注記が来たら
-          // 自動で前の字下げブロックをポップして閉じる（スタック蓄積の防止）
           if (blockStack.length > 0 && (state.type === 'indent' || state.type === 'burasage')) {
             const top = blockStack[blockStack.length - 1];
             if (top.type === 'indent' || top.type === 'burasage') {
@@ -287,7 +258,7 @@ export function parseAozoraTxtToHtml(
     }
 
     /*
-     * 「〜」は大見出し
+     * 見出し処理
      */
     const headingForward = line.match(/［＃「(.+?)」は(同行|窓)?(大|中|小)見出し］/) ?? null;
 
@@ -319,7 +290,7 @@ export function parseAozoraTxtToHtml(
             `</${info.tag}>`;
 
           if (indent > 0) {
-            htmlResult.push(`<div class="jisage-${indent}">` + renderedHeading + `</div>`);
+            htmlResult.push(`<div class="jisage-${indent}">${renderedHeading}</div>`);
           } else {
             htmlResult.push(renderedHeading);
           }
@@ -329,9 +300,6 @@ export function parseAozoraTxtToHtml(
       }
     }
 
-    /*
-     * ［＃大見出し］〜［＃大見出し終わり］
-     */
     const leadingIndentMatch = trimmed.match(/^［＃([\d０-９]+)字下げ］/);
     const afterIndent = leadingIndentMatch ? trimmed.slice(leadingIndentMatch[0].length) : trimmed;
     const leadingIndent = leadingIndentMatch
@@ -370,27 +338,13 @@ export function parseAozoraTxtToHtml(
     }
 
     /*
-     * 地付き / 字上げ
-     */
-    const alignmentResult = tryRenderTrailingAlignment(line, gaijiImages);
-
-    if (alignmentResult) {
-      htmlResult.push(...alignmentResult);
-
-      continue;
-    }
-
-    /*
-     * 通常行
+     * 通常行（地上げ・地付きのインライン／ブロック共通処理を renderInline 内で一括吸収）
      */
     const rendered = renderNormalLine(line, gaijiImages);
 
     htmlResult.push(rendered);
   }
 
-  /*
-   * EOF で閉じ忘れたブロックを閉じる
-   */
   while (blockStack.length > 0) {
     const state = blockStack.pop()!;
 
