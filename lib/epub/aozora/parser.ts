@@ -323,12 +323,8 @@ export function parseAozoraTxtToHtml(
      * ［＃大見出し］〜［＃大見出し終わり］
      */
     const leadingIndentMatch = trimmed.match(/^［＃([\d０-９]+)字下げ］/);
-    const afterIndent = leadingIndentMatch
-      ? trimmed.slice(leadingIndentMatch[0].length)
-      : trimmed;
-    const leadingIndent = leadingIndentMatch
-      ? Number(zenToHanDigits(leadingIndentMatch[1]))
-      : 0;
+    const afterIndent = leadingIndentMatch ? trimmed.slice(leadingIndentMatch[0].length) : trimmed;
+    const leadingIndent = leadingIndentMatch ? Number(zenToHanDigits(leadingIndentMatch[1])) : 0;
 
     const headingOpenClose = afterIndent.match(
       /^［＃((?:同行|窓)?(大|中|小)見出し)］(.+?)［＃\1終わり］/
@@ -351,7 +347,7 @@ export function parseAozoraTxtToHtml(
           `${renderInline(content, gaijiImages)}` +
           `</${info.tag}>`;
 
-          // 閉じタグ直後に余計な文字（誤記由来）が残っていたら、そのまま別段落として出力する
+        // 閉じタグ直後に余計な文字（誤記由来）が残っていたら、そのまま別段落として出力する
         const matchEnd = (headingOpenClose.index ?? 0) + headingOpenClose[0].length;
         const trailing = afterIndent.slice(matchEnd);
 
