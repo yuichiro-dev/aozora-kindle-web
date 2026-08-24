@@ -65,9 +65,11 @@ export interface BlockState {
     | 'yokogumi'
     | 'caption'
     | 'dai'
-    | 'sho';
+    | 'sho'
+    | 'composite';
 
   className?: string;
+  classes?: string[];
   level?: 1 | 2 | 3;
   tag?: 'h2' | 'h3' | 'h4';
   amount?: number;

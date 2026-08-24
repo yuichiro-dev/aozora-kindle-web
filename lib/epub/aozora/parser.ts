@@ -245,34 +245,46 @@ export function parseAozoraTxtToHtml(
     }
 
     /*
-     * 単独行のブロック注記
+     * 単独行のブロック注記（または単発注記）
      */
     const annotations = [...trimmed.matchAll(ANNOTATION_PATTERN)].map((m) => m[0].slice(2, -1));
 
     if (annotations.length === 1 && trimmed === `［＃${annotations[0]}］`) {
       const annotation = annotations[0];
 
+      // 1. ブロック開始（「ここから〜」）の判定
       const state = parseBlockStart(annotation);
 
       if (state) {
         const { open } = blockTags(state);
-
         htmlResult.push(open);
         blockStack.push(state);
-
-        continue;
+        continue; // ★ 必ず continue して後続の renderNormalLine に流さない！
       }
 
+      // 2. ブロック終了（「ここで〜終わり」）の判定
       if (isBlockEnd(annotation)) {
         closeBlock(blockEndType(annotation));
+        continue; // ★ 必ず continue して後続の renderNormalLine に流さない！
+      }
 
+      // 3. 単発の1行注記（［＃２字下げ］、［＃罫囲み］など）の場合
+      // ※ parseBlockStart も isBlockEnd も null/false だった場合
+      const cleanAnno = zenToHanDigits(annotation);
+      if (
+        /^\d+字下げ/.test(cleanAnno) ||
+        /ぶら下げ/.test(cleanAnno) ||
+        cleanAnno === '地付き' ||
+        cleanAnno === '罫囲み' ||
+        cleanAnno === '横組み'
+      ) {
+        // 単発注記行そのものは HTML 本文に出力させない（スキップする）
         continue;
       }
 
+      // 4. 上記いずれにも当てはまらない未対応注記
       console.warn('[Aozora] unsupported block annotation:', trimmed);
-
       htmlResult.push(`<span class="notes">${escapeHtml(trimmed)}</span>`);
-
       continue;
     }
 

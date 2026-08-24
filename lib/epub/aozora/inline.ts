@@ -1,7 +1,6 @@
 import { ANNOTATION_PATTERN, IMAGE_ANNOTATION_PATTERN, RUBY_PATTERN } from '../constants';
 
-import { escapeHtml, escapeXml, zenToHanDigits } from '../escape';
-
+import { escapeHtml, escapeXml, parseJapaneseOrArabicNumber, zenToHanDigits } from '../escape';
 import { headingInfo } from './headings';
 
 import type { InlineStyle } from '../types';
@@ -293,6 +292,14 @@ function applyForwardReferenceAnnotations(line: string): string {
 
   const simplePatterns: SimpleForwardRule[] = [
     {
+      re: /「(.+?)」は罫囲み/,
+      getClassName: () => 'keigakomi',
+    },
+    {
+      re: /「(.+?)」は枠囲み/,
+      getClassName: () => 'keigakomi',
+    },
+    {
       re: /「(.+?)」は太字/,
       getClassName: () => 'futoji',
     },
@@ -368,6 +375,27 @@ function applyForwardReferenceAnnotations(line: string): string {
 export function renderInline(line: string, gaijiImages: Map<string, string> = new Map()): string {
   let working = resolveGaiji(line, gaijiImages);
   /*
+   * 1. 範囲指定「天から〜字下げ」...「天から〜字下げ終わり」
+   */
+  working = working.replace(
+    /［＃(?:ここから)?天から([０-９\d一二三四五六七八九十]+)字下げ］([\s\S]+?)［＃(?:ここで)?天から\1字下げ終わり］/g,
+    (_m, numStr, content) => {
+      const n = parseJapaneseOrArabicNumber(numStr);
+      return `[[AOZORA_HTML:${encodeURIComponent(
+        `<div class="jisage-${n}">${renderInline(content, gaijiImages)}</div>`
+      )}]]`;
+    }
+  );
+
+  /*
+   * 2. 単発「天から〜字下げ」（例: ［＃天から２字下げ］, ［＃天から五字下げ］）
+   */
+  working = working.replace(/［＃天から([０-９\d一二三四五六七八九十]+)字下げ］/g, (_m, numStr) => {
+    const n = parseJapaneseOrArabicNumber(numStr);
+    if (n <= 0) return '';
+    return `[[AOZORA_HTML:<div class="jisage-${n}">]]`;
+  });
+  /*
    * JISコードのない約物注記（例: ※［＃感嘆符三つ、626-10］など）の安全な置換
    */
   working = working.replace(/※?［＃([^、］]+)[、,]\s*\d+-\d+］/g, (_match, description) => {
@@ -442,6 +470,18 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
     className: string;
     tag?: string;
   }> = [
+    {
+      start: '罫囲み',
+      end: '罫囲み終わり',
+      className: 'keigakomi',
+      tag: 'span',
+    },
+    {
+      start: '横組み',
+      end: '横組み終わり',
+      className: 'yokogumi',
+      tag: 'span',
+    },
     {
       start: '傍点',
       end: '傍点終わり',
@@ -669,34 +709,59 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
       className: 'caption',
       tag: 'span',
     },
+    {
+      start: '横組み',
+      end: '横組み終わり',
+      className: 'yokogumi',
+      tag: 'span',
+    },
   ];
 
   for (const range of rangePatterns) {
-    const startToken = `［＃${range.start}］`;
-    const endToken = `［＃${range.end}］`;
+    const startCandidates = [`［＃${range.start}］`, `［＃ここから${range.start}］`];
+    const endCandidates = [`［＃${range.end}］`, `［＃ここで${range.start}終わり］`];
 
-    const startIndex = working.indexOf(startToken);
+    // 同一種類の装飾が同じ行に複数あってもすべて処理できるよう while にする
+    while (true) {
+      let startToken = '';
+      let startIndex = -1;
+      for (const candidate of startCandidates) {
+        const idx = working.indexOf(candidate);
+        if (idx !== -1 && (startIndex === -1 || idx < startIndex)) {
+          startToken = candidate;
+          startIndex = idx;
+        }
+      }
 
-    if (startIndex === -1) continue;
+      if (startIndex === -1) break;
 
-    const contentStart = startIndex + startToken.length;
+      const contentStart = startIndex + startToken.length;
 
-    const endIndex = working.indexOf(endToken, contentStart);
+      let endToken = '';
+      let endIndex = -1;
+      for (const candidate of endCandidates) {
+        const idx = working.indexOf(candidate, contentStart);
+        if (idx !== -1 && (endIndex === -1 || idx < endIndex)) {
+          endToken = candidate;
+          endIndex = idx;
+        }
+      }
 
-    if (endIndex === -1) continue;
+      if (endIndex === -1) break;
 
-    const before = working.slice(0, startIndex);
-    const content = working.slice(contentStart, endIndex);
-    const after = working.slice(endIndex + endToken.length);
+      const before = working.slice(0, startIndex);
+      const content = working.slice(contentStart, endIndex);
+      const after = working.slice(endIndex + endToken.length);
 
-    const rendered =
-      range.className === 'warichu'
-        ? `<span class="warichu">（${renderInline(content, gaijiImages)}）</span>`
-        : `<${range.tag} class="${range.className}">` +
-          `${renderInline(content, gaijiImages)}` +
-          `</${range.tag}>`;
+      const rendered =
+        range.className === 'warichu'
+          ? `<span class="warichu">（${renderInline(content, gaijiImages)}）</span>`
+          : `<${range.tag} class="${range.className}">` +
+            `${renderInline(content, gaijiImages)}` +
+            `</${range.tag}>`;
 
-    working = before + `[[AOZORA_HTML:${encodeURIComponent(rendered)}]]` + after;
+      working = before + `[[AOZORA_HTML:${encodeURIComponent(rendered)}]]` + after;
+    }
   }
 
   /*
@@ -711,6 +776,10 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
 
       if (className === 'tcy') {
         html = `<span class="tcy">` + `${applyRubyAndEscape(target)}` + `</span>`;
+      } else if (className === 'keigakomi') {
+        html = `<span class="keigakomi">` + `${applyRubyAndEscape(target)}` + `</span>`;
+      } else if (className === 'yokogumi') { 
+        html = `<span class="yokogumi">` + `${applyRubyAndEscape(target)}` + `</span>`;
       } else if (className === 'superscript') {
         html = `<sup class="superscript">` + `${applyRubyAndEscape(target)}` + `</sup>`;
       } else if (className === 'subscript') {
@@ -764,7 +833,14 @@ export function renderInline(line: string, gaijiImages: Map<string, string> = ne
     const html = `<sub class="kaeriten">${escapeHtml(kaeriten)}</sub>`;
     return `[[AOZORA_HTML:${encodeURIComponent(html)}]]`;
   });
+/*
+   * 孤立・浮遊した各種「終了注記」の安全なクリーンアップ
+   * （開始注記とのペアが外れたり単独で残った「ここで〜終わり」を画面露出・エラー化させない）
+   */
+  const UNPAIRED_END_ANNOTATION =
+    /［＃(?:ここで)?(?:横組み|太字|斜体|傍点|傍線|縦中横|割り注|キャプション|字下げ|地付き|字上げ|字詰め|大きな文字|小さな文字|罫囲み|枠囲み|(?:大|中|小)?見出し)(?:終わり|おわり)］/g;
 
+  working = working.replace(UNPAIRED_END_ANNOTATION, '');
   /*
    * 未対応注記を可視化
    */
