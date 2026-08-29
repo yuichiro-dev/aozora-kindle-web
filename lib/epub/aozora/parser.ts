@@ -15,17 +15,13 @@ function renderNormalLine(line: string, gaijiImages: Map<string, string>): strin
 
   let inlineIndent = 0;
 
-  const inlineIndentPattern =
-  /［＃([0-9０-９一二三四五六七八九十]+)字下げ］/g;
+  const inlineIndentPattern = /［＃([0-9０-９一二三四五六七八九十]+)字下げ］/g;
 
-for (const match of working.matchAll(inlineIndentPattern)) {
-  inlineIndent = Math.max(
-    inlineIndent,
-    parseJapaneseOrArabicNumber(match[1])
-  );
-}
+  for (const match of working.matchAll(inlineIndentPattern)) {
+    inlineIndent = Math.max(inlineIndent, parseJapaneseOrArabicNumber(match[1]));
+  }
 
-working = working.replace(inlineIndentPattern, '');
+  working = working.replace(inlineIndentPattern, '');
 
   const content = renderInline(working, gaijiImages);
 

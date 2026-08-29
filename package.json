@@ -11,7 +11,8 @@
     "lint": "eslint",
     "build-index": "node scripts/build-index.js",
     "format": "prettier --write .",
-    "check-genre": "tsx scripts/check-genre.ts"
+    "check-genre": "tsx scripts/check-genre.ts",
+    "collect-error": "tsx scripts/collect-error.js"
   },
   "dependencies": {
     "@vercel/analytics": "^2.0.1",
