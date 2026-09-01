@@ -77,11 +77,7 @@ export default function Home() {
             <span>「夏目漱石 こころ」のようにスペースを空けて作品名も絞り込めます</span>
           </p>
 
-          <Recommendations
-            books={books}
-            searchQuery={query}
-            onSelectAuthor={handleSelectSuggestion}
-          />
+          <Recommendations searchQuery={query} onSelectAuthor={handleSelectSuggestion} />
 
           {hasQuery && (
             <>

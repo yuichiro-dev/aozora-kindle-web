@@ -1,0 +1,6743 @@
+[
+  {
+    "author": "素木 しづ",
+    "author_kana": "しらき しづ",
+    "author_birth": "1895-03-26",
+    "author_death": "1918-01-29"
+  },
+  {
+    "author": "山本 ゆうじ",
+    "author_kana": "やまもと ゆうじ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "ツルゲーネフ イワン",
+    "author_kana": "ツルゲーネフ イワン",
+    "author_birth": "1818-11-09",
+    "author_death": "1883-09-03"
+  },
+  {
+    "author": "藤下 真潮",
+    "author_kana": "ふじした ましお",
+    "author_birth": "1961",
+    "author_death": null
+  },
+  {
+    "author": "島木 健作",
+    "author_kana": "しまき けんさく",
+    "author_birth": "1903-09-07",
+    "author_death": "1945-08-17"
+  },
+  {
+    "author": "ドイル アーサー・コナン",
+    "author_kana": "ドイル アーサー・コナン",
+    "author_birth": "1859-05-22",
+    "author_death": "1930-07-07"
+  },
+  {
+    "author": "立原 道造",
+    "author_kana": "たちはら みちぞう",
+    "author_birth": "1914-07-30",
+    "author_death": "1939-03-29"
+  },
+  {
+    "author": "八木 重吉",
+    "author_kana": "やぎ じゅうきち",
+    "author_birth": "1898-02-09",
+    "author_death": "1927-10-26"
+  },
+  {
+    "author": "村山 槐多",
+    "author_kana": "むらやま かいた",
+    "author_birth": "1896-09-15",
+    "author_death": "1919-02-20"
+  },
+  {
+    "author": "芥川 竜之介",
+    "author_kana": "あくたがわ りゅうのすけ",
+    "author_birth": "1892-03-01",
+    "author_death": "1927-07-24"
+  },
+  {
+    "author": "イエイツ ウィリアム・バトラー",
+    "author_kana": "イエイツ ウィリアム・バトラー",
+    "author_birth": "1865-06-13",
+    "author_death": "1939-01-28"
+  },
+  {
+    "author": "ウィード グスターフ",
+    "author_kana": "ウィード グスターフ",
+    "author_birth": "1858",
+    "author_death": "1914"
+  },
+  {
+    "author": "アンデルセン ハンス・クリスチャン",
+    "author_kana": "アンデルセン ハンス・クリスチャン",
+    "author_birth": "1805-04-02",
+    "author_death": "1875-08-04"
+  },
+  {
+    "author": "渡辺 温",
+    "author_kana": "わたなべ おん",
+    "author_birth": "1902-08-26",
+    "author_death": "1930-02-10"
+  },
+  {
+    "author": "白田 秀彰",
+    "author_kana": "しらた ひであき",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "三島 霜川",
+    "author_kana": "みしま そうせん",
+    "author_birth": "1876-07-30",
+    "author_death": "1934-03-07"
+  },
+  {
+    "author": "徳田 秋声",
+    "author_kana": "とくだ しゅうせい",
+    "author_birth": "1872-02-01",
+    "author_death": "1943-11-18"
+  },
+  {
+    "author": "有島 武郎",
+    "author_kana": "ありしま たけお",
+    "author_birth": "1878-03-04",
+    "author_death": "1923-06-09"
+  },
+  {
+    "author": "中原 中也",
+    "author_kana": "なかはら ちゅうや",
+    "author_birth": "1907-04-29",
+    "author_death": "1937-10-22"
+  },
+  {
+    "author": "小島 烏水",
+    "author_kana": "こじま うすい",
+    "author_birth": "1873-12-29",
+    "author_death": "1948-12-13"
+  },
+  {
+    "author": "早見 秋",
+    "author_kana": "はやみ あき",
+    "author_birth": "1969",
+    "author_death": null
+  },
+  {
+    "author": "レイモンド エリック",
+    "author_kana": "レイモンド エリック",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "葉山 嘉樹",
+    "author_kana": "はやま よしき",
+    "author_birth": "1894-03-12",
+    "author_death": "1945-10-18"
+  },
+  {
+    "author": "植松 真人",
+    "author_kana": "うえまつ まさと",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "内村 鑑三",
+    "author_kana": "うちむら かんぞう",
+    "author_birth": "1861-03-26",
+    "author_death": "1930-03-28"
+  },
+  {
+    "author": "太宰 治",
+    "author_kana": "だざい おさむ",
+    "author_birth": "1909-06-19",
+    "author_death": "1948-06-13"
+  },
+  {
+    "author": "黒木 舜平, 太宰 治",
+    "author_kana": "くろき しゅんぺい, だざい おさむ",
+    "author_birth": "1909-06-19",
+    "author_death": "1948-06-13"
+  },
+  {
+    "author": "黒島 伝治",
+    "author_kana": "くろしま でんじ",
+    "author_birth": "1898-12-12",
+    "author_death": "1943-10-17"
+  },
+  {
+    "author": "国木田 独歩",
+    "author_kana": "くにきだ どっぽ",
+    "author_birth": "1871-08-30",
+    "author_death": "1908-06-23"
+  },
+  {
+    "author": "織田 作之助",
+    "author_kana": "おだ さくのすけ",
+    "author_birth": "1913-10-26",
+    "author_death": "1947-01-10"
+  },
+  {
+    "author": "徳永 真一",
+    "author_kana": "とくなが しんいち",
+    "author_birth": "1973",
+    "author_death": null
+  },
+  {
+    "author": "寺田 寅彦",
+    "author_kana": "てらだ とらひこ",
+    "author_birth": "1878-11-28",
+    "author_death": "1935-12-31"
+  },
+  {
+    "author": "吉行 エイスケ",
+    "author_kana": "よしゆき えいすけ",
+    "author_birth": "1906-05-10",
+    "author_death": "1940-07-08"
+  },
+  {
+    "author": "三遊亭 円朝",
+    "author_kana": "さんゆうてい えんちょう",
+    "author_birth": "1839-05-13",
+    "author_death": "1900-08-11"
+  },
+  {
+    "author": "長尾 高弘",
+    "author_kana": "ながお たかひろ",
+    "author_birth": "1960",
+    "author_death": null
+  },
+  {
+    "author": "ゴーゴリ ニコライ",
+    "author_kana": "ゴーゴリ ニコライ",
+    "author_birth": "1809-03-12",
+    "author_death": "1852-02-21"
+  },
+  {
+    "author": "南部 修太郎",
+    "author_kana": "なんぶ しゅうたろう",
+    "author_birth": "1892-10-12",
+    "author_death": "1936-06-22"
+  },
+  {
+    "author": "北条 民雄",
+    "author_kana": "ほうじょう たみお",
+    "author_birth": "1914-09-22",
+    "author_death": "1937-12-05"
+  },
+  {
+    "author": "泉 鏡花",
+    "author_kana": "いずみ きょうか",
+    "author_birth": "1873-11-04",
+    "author_death": "1939-09-07"
+  },
+  {
+    "author": "幸田 露伴",
+    "author_kana": "こうだ ろはん",
+    "author_birth": "1867-08-20",
+    "author_death": "1947-07-30"
+  },
+  {
+    "author": "紫式部",
+    "author_kana": "むらさき しきぶ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "佐野 良二",
+    "author_kana": "さの りょうじ",
+    "author_birth": "1940",
+    "author_death": null
+  },
+  {
+    "author": "富田 倫生",
+    "author_kana": "とみた みちお",
+    "author_birth": "1952-04-20",
+    "author_death": "2013-08-16"
+  },
+  {
+    "author": "平田 剛士",
+    "author_kana": "ひらた つよし",
+    "author_birth": "1964",
+    "author_death": null
+  },
+  {
+    "author": "シュヴァルツ エフゲーニイ",
+    "author_kana": "シュヴァルツ エフゲーニイ",
+    "author_birth": "1896",
+    "author_death": "1958"
+  },
+  {
+    "author": "福田 英子",
+    "author_kana": "ふくだ ひでこ",
+    "author_birth": "1865-11-22",
+    "author_death": "1927-05-02"
+  },
+  {
+    "author": "清水 哲男",
+    "author_kana": "しみず てつお",
+    "author_birth": "1938-02-15",
+    "author_death": "2022-03-07"
+  },
+  {
+    "author": "伊藤 左千夫",
+    "author_kana": "いとう さちお",
+    "author_birth": "1864-09-18",
+    "author_death": "1913-07-30"
+  },
+  {
+    "author": "高橋 悠治",
+    "author_kana": "たかはし ゆうじ",
+    "author_birth": "1938",
+    "author_death": null
+  },
+  {
+    "author": "橋本 進吉",
+    "author_kana": "はしもと しんきち",
+    "author_birth": "1882-12-24",
+    "author_death": "1945-01-30"
+  },
+  {
+    "author": "二葉亭 四迷",
+    "author_kana": "ふたばてい しめい",
+    "author_birth": "1864-04-04",
+    "author_death": "1909-05-10"
+  },
+  {
+    "author": "宮武 外骨",
+    "author_kana": "みやたけ がいこつ",
+    "author_birth": "1867-02-22",
+    "author_death": "1955-07-28"
+  },
+  {
+    "author": "樋口 一葉",
+    "author_kana": "ひぐち いちよう",
+    "author_birth": "1872-05-02",
+    "author_death": "1896-11-23"
+  },
+  {
+    "author": "九鬼 周造",
+    "author_kana": "くき しゅうぞう",
+    "author_birth": "1888-02-15",
+    "author_death": "1941-05-06"
+  },
+  {
+    "author": "萩原 朔太郎",
+    "author_kana": "はぎわら さくたろう",
+    "author_birth": "1886-11-01",
+    "author_death": "1942-05-11"
+  },
+  {
+    "author": "高野 敦志",
+    "author_kana": "たかの あつし",
+    "author_birth": "1963",
+    "author_death": null
+  },
+  {
+    "author": "山中 貞雄",
+    "author_kana": "やまなか さだお",
+    "author_birth": "1909-11-07",
+    "author_death": "1938-09-17"
+  },
+  {
+    "author": "作者不詳",
+    "author_kana": "さくしゃふしょう",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "梶井 基次郎",
+    "author_kana": "かじい もとじろう",
+    "author_birth": "1901-02-17",
+    "author_death": "1932-03-24"
+  },
+  {
+    "author": "リルケ ライネル・マリア",
+    "author_kana": "リルケ ライネル・マリア",
+    "author_birth": "1875-12-04",
+    "author_death": "1926-12-29"
+  },
+  {
+    "author": "岡本 かの子",
+    "author_kana": "おかもと かのこ",
+    "author_birth": "1889-03-01",
+    "author_death": "1939-02-18"
+  },
+  {
+    "author": "押川 春浪",
+    "author_kana": "おしかわ しゅんろう",
+    "author_birth": "1876-03-21",
+    "author_death": "1914-11-16"
+  },
+  {
+    "author": "森野 光",
+    "author_kana": "もりの みつる",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "平出 修",
+    "author_kana": "ひらいで しゅう",
+    "author_birth": "1878-04-03",
+    "author_death": "1914-03-17"
+  },
+  {
+    "author": "宮沢 賢治",
+    "author_kana": "みやざわ けんじ",
+    "author_birth": "1896-08-27",
+    "author_death": "1933-09-21"
+  },
+  { "author": "日本国", "author_kana": "にほんこく", "author_birth": null, "author_death": null },
+  {
+    "author": "岡本 綺堂",
+    "author_kana": "おかもと きどう",
+    "author_birth": "1872-11-15",
+    "author_death": "1939-03-01"
+  },
+  {
+    "author": "菊池 寛",
+    "author_kana": "きくち かん",
+    "author_birth": "1888-12-26",
+    "author_death": "1948-03-06"
+  },
+  {
+    "author": "綱島 梁川",
+    "author_kana": "つなしま りょうせん",
+    "author_birth": "1873-05-27",
+    "author_death": "1907-09-14"
+  },
+  {
+    "author": "北 一輝",
+    "author_kana": "きた いっき",
+    "author_birth": "1883-04-03",
+    "author_death": "1937-08-19"
+  },
+  {
+    "author": "清水 鱗造",
+    "author_kana": "しみず りんぞう",
+    "author_birth": "1950",
+    "author_death": null
+  },
+  {
+    "author": "カワード ノエル",
+    "author_kana": "カワード ノエル",
+    "author_birth": "1899-12-16",
+    "author_death": "1973-03-26"
+  },
+  {
+    "author": "尾崎 紅葉",
+    "author_kana": "おざき こうよう",
+    "author_birth": "1868-01-10",
+    "author_death": "1903-10-30"
+  },
+  {
+    "author": "南方 熊楠",
+    "author_kana": "みなかた くまぐす",
+    "author_birth": "1867-05-18",
+    "author_death": "1941-12-29"
+  },
+  {
+    "author": "ポー エドガー・アラン",
+    "author_kana": "ポー エドガー・アラン",
+    "author_birth": "1809-01-19",
+    "author_death": "1849-10-07"
+  },
+  {
+    "author": "夢野 久作",
+    "author_kana": "ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "オー・ヘンリー",
+    "author_kana": "オー・ヘンリー",
+    "author_birth": "1862-09-11",
+    "author_death": "1910-06-05"
+  },
+  {
+    "author": "菊池 美範",
+    "author_kana": "きくち よしのり",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "石橋 忍月",
+    "author_kana": "いしばし にんげつ",
+    "author_birth": "1865-10-20",
+    "author_death": "1926-02-01"
+  },
+  {
+    "author": "松永 延造",
+    "author_kana": "まつなが えんぞう",
+    "author_birth": "1895-04-26",
+    "author_death": "1938-11-20"
+  },
+  {
+    "author": "与謝野 晶子",
+    "author_kana": "よさの あきこ",
+    "author_birth": "1878-12-07",
+    "author_death": "1942-05-29"
+  },
+  {
+    "author": "鈴木 三重吉",
+    "author_kana": "すずき みえきち",
+    "author_birth": "1882-09-29",
+    "author_death": "1936-06-27"
+  },
+  {
+    "author": "小泉 英政",
+    "author_kana": "こいずみ ひでまさ",
+    "author_birth": "1948",
+    "author_death": null
+  },
+  {
+    "author": "冬 佳彰",
+    "author_kana": "ふゆ よしあき",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "藤井 貞和",
+    "author_kana": "ふじい さだかず",
+    "author_birth": "1942",
+    "author_death": null
+  },
+  {
+    "author": "佐々木 味津三",
+    "author_kana": "ささき みつぞう",
+    "author_birth": "1896-03-18",
+    "author_death": "1934-02-06"
+  },
+  {
+    "author": "水野 仙子",
+    "author_kana": "みずの せんこ",
+    "author_birth": "1888-12-03",
+    "author_death": "1919-05-31"
+  },
+  {
+    "author": "キプリング ラデャード",
+    "author_kana": "キプリング ラデャード",
+    "author_birth": "1865-12-30",
+    "author_death": "1936-01-18"
+  },
+  {
+    "author": "ブレイク ウィリアム",
+    "author_kana": "ブレイク ウィリアム",
+    "author_birth": "1757-11-28",
+    "author_death": "1827-8-12"
+  },
+  {
+    "author": "鷹野 つぎ",
+    "author_kana": "たかの つぎ",
+    "author_birth": "1890-08-15",
+    "author_death": "1943-03-19"
+  },
+  {
+    "author": "津野 海太郎",
+    "author_kana": "つの かいたろう",
+    "author_birth": "1938-04-06",
+    "author_death": null
+  },
+  {
+    "author": "長塚 節",
+    "author_kana": "ながつか たかし",
+    "author_birth": "1879-04-03",
+    "author_death": "1915-02-08"
+  },
+  {
+    "author": "中島 敦",
+    "author_kana": "なかじま あつし",
+    "author_birth": "1909-05-05",
+    "author_death": "1942-12-04"
+  },
+  {
+    "author": "木下 杢太郎",
+    "author_kana": "きのした もくたろう",
+    "author_birth": "1885-08-01",
+    "author_death": "1945-10-15"
+  },
+  {
+    "author": "新美 南吉",
+    "author_kana": "にいみ なんきち",
+    "author_birth": "1913-07-30",
+    "author_death": "1943-03-22"
+  },
+  {
+    "author": "小熊 秀雄",
+    "author_kana": "おぐま ひでお",
+    "author_birth": "1901-09-09",
+    "author_death": "1940-11-20"
+  },
+  {
+    "author": "小栗 虫太郎",
+    "author_kana": "おぐり むしたろう",
+    "author_birth": "1901-03-14",
+    "author_death": "1946-02-10"
+  },
+  {
+    "author": "田中 英光",
+    "author_kana": "たなか ひでみつ",
+    "author_birth": "1913-01-10",
+    "author_death": "1949-11-03"
+  },
+  {
+    "author": "藤本 和子",
+    "author_kana": "ふじもと かずこ",
+    "author_birth": "1939",
+    "author_death": null
+  },
+  {
+    "author": "森 鴎外",
+    "author_kana": "もり おうがい",
+    "author_birth": "1862-02-17",
+    "author_death": "1922-07-09"
+  },
+  {
+    "author": "菅原孝標女",
+    "author_kana": "すがわらたかすえのむすめ",
+    "author_birth": "1008",
+    "author_death": null
+  },
+  {
+    "author": "佐左木 俊郎",
+    "author_kana": "ささき としろう",
+    "author_birth": "1900-04-14",
+    "author_death": "1933-03-13"
+  },
+  {
+    "author": "山村 暮鳥",
+    "author_kana": "やまむら ぼちょう",
+    "author_birth": "1884-01-10",
+    "author_death": "1924-12-08"
+  },
+  {
+    "author": "岩野 泡鳴",
+    "author_kana": "いわの ほうめい",
+    "author_birth": "1873-01-20",
+    "author_death": "1920-05-09"
+  },
+  {
+    "author": "朝倉 克彦",
+    "author_kana": "あさくら かつひこ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "テニソン アルフレッド",
+    "author_kana": "テニソン アルフレッド",
+    "author_birth": "1809-08-06",
+    "author_death": "1892-10-06"
+  },
+  {
+    "author": "関 富士子",
+    "author_kana": "せき ふじこ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "畑仲 哲雄",
+    "author_kana": "はたなか てつお",
+    "author_birth": "1961-09",
+    "author_death": null
+  },
+  {
+    "author": "種田 山頭火",
+    "author_kana": "たねだ さんとうか",
+    "author_birth": "1882-12-03",
+    "author_death": "1940-10-11"
+  },
+  {
+    "author": "夏目 漱石",
+    "author_kana": "なつめ そうせき",
+    "author_birth": "1867-02-09",
+    "author_death": "1916-12-09"
+  },
+  {
+    "author": "富岡 誠, 中浜 哲",
+    "author_kana": "とみおか まこと, なかはま てつ",
+    "author_birth": "1897-01-01",
+    "author_death": "1926-10-15"
+  },
+  {
+    "author": "薄田 泣菫",
+    "author_kana": "すすきだ きゅうきん",
+    "author_birth": "1877-05-19",
+    "author_death": "1945-10-09"
+  },
+  {
+    "author": "西府 章",
+    "author_kana": "さいふ あきら",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "石川 啄木",
+    "author_kana": "いしかわ たくぼく",
+    "author_birth": "1886-02-20",
+    "author_death": "1912-04-13"
+  },
+  {
+    "author": "田中 貢太郎",
+    "author_kana": "たなか こうたろう",
+    "author_birth": "1880-03-02",
+    "author_death": "1941-02-01"
+  },
+  {
+    "author": "紀 貫之",
+    "author_kana": "きの つらゆき",
+    "author_birth": "870",
+    "author_death": "945"
+  },
+  {
+    "author": "小林 多喜二",
+    "author_kana": "こばやし たきじ",
+    "author_birth": "1903-10-13",
+    "author_death": "1933-02-20"
+  },
+  {
+    "author": "北村 透谷",
+    "author_kana": "きたむら とうこく",
+    "author_birth": "1868-12-29",
+    "author_death": "1894-05-16"
+  },
+  {
+    "author": "島崎 藤村",
+    "author_kana": "しまざき とうそん",
+    "author_birth": "1872-03-25",
+    "author_death": "1943-08-22"
+  },
+  {
+    "author": "辻 潤",
+    "author_kana": "つじ じゅん",
+    "author_birth": "1884-10-04",
+    "author_death": "1944-11-24"
+  },
+  {
+    "author": "海野 十三",
+    "author_kana": "うんの じゅうざ",
+    "author_birth": "1897-12-26",
+    "author_death": "1949-05-17"
+  },
+  {
+    "author": "海野 十三, 丘 丘十郎",
+    "author_kana": "うんの じゅうざ, おか きゅうじゅうろう",
+    "author_birth": "1897-12-26",
+    "author_death": "1949-05-17"
+  },
+  {
+    "author": "若山 牧水",
+    "author_kana": "わかやま ぼくすい",
+    "author_birth": "1885-08-24",
+    "author_death": "1928-09-17"
+  },
+  {
+    "author": "若松 賤子",
+    "author_kana": "わかまつ しずこ",
+    "author_birth": "1864-04-06",
+    "author_death": "1896-02-10"
+  },
+  {
+    "author": "堺 利彦",
+    "author_kana": "さかい としひこ",
+    "author_birth": "1871-01-15",
+    "author_death": "1933-01-23"
+  },
+  {
+    "author": "内田 魯庵, 三文字屋 金平",
+    "author_kana": "うちだ ろあん, さんもんじや きんぴら",
+    "author_birth": "1868-04-27",
+    "author_death": "1929-06-29"
+  },
+  {
+    "author": "サマン アルベール",
+    "author_kana": "サマン アルベール",
+    "author_birth": "1858",
+    "author_death": "1900"
+  },
+  {
+    "author": "青木 栄瞳",
+    "author_kana": "あおき えいめ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "横光 利一",
+    "author_kana": "よこみつ りいち",
+    "author_birth": "1898-03-17",
+    "author_death": "1947-12-30"
+  },
+  {
+    "author": "大杉 栄",
+    "author_kana": "おおすぎ さかえ",
+    "author_birth": "1885-01-17",
+    "author_death": "1923-09-16"
+  },
+  {
+    "author": "香倶土 三鳥, 夢野 久作",
+    "author_kana": "かぐつち みどり, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "三鳥山人, 夢野 久作",
+    "author_kana": "みどりさんじん, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "海若 藍平, 夢野 久作",
+    "author_kana": "かいじゃく らんぺい, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "とだ けん, 夢野 久作",
+    "author_kana": "とだ けん, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "萠円, 夢野 久作",
+    "author_kana": "ほうえん, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "かぐつち みどり, 夢野 久作",
+    "author_kana": "かぐつち みどり, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "萠円山人, 夢野 久作",
+    "author_kana": "ほうえんさんじん, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "杉山 萠円, 夢野 久作",
+    "author_kana": "すぎやま ほうえん, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "黒岩 涙香",
+    "author_kana": "くろいわ るいこう",
+    "author_birth": "1862-11-20",
+    "author_death": "1920-10-06"
+  },
+  {
+    "author": "ヴォルテール",
+    "author_kana": "ヴォルテール",
+    "author_birth": "1694",
+    "author_death": "1778"
+  },
+  {
+    "author": "西田 幾多郎",
+    "author_kana": "にしだ きたろう",
+    "author_birth": "1870-06-17",
+    "author_death": "1945-06-07"
+  },
+  {
+    "author": "牧野 信一",
+    "author_kana": "まきの しんいち",
+    "author_birth": "1896-11-12",
+    "author_death": "1936-03-24"
+  },
+  {
+    "author": "武田 麟太郎",
+    "author_kana": "たけだ りんたろう",
+    "author_birth": "1904-05-09",
+    "author_death": "1946-03-31"
+  },
+  {
+    "author": "大手 拓次",
+    "author_kana": "おおて たくじ",
+    "author_birth": "1887-12-03",
+    "author_death": "1934-04-18"
+  },
+  {
+    "author": "山本 光夫",
+    "author_kana": "やまもと みつお",
+    "author_birth": "1959",
+    "author_death": null
+  },
+  {
+    "author": "尾崎 放哉",
+    "author_kana": "おざき ほうさい",
+    "author_birth": "1885-01-20",
+    "author_death": "1926-04-07"
+  },
+  {
+    "author": "鴨 長明",
+    "author_kana": "かも ちょうめい",
+    "author_birth": "1153",
+    "author_death": "1216"
+  },
+  {
+    "author": "山本 洋",
+    "author_kana": "やまもと ひろし",
+    "author_birth": "1956",
+    "author_death": null
+  },
+  {
+    "author": "岩本 良子",
+    "author_kana": "いわもと りょうこ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "竹久 夢二",
+    "author_kana": "たけひさ ゆめじ",
+    "author_birth": "1884-09-16",
+    "author_death": "1934-09-01"
+  },
+  {
+    "author": "田山 花袋",
+    "author_kana": "たやま かたい",
+    "author_birth": "1872-01-22",
+    "author_death": "1930-05-13"
+  },
+  {
+    "author": "栗林 元",
+    "author_kana": "くりばやし はじめ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "直木 三十五",
+    "author_kana": "なおき さんじゅうご",
+    "author_birth": "1891-02-12",
+    "author_death": "1934-02-24"
+  },
+  {
+    "author": "葛西 善蔵",
+    "author_kana": "かさい ぜんぞう",
+    "author_birth": "1887-01-16",
+    "author_death": "1928-07-23"
+  },
+  {
+    "author": "三木 清",
+    "author_kana": "みき きよし",
+    "author_birth": "1897-01-05",
+    "author_death": "1945-09-26"
+  },
+  {
+    "author": "里村 欣三",
+    "author_kana": "さとむら きんぞう",
+    "author_birth": "1902-03-13",
+    "author_death": "1945-02-23"
+  },
+  {
+    "author": "吉江 喬松",
+    "author_kana": "よしえ たかまつ",
+    "author_birth": "1880-09-05",
+    "author_death": "1940-03-26"
+  },
+  {
+    "author": "平林 初之輔",
+    "author_kana": "ひらばやし はつのすけ",
+    "author_birth": "1892-11-08",
+    "author_death": "1931-06-15"
+  },
+  {
+    "author": "薄田 泣菫, 薄田 淳介",
+    "author_kana": "すすきだ きゅうきん, すすきだ じゅんすけ",
+    "author_birth": "1877-05-19",
+    "author_death": "1945-10-09"
+  },
+  {
+    "author": "小泉 節子",
+    "author_kana": "こいずみ せつこ",
+    "author_birth": "1868-02-04",
+    "author_death": "1932-02-18"
+  },
+  {
+    "author": "阿部 徳蔵",
+    "author_kana": "あべ とくぞう",
+    "author_birth": "1889",
+    "author_death": "1944"
+  },
+  {
+    "author": "アレニウス スヴァンテ",
+    "author_kana": "アレニウス スヴァンテ",
+    "author_birth": "1859-02-19",
+    "author_death": "1927-10-02"
+  },
+  {
+    "author": "生田 春月",
+    "author_kana": "いくた しゅんげつ",
+    "author_birth": "1892-03-12",
+    "author_death": "1930-05-19"
+  },
+  {
+    "author": "井沢 衣水, 押川 春浪",
+    "author_kana": "いざわ いすい, おしかわ しゅんろう",
+    "author_birth": "1889",
+    "author_death": "1967-08-14"
+  },
+  {
+    "author": "石田 孫太郎",
+    "author_kana": "いしだ まごたろう",
+    "author_birth": "1874",
+    "author_death": "1936"
+  },
+  {
+    "author": "石原 莞爾",
+    "author_kana": "いしわら かんじ",
+    "author_birth": "1889-01-18",
+    "author_death": "1949-08-15"
+  },
+  {
+    "author": "漢那 浪笛",
+    "author_kana": "かんな ろうてき",
+    "author_birth": "1887",
+    "author_death": "1939"
+  },
+  {
+    "author": "泉 鏡花, 泉 鏡太郎",
+    "author_kana": "いずみ きょうか, いずみ きょうたろう",
+    "author_birth": "1873-11-04",
+    "author_death": "1939-09-07"
+  },
+  {
+    "author": "伊丹 万作",
+    "author_kana": "いたみ まんさく",
+    "author_birth": "1900-01-02",
+    "author_death": "1946-09-21"
+  },
+  {
+    "author": "内田 魯庵",
+    "author_kana": "うちだ ろあん",
+    "author_birth": "1868-04-27",
+    "author_death": "1929-06-29"
+  },
+  {
+    "author": "大阪 圭吉",
+    "author_kana": "おおさか けいきち",
+    "author_birth": "1912-03-20",
+    "author_death": "1945-07-02"
+  },
+  {
+    "author": "大町 桂月",
+    "author_kana": "おおまち けいげつ",
+    "author_birth": "1869-03-06",
+    "author_death": "1925-06-10"
+  },
+  {
+    "author": "岡倉 覚三, 岡倉 天心",
+    "author_kana": "おかくら かくぞう, おかくら てんしん",
+    "author_birth": "1863-02-14",
+    "author_death": "1913-09-02"
+  },
+  {
+    "author": "岡本 一平",
+    "author_kana": "おかもと いっぺい",
+    "author_birth": "1886-06-11",
+    "author_death": "1948-10-11"
+  },
+  {
+    "author": "荻原 守衛",
+    "author_kana": "おぎわら もりえ",
+    "author_birth": "1879-12-01",
+    "author_death": "1910-04-22"
+  },
+  {
+    "author": "尾崎 秀実",
+    "author_kana": "おざき ほつみ",
+    "author_birth": "1901-05-01",
+    "author_death": "1944-11-07"
+  },
+  {
+    "author": "小野 賢一郎",
+    "author_kana": "おの けんいちろう",
+    "author_birth": "1888-07-01",
+    "author_death": "1943-02-01"
+  },
+  {
+    "author": "梶井 久",
+    "author_kana": "かじい ひさ",
+    "author_birth": "1870",
+    "author_death": "1946"
+  },
+  {
+    "author": "加藤 文太郎",
+    "author_kana": "かとう ぶんたろう",
+    "author_birth": "1905-03-11",
+    "author_death": "1936-01-05"
+  },
+  {
+    "author": "加能 作次郎",
+    "author_kana": "かのう さくじろう",
+    "author_birth": "1885-01-10",
+    "author_death": "1941-08-05"
+  },
+  {
+    "author": "上司 小剣",
+    "author_kana": "かみつかさ しょうけん",
+    "author_birth": "1874-12-15",
+    "author_death": "1947-09-02"
+  },
+  {
+    "author": "嘉村 礒多",
+    "author_kana": "かむら いそた",
+    "author_birth": "1897-12-15",
+    "author_death": "1933-11-30"
+  },
+  {
+    "author": "河上 肇",
+    "author_kana": "かわかみ はじめ",
+    "author_birth": "1879-10-20",
+    "author_death": "1946-01-30"
+  },
+  {
+    "author": "岸田 劉生",
+    "author_kana": "きしだ りゅうせい",
+    "author_birth": "1891-06-23",
+    "author_death": "1929-12-20"
+  },
+  {
+    "author": "金 史良",
+    "author_kana": "きむ さりゃん",
+    "author_birth": "1914-03-03",
+    "author_death": "1950"
+  },
+  {
+    "author": "陸 羯南",
+    "author_kana": "くが かつなん",
+    "author_birth": "1857-11-30",
+    "author_death": "1907-09-02"
+  },
+  {
+    "author": "国枝 史郎",
+    "author_kana": "くにえだ しろう",
+    "author_birth": "1887-10-10",
+    "author_death": "1943-04-08"
+  },
+  {
+    "author": "倉田 百三",
+    "author_kana": "くらた ひゃくぞう",
+    "author_birth": "1891-02-23",
+    "author_death": "1943-02-12"
+  },
+  {
+    "author": "黒田 清輝",
+    "author_kana": "くろだ せいき",
+    "author_birth": "1866-06-29",
+    "author_death": "1924-07-15"
+  },
+  {
+    "author": "甲賀 三郎",
+    "author_kana": "こうが さぶろう",
+    "author_birth": "1893-10-05",
+    "author_death": "1945-02-14"
+  },
+  {
+    "author": "幸徳 秋水",
+    "author_kana": "こうとく しゅうすい",
+    "author_birth": "1871-11-05",
+    "author_death": "1911-01-24"
+  },
+  {
+    "author": "小酒井 不木",
+    "author_kana": "こざかい ふぼく",
+    "author_birth": "1890-10-08",
+    "author_death": "1929-04-01"
+  },
+  {
+    "author": "関根 金次郎",
+    "author_kana": "せきね きんじろう",
+    "author_birth": "1868-04-01",
+    "author_death": "1946-03-12"
+  },
+  {
+    "author": "高神 覚昇",
+    "author_kana": "たかがみ かくしょう",
+    "author_birth": "1894",
+    "author_death": "1948"
+  },
+  {
+    "author": "高村 光雲",
+    "author_kana": "たかむら こううん",
+    "author_birth": "1852-03-08",
+    "author_death": "1934-10-10"
+  },
+  {
+    "author": "高山 樗牛",
+    "author_kana": "たかやま ちょぎゅう",
+    "author_birth": "1871-02-28",
+    "author_death": "1902-12-24"
+  },
+  {
+    "author": "田畑 修一郎",
+    "author_kana": "たばた しゅういちろう",
+    "author_birth": "1903-09-02",
+    "author_death": "1943-07-23"
+  },
+  {
+    "author": "談洲楼 燕枝　二代",
+    "author_kana": "だんしゅうろう えんし　にだい",
+    "author_birth": "1879",
+    "author_death": "1935"
+  },
+  {
+    "author": "近松 秋江",
+    "author_kana": "ちかまつ しゅうこう",
+    "author_birth": "1876-05-04",
+    "author_death": "1944-04-23"
+  },
+  {
+    "author": "辻村 伊助",
+    "author_kana": "つじむら いすけ",
+    "author_birth": "1886-04-22",
+    "author_death": "1923-09-01"
+  },
+  {
+    "author": "津村 信夫",
+    "author_kana": "つむら のぶお",
+    "author_birth": "1909-01-05",
+    "author_death": "1944-06-27"
+  },
+  {
+    "author": "徳冨 健次郎, 徳冨 蘆花",
+    "author_kana": "とくとみ けんじろう, とくとみ ろか",
+    "author_birth": "1868-12-08",
+    "author_death": "1927-09-18"
+  },
+  {
+    "author": "徳冨 蘆花",
+    "author_kana": "とくとみ ろか",
+    "author_birth": "1868-12-08",
+    "author_death": "1927-09-18"
+  },
+  {
+    "author": "戸坂 潤",
+    "author_kana": "とさか じゅん",
+    "author_birth": "1900-09-27",
+    "author_death": "1945-08-09"
+  },
+  {
+    "author": "富ノ沢 麟太郎",
+    "author_kana": "とみのさわ りんたろう",
+    "author_birth": "1899-03-25",
+    "author_death": "1925-02-24"
+  },
+  {
+    "author": "中里 介山",
+    "author_kana": "なかざと かいざん",
+    "author_birth": "1885-04-04",
+    "author_death": "1944-04-28"
+  },
+  {
+    "author": "内藤 湖南",
+    "author_kana": "ないとう こなん",
+    "author_birth": "1866-08-26",
+    "author_death": "1934-06-26"
+  },
+  {
+    "author": "野口 雨情",
+    "author_kana": "のぐち うじょう",
+    "author_birth": "1882-05-29",
+    "author_death": "1945-01-27"
+  },
+  {
+    "author": "ハイヤーム オマル",
+    "author_kana": "ハイヤーム オマル",
+    "author_birth": "1048",
+    "author_death": "1131"
+  },
+  {
+    "author": "小山 清",
+    "author_kana": "こやま きよし",
+    "author_birth": "1911-10-04",
+    "author_death": "1965-03-06"
+  },
+  {
+    "author": "山川 方夫",
+    "author_kana": "やまかわ まさお",
+    "author_birth": "1930-02-25",
+    "author_death": "1965-02-20"
+  },
+  {
+    "author": "浜尾 四郎",
+    "author_kana": "はまお しろう",
+    "author_birth": "1896-04-24",
+    "author_death": "1935-10-29"
+  },
+  {
+    "author": "林 不忘",
+    "author_kana": "はやし ふぼう",
+    "author_birth": "1900-01-17",
+    "author_death": "1935-06-29"
+  },
+  {
+    "author": "谷 譲次, 林 不忘",
+    "author_kana": "たに じょうじ, はやし ふぼう",
+    "author_birth": "1900-01-17",
+    "author_death": "1935-06-29"
+  },
+  {
+    "author": "林 不忘, 牧 逸馬",
+    "author_kana": "はやし ふぼう, まき いつま",
+    "author_birth": "1900-01-17",
+    "author_death": "1935-06-29"
+  },
+  {
+    "author": "林 芙美子",
+    "author_kana": "はやし ふみこ",
+    "author_birth": "1903-12-31",
+    "author_death": "1951-06-28"
+  },
+  {
+    "author": "原田 皐月",
+    "author_kana": "はらだ さつき",
+    "author_birth": "1887",
+    "author_death": "1933"
+  },
+  {
+    "author": "原 民喜",
+    "author_kana": "はら たみき",
+    "author_birth": "1905-11-15",
+    "author_death": "1951-03-13"
+  },
+  {
+    "author": "平野 万里",
+    "author_kana": "ひらの ばんり",
+    "author_birth": "1885-05-25",
+    "author_death": "1947-02-10"
+  },
+  {
+    "author": "福沢 諭吉",
+    "author_kana": "ふくざわ ゆきち",
+    "author_birth": "1835-01-10",
+    "author_death": "1901-02-03"
+  },
+  {
+    "author": "藤島 武二",
+    "author_kana": "ふじしま たけじ",
+    "author_birth": "1867-10-15",
+    "author_death": "1943-03-19"
+  },
+  {
+    "author": "ガールシン フセヴォロド・ミハイロヴィチ",
+    "author_kana": "ガールシン フセヴォロド・ミハイロヴィチ",
+    "author_birth": "1855-02-14",
+    "author_death": "1888-04-05"
+  },
+  {
+    "author": "穂積 陳重",
+    "author_kana": "ほづみ のぶしげ",
+    "author_birth": "1855-08-23",
+    "author_death": "1926-04-07"
+  },
+  {
+    "author": "堀口 九万一",
+    "author_kana": "ほりぐち くまいち",
+    "author_birth": "1865-02-23",
+    "author_death": "1945-10-30"
+  },
+  {
+    "author": "本庄 陸男",
+    "author_kana": "ほんじょう むつお",
+    "author_birth": "1905-02-20",
+    "author_death": "1939-07-23"
+  },
+  {
+    "author": "牧 逸馬",
+    "author_kana": "まき いつま",
+    "author_birth": "1900-01-17",
+    "author_death": "1935-06-29"
+  },
+  {
+    "author": "正岡 子規",
+    "author_kana": "まさおか しき",
+    "author_birth": "1867-10-14",
+    "author_death": "1902-09-19"
+  },
+  {
+    "author": "松濤 明",
+    "author_kana": "まつなみ あきら",
+    "author_birth": "1922-03-05",
+    "author_death": "1949-01-06"
+  },
+  {
+    "author": "松本 泰",
+    "author_kana": "まつもと たい",
+    "author_birth": "1887-02-22",
+    "author_death": "1939-04-19"
+  },
+  {
+    "author": "三上 於菟吉",
+    "author_kana": "みかみ おときち",
+    "author_birth": "1891-02-04",
+    "author_death": "1944-02-07"
+  },
+  {
+    "author": "宮本 百合子",
+    "author_kana": "みやもと ゆりこ",
+    "author_birth": "1899-02-13",
+    "author_death": "1951-01-21"
+  },
+  {
+    "author": "村井 政善",
+    "author_kana": "むらい まさよし",
+    "author_birth": null,
+    "author_death": "1937"
+  },
+  {
+    "author": "レニエ アンリ・ド",
+    "author_kana": "レニエ アンリ・ド",
+    "author_birth": "1864-12-28",
+    "author_death": "1936-05-23"
+  },
+  {
+    "author": "クラルテ ジュール",
+    "author_kana": "クラルテ ジュール",
+    "author_birth": "1840",
+    "author_death": "1913"
+  },
+  {
+    "author": "ルモンニエー カミーユ",
+    "author_kana": "ルモンニエー カミーユ",
+    "author_birth": "1844-03-24",
+    "author_death": "1913-06-13"
+  },
+  {
+    "author": "ヒルシュフェルド ゲオルヒ",
+    "author_kana": "ヒルシュフェルド ゲオルヒ",
+    "author_birth": "1873-02-11",
+    "author_death": "1943-01-17"
+  },
+  {
+    "author": "シュニッツレル アルツール",
+    "author_kana": "シュニッツレル アルツール",
+    "author_birth": "1862",
+    "author_death": "1931"
+  },
+  {
+    "author": "トルストイ レオ",
+    "author_kana": "トルストイ レオ",
+    "author_birth": "1828-09-09",
+    "author_death": "1910-11-20"
+  },
+  {
+    "author": "コロレンコ ウラジミール・ガラクティオノヴィチ",
+    "author_kana": "コロレンコ ウラジミール・ガラクティオノヴィチ",
+    "author_birth": "1853-07-15",
+    "author_death": "1921-12-25"
+  },
+  {
+    "author": "ドストエフスキー フィヨードル・ミハイロヴィチ",
+    "author_kana": "ドストエフスキー フィヨードル・ミハイロヴィチ",
+    "author_birth": "1821-11-11",
+    "author_death": "1881-02-09"
+  },
+  {
+    "author": "ゴーリキー マクシム",
+    "author_kana": "ゴーリキー マクシム",
+    "author_birth": "1868",
+    "author_death": "1936"
+  },
+  {
+    "author": "チリコフ オイゲン",
+    "author_kana": "チリコフ オイゲン",
+    "author_birth": "1864",
+    "author_death": "1932"
+  },
+  {
+    "author": "アルチバシェッフ ミハイル・ペトローヴィチ",
+    "author_kana": "アルチバシェッフ ミハイル・ペトローヴィチ",
+    "author_birth": "1878-11-05",
+    "author_death": "1927-03-03"
+  },
+  {
+    "author": "クスミン ミカイル・アレクセーヴィチ",
+    "author_kana": "クスミン ミカイル・アレクセーヴィチ",
+    "author_birth": "1872",
+    "author_death": "1936"
+  },
+  {
+    "author": "増田 雅子, 山川 登美子, 与謝野 晶子",
+    "author_kana": "ますだ まさこ, やまかわ とみこ, よさの あきこ",
+    "author_birth": "1880-05-06",
+    "author_death": "1946-09-02"
+  },
+  {
+    "author": "山本 宣治",
+    "author_kana": "やまもと せんじ",
+    "author_birth": "1889-05-28",
+    "author_death": "1929-03-05"
+  },
+  {
+    "author": "与謝野 晶子, 与謝野 寛",
+    "author_kana": "よさの あきこ, よさの ひろし",
+    "author_birth": "1878-12-07",
+    "author_death": "1942-05-29"
+  },
+  {
+    "author": "与謝野 礼厳",
+    "author_kana": "よさの れいごん",
+    "author_birth": "1823-10-16",
+    "author_death": "1898-08-17"
+  },
+  {
+    "author": "吉江 孤雁, 吉江 喬松",
+    "author_kana": "よしえ こがん, よしえ たかまつ",
+    "author_birth": "1880-09-05",
+    "author_death": "1940-03-26"
+  },
+  {
+    "author": "吉野 作造",
+    "author_kana": "よしの さくぞう",
+    "author_birth": "1878-01-29",
+    "author_death": "1933-03-18"
+  },
+  {
+    "author": "蘭 郁二郎",
+    "author_kana": "らん いくじろう",
+    "author_birth": "1913-09-02",
+    "author_death": "1944-01-05"
+  },
+  {
+    "author": "ルヴェル モーリス",
+    "author_kana": "ルヴェル モーリス",
+    "author_birth": "1875-08-29",
+    "author_death": "1926-04-15"
+  },
+  {
+    "author": "ワイルド オスカー, 渡辺 温",
+    "author_kana": "ワイルド オスカー, わたなべ おん",
+    "author_birth": "1854-10-16",
+    "author_death": "1900-11-30"
+  },
+  {
+    "author": "楠山 正雄",
+    "author_kana": "くすやま まさお",
+    "author_birth": "1884-11-04",
+    "author_death": "1950-11-26"
+  },
+  {
+    "author": "若杉 鳥子",
+    "author_kana": "わかすぎ とりこ",
+    "author_birth": "1892-12-21",
+    "author_death": "1937-12-18"
+  },
+  {
+    "author": "ワイルド オスカー",
+    "author_kana": "ワイルド オスカー",
+    "author_birth": "1854-10-16",
+    "author_death": "1900-11-30"
+  },
+  {
+    "author": "ストールマン リチャード",
+    "author_kana": "ストールマン リチャード",
+    "author_birth": "1953",
+    "author_death": null
+  },
+  {
+    "author": "ラティガン テレンス",
+    "author_kana": "ラティガン テレンス",
+    "author_birth": "1911-06-10",
+    "author_death": "1977-11-30"
+  },
+  {
+    "author": "上田 敏",
+    "author_kana": "うえだ びん",
+    "author_birth": "1874-10-30",
+    "author_death": "1916-07-09"
+  },
+  {
+    "author": "フランス アナトール",
+    "author_kana": "フランス アナトール",
+    "author_birth": "1844-04-16",
+    "author_death": "1924-10-12"
+  },
+  {
+    "author": "ルター マルチン",
+    "author_kana": "ルター マルチン",
+    "author_birth": "1483-11-10",
+    "author_death": "1546-02-18"
+  },
+  {
+    "author": "柴田 流星",
+    "author_kana": "しばた りゅうせい",
+    "author_birth": "1879-02-28",
+    "author_death": "1913-09-27"
+  },
+  {
+    "author": "平田 禿木",
+    "author_kana": "ひらた とくぼく",
+    "author_birth": "1873-02-10",
+    "author_death": "1943-03-13"
+  },
+  {
+    "author": "土田 杏村",
+    "author_kana": "つちだ きょうそん",
+    "author_birth": "1891-01-15",
+    "author_death": "1934-04-25"
+  },
+  {
+    "author": "勝 海舟",
+    "author_kana": "かつ かいしゅう",
+    "author_birth": "1823-03-12",
+    "author_death": "1899-01-19"
+  },
+  {
+    "author": "山本 政喜",
+    "author_kana": "やまもと まさき",
+    "author_birth": "1899-04-20",
+    "author_death": "1960-04-07"
+  },
+  {
+    "author": "上村 松園",
+    "author_kana": "うえむら しょうえん",
+    "author_birth": "1875-04-23",
+    "author_death": "1949-08-27"
+  },
+  {
+    "author": "北原 白秋",
+    "author_kana": "きたはら はくしゅう",
+    "author_birth": "1885-01-25",
+    "author_death": "1942-11-02"
+  },
+  {
+    "author": "川端 茅舎",
+    "author_kana": "かわばた ぼうしゃ",
+    "author_birth": "1897-08-17",
+    "author_death": "1941-07-17"
+  },
+  {
+    "author": "横瀬 夜雨",
+    "author_kana": "よこせ やう",
+    "author_birth": "1878-01-01",
+    "author_death": "1934-02-14"
+  },
+  {
+    "author": "与謝野 寛",
+    "author_kana": "よさの ひろし",
+    "author_birth": "1873-02-26",
+    "author_death": "1935-03-26"
+  },
+  {
+    "author": "細井 和喜蔵",
+    "author_kana": "ほそい わきぞう",
+    "author_birth": "1897-05-09",
+    "author_death": "1925-08-18"
+  },
+  {
+    "author": "萩原 恭次郎",
+    "author_kana": "はぎわら きょうじろう",
+    "author_birth": "1899-05-23",
+    "author_death": "1938-11-22"
+  },
+  {
+    "author": "桑原 隲蔵",
+    "author_kana": "くわばら じつぞう",
+    "author_birth": "1871-01-27",
+    "author_death": "1931-05-24"
+  },
+  {
+    "author": "板倉 勝宣",
+    "author_kana": "いたくら かつのぶ",
+    "author_birth": "1898-02-12",
+    "author_death": "1923-01-17"
+  },
+  {
+    "author": "狩野 亨吉",
+    "author_kana": "かのう こうきち",
+    "author_birth": "1865-09-17",
+    "author_death": "1942-12-22"
+  },
+  {
+    "author": "池宮城 積宝",
+    "author_kana": "いけみやぎ せきほう",
+    "author_birth": "1893",
+    "author_death": "1951"
+  },
+  {
+    "author": "矢田 津世子",
+    "author_kana": "やだ つせこ",
+    "author_birth": "1907-06-19",
+    "author_death": "1944-03-14"
+  },
+  {
+    "author": "片岡 鉄兵",
+    "author_kana": "かたおか てっぺい",
+    "author_birth": "1894-02-02",
+    "author_death": "1944-12-25"
+  },
+  {
+    "author": "永崎 貢",
+    "author_kana": "ながさき みつぐ",
+    "author_birth": "1908-11-23",
+    "author_death": "1934-12-12"
+  },
+  {
+    "author": "山本 勝治",
+    "author_kana": "やまもと かつじ",
+    "author_birth": null,
+    "author_death": "1929-03-17"
+  },
+  {
+    "author": "広津 柳浪",
+    "author_kana": "ひろつ りゅうろう",
+    "author_birth": "1861-07-15",
+    "author_death": "1928-10-15"
+  },
+  {
+    "author": "小山内 薫",
+    "author_kana": "おさない かおる",
+    "author_birth": "1881-07-26",
+    "author_death": "1928-12-25"
+  },
+  {
+    "author": "逸見 猶吉",
+    "author_kana": "へんみ ゆうきち",
+    "author_birth": "1907-09-09",
+    "author_death": "1946-05-17"
+  },
+  {
+    "author": "宮原 晃一郎",
+    "author_kana": "みやはら こういちろう",
+    "author_birth": "1882-09-02",
+    "author_death": "1945-06-10"
+  },
+  {
+    "author": "小野 浩",
+    "author_kana": "おの ひろし",
+    "author_birth": "1894-06-29",
+    "author_death": "1933-10-21"
+  },
+  {
+    "author": "木内 高音",
+    "author_kana": "きうち たかね",
+    "author_birth": "1896-02-28",
+    "author_death": "1951-06-07"
+  },
+  {
+    "author": "中戸川 吉二",
+    "author_kana": "なかとがわ きちじ",
+    "author_birth": "1896-05-20",
+    "author_death": "1942-11-19"
+  },
+  {
+    "author": "野呂 栄太郎",
+    "author_kana": "のろ えいたろう",
+    "author_birth": "1900-04-30",
+    "author_death": "1934-02-19"
+  },
+  {
+    "author": "金田 千鶴",
+    "author_kana": "かなだ ちづ",
+    "author_birth": "1902-11-19",
+    "author_death": "1934-08-17"
+  },
+  {
+    "author": "尾形 亀之助",
+    "author_kana": "おがた かめのすけ",
+    "author_birth": "1900-12-12",
+    "author_death": "1942-12-02"
+  },
+  {
+    "author": "添田 唖蝉坊",
+    "author_kana": "そえだ あぜんぼう",
+    "author_birth": "1872-12-25",
+    "author_death": "1944-02-08"
+  },
+  {
+    "author": "斎藤 緑雨",
+    "author_kana": "さいとう りょくう",
+    "author_birth": "1868-01-24",
+    "author_death": "1904-04-13"
+  },
+  {
+    "author": "淡島 寒月",
+    "author_kana": "あわしま かんげつ",
+    "author_birth": "1859-11-17",
+    "author_death": "1926-02-23"
+  },
+  {
+    "author": "金子 ふみ子",
+    "author_kana": "かねこ ふみこ",
+    "author_birth": "1903-01-25",
+    "author_death": "1926-07-23"
+  },
+  {
+    "author": "森本 薫",
+    "author_kana": "もりもと かおる",
+    "author_birth": "1912-06-04",
+    "author_death": "1946-10-06"
+  },
+  {
+    "author": "ブウテ フレデリック",
+    "author_kana": "ブウテ フレデリック",
+    "author_birth": "1874",
+    "author_death": "1941"
+  },
+  {
+    "author": "プレヴォー マルセル",
+    "author_kana": "プレヴォー マルセル",
+    "author_birth": "1862-05-01",
+    "author_death": "1941"
+  },
+  {
+    "author": "モルナール フェレンツ",
+    "author_kana": "モルナール フェレンツ",
+    "author_birth": "1878-01-12",
+    "author_death": "1952-04-01"
+  },
+  {
+    "author": "ディモフ オシップ",
+    "author_kana": "ディモフ オシップ",
+    "author_birth": "1878",
+    "author_death": "1959"
+  },
+  {
+    "author": "ピランデルロ ルイジ",
+    "author_kana": "ピランデルロ ルイジ",
+    "author_birth": "1867-06-28",
+    "author_death": "1936-12-10"
+  },
+  {
+    "author": "木下 尚江",
+    "author_kana": "きのした なおえ",
+    "author_birth": "1869-10-12",
+    "author_death": "1937-11-05"
+  },
+  {
+    "author": "小出 楢重",
+    "author_kana": "こいで ならしげ",
+    "author_birth": "1887-10-13",
+    "author_death": "1931-02-13"
+  },
+  {
+    "author": "伊藤 野枝",
+    "author_kana": "いとう のえ",
+    "author_birth": "1895-01-21",
+    "author_death": "1923-09-16"
+  },
+  {
+    "author": "佐藤 紅緑",
+    "author_kana": "さとう こうろく",
+    "author_birth": "1874-07-06",
+    "author_death": "1949-06-03"
+  },
+  {
+    "author": "市島 春城",
+    "author_kana": "いちじま しゅんじょう",
+    "author_birth": "1860-03-09",
+    "author_death": "1944-04-21"
+  },
+  {
+    "author": "坪内 逍遥",
+    "author_kana": "つぼうち しょうよう",
+    "author_birth": "1859-06-22",
+    "author_death": "1935-02-28"
+  },
+  {
+    "author": "桐生 悠々",
+    "author_kana": "きりゅう ゆうゆう",
+    "author_birth": "1873-05-20",
+    "author_death": "1941-09-10"
+  },
+  {
+    "author": "加福 均三",
+    "author_kana": "かふく きんぞう",
+    "author_birth": "1885",
+    "author_death": "1948"
+  },
+  {
+    "author": "巌谷 小波",
+    "author_kana": "いわや さざなみ",
+    "author_birth": "1870-07-04",
+    "author_death": "1933-09-05"
+  },
+  {
+    "author": "橋本 五郎",
+    "author_kana": "はしもと ごろう",
+    "author_birth": "1903-05-01",
+    "author_death": "1948-05-29"
+  },
+  {
+    "author": "塚原 渋柿園, 塚原 蓼洲",
+    "author_kana": "つかはら じゅうしえん, つかはら りょうしゅう",
+    "author_birth": "1848-04-04",
+    "author_death": "1917-07-05"
+  },
+  {
+    "author": "十一谷 義三郎",
+    "author_kana": "じゅういちや ぎさぶろう",
+    "author_birth": "1897-10-14",
+    "author_death": "1937-04-02"
+  },
+  {
+    "author": "池谷 信三郎",
+    "author_kana": "いけたに しんざぶろう",
+    "author_birth": "1900-10-15",
+    "author_death": "1933-12-21"
+  },
+  {
+    "author": "ビアス アンブローズ",
+    "author_kana": "ビアス アンブローズ",
+    "author_birth": "1842",
+    "author_death": "1914"
+  },
+  {
+    "author": "モーパッサン ギ・ド",
+    "author_kana": "モーパッサン ギ・ド",
+    "author_birth": "1850-08-05",
+    "author_death": "1893-07-06"
+  },
+  {
+    "author": "田沢 稲舟",
+    "author_kana": "たざわ いなぶね",
+    "author_birth": "1874-12-28",
+    "author_death": "1896-09-10"
+  },
+  {
+    "author": "ホーソーン ナサニエル",
+    "author_kana": "ホーソーン ナサニエル",
+    "author_birth": "1804-07-04",
+    "author_death": "1864-05-19"
+  },
+  {
+    "author": "アンドレーエフ レオニード・ニコラーエヴィチ",
+    "author_kana": "アンドレーエフ レオニード・ニコラーエヴィチ",
+    "author_birth": "1871",
+    "author_death": "1919"
+  },
+  {
+    "author": "坂本 竜馬",
+    "author_kana": "さかもと りょうま",
+    "author_birth": "1836-01-03",
+    "author_death": "1867-12-10"
+  },
+  {
+    "author": "スウィフト ジョナサン",
+    "author_kana": "スウィフト ジョナサン",
+    "author_birth": "1667-11-30",
+    "author_death": "1745-10-19"
+  },
+  {
+    "author": "条野 採菊",
+    "author_kana": "じょうの さいぎく",
+    "author_birth": "1832",
+    "author_death": "1902-01-24"
+  },
+  {
+    "author": "ゴーチェ テオフィル",
+    "author_kana": "ゴーチェ テオフィル",
+    "author_birth": "1811-08-30",
+    "author_death": "1872-10-23"
+  },
+  {
+    "author": "鶴岡 雄二",
+    "author_kana": "つるおか ゆうじ",
+    "author_birth": "1953",
+    "author_death": null
+  },
+  {
+    "author": "ディケンズ チャールズ",
+    "author_kana": "ディケンズ チャールズ",
+    "author_birth": "1812-02-07",
+    "author_death": "1870-06-09"
+  },
+  {
+    "author": "長谷川 時雨",
+    "author_kana": "はせがわ しぐれ",
+    "author_birth": "1879-10-01",
+    "author_death": "1941-08-22"
+  },
+  {
+    "author": "プラトン",
+    "author_kana": "プラトン",
+    "author_birth": "前427",
+    "author_death": "前347"
+  },
+  {
+    "author": "長谷川 時雨, 三上 於菟吉",
+    "author_kana": "はせがわ しぐれ, みかみ おときち",
+    "author_birth": "1879-10-01",
+    "author_death": "1941-08-22"
+  },
+  {
+    "author": "谷 譲次",
+    "author_kana": "たに じょうじ",
+    "author_birth": "1900-01-17",
+    "author_death": "1935-06-29"
+  },
+  {
+    "author": "折口 信夫",
+    "author_kana": "おりくち しのぶ",
+    "author_birth": "1887-02-11",
+    "author_death": "1953-09-03"
+  },
+  {
+    "author": "今井 邦子",
+    "author_kana": "いまい くにこ",
+    "author_birth": "1890-05-31",
+    "author_death": "1948-07-15"
+  },
+  {
+    "author": "野口 米次郎",
+    "author_kana": "のぐち よねじろう",
+    "author_birth": "1875-12-08",
+    "author_death": "1947-07-13"
+  },
+  {
+    "author": "観世 左近　二十四世",
+    "author_kana": "かんぜ さこん　にじゅうよんせい",
+    "author_birth": "1895-12-18",
+    "author_death": "1939-03-21"
+  },
+  {
+    "author": "別所 梅之助",
+    "author_kana": "べっしょ うめのすけ",
+    "author_birth": "1872-01-21",
+    "author_death": "1945-03-01"
+  },
+  {
+    "author": "水野 葉舟",
+    "author_kana": "みずの ようしゅう",
+    "author_birth": "1883-04-09",
+    "author_death": "1947-02-02"
+  },
+  {
+    "author": "ダンテ アリギエリ",
+    "author_kana": "ダンテ アリギエリ",
+    "author_birth": "1265",
+    "author_death": "1321"
+  },
+  {
+    "author": "野上 豊一郎",
+    "author_kana": "のがみ とよいちろう",
+    "author_birth": "1883-09-14",
+    "author_death": "1950-02-23"
+  },
+  {
+    "author": "水上 滝太郎",
+    "author_kana": "みなかみ たきたろう",
+    "author_birth": "1887-12-06",
+    "author_death": "1940-03-23"
+  },
+  {
+    "author": "戸川 秋骨",
+    "author_kana": "とがわ しゅうこつ",
+    "author_birth": "1871-02-07",
+    "author_death": "1939-07-09"
+  },
+  {
+    "author": "木下 利玄",
+    "author_kana": "きのした りげん",
+    "author_birth": "1886-01-01",
+    "author_death": "1925-02-15"
+  },
+  {
+    "author": "白鳥 庫吉",
+    "author_kana": "しらとり くらきち",
+    "author_birth": "1865-03-01",
+    "author_death": "1942-04-01"
+  },
+  {
+    "author": "デカルト ルネ",
+    "author_kana": "デカルト ルネ",
+    "author_birth": "1596",
+    "author_death": "1650"
+  },
+  {
+    "author": "関 寛",
+    "author_kana": "せき かん",
+    "author_birth": "1830",
+    "author_death": "1912-10-15"
+  },
+  {
+    "author": "イプセン ヘンリック",
+    "author_kana": "イプセン ヘンリック",
+    "author_birth": "1828-03-20",
+    "author_death": "1906-05-23"
+  },
+  {
+    "author": "堀 辰雄",
+    "author_kana": "ほり たつお",
+    "author_birth": "1904-12-28",
+    "author_death": "1953-05-28"
+  },
+  {
+    "author": "浅野 和三郎",
+    "author_kana": "あさの わさぶろう",
+    "author_birth": "1874-08",
+    "author_death": "1937-02-03"
+  },
+  {
+    "author": "モーゼス ウィリアム・ステイントン",
+    "author_kana": "モーゼス ウィリアム・ステイントン",
+    "author_birth": "1839",
+    "author_death": "1892"
+  },
+  {
+    "author": "内藤 鳴雪",
+    "author_kana": "ないとう めいせつ",
+    "author_birth": "1847-05-29",
+    "author_death": "1926-02-20"
+  },
+  {
+    "author": "フィッツジェラルド フランシス・スコット",
+    "author_kana": "フィッツジェラルド フランシス・スコット",
+    "author_birth": "1896-9-24",
+    "author_death": "1940-12-21"
+  },
+  {
+    "author": "井上 円了",
+    "author_kana": "いのうえ えんりょう",
+    "author_birth": "1858-03-18",
+    "author_death": "1919-06-06"
+  },
+  {
+    "author": "杉田 久女",
+    "author_kana": "すぎた ひさじょ",
+    "author_birth": "1890-05-30",
+    "author_death": "1946-01-21"
+  },
+  {
+    "author": "ド・ラ・ラメー マリー・ルイーズ",
+    "author_kana": "ド・ラ・ラメー マリー・ルイーズ",
+    "author_birth": "1839-01-01",
+    "author_death": "1908-01-25"
+  },
+  {
+    "author": "バーネット フランシス・ホジソン・エリザ",
+    "author_kana": "バーネット フランシス・ホジソン・エリザ",
+    "author_birth": "1849-11-24",
+    "author_death": "1924-10-29"
+  },
+  {
+    "author": "田中 正造",
+    "author_kana": "たなか しょうぞう",
+    "author_birth": "1841-12-15",
+    "author_death": "1913-09-04"
+  },
+  {
+    "author": "ファーブル ジャン・アンリ",
+    "author_kana": "ファーブル ジャン・アンリ",
+    "author_birth": "1823-12-23",
+    "author_death": "1915-10-11"
+  },
+  {
+    "author": "蒲 松齢",
+    "author_kana": "ほ しょうれい",
+    "author_birth": "1640-06-05",
+    "author_death": "1715-02-25"
+  },
+  {
+    "author": "峠 三吉",
+    "author_kana": "とうげ さんきち",
+    "author_birth": "1917-02-19",
+    "author_death": "1953-03-10"
+  },
+  {
+    "author": "久坂 葉子",
+    "author_kana": "くさか ようこ",
+    "author_birth": "1931-03-27",
+    "author_death": "1952-12-31"
+  },
+  {
+    "author": "河東 碧梧桐",
+    "author_kana": "かわひがし へきごとう",
+    "author_birth": "1873-02-26",
+    "author_death": "1937-02-01"
+  },
+  {
+    "author": "浜田 青陵",
+    "author_kana": "はまだ せいりょう",
+    "author_birth": "1881-02-22",
+    "author_death": "1938-07-25"
+  },
+  {
+    "author": "蒲原 有明",
+    "author_kana": "かんばら ありあけ",
+    "author_birth": "1875-03-15",
+    "author_death": "1952-02-03"
+  },
+  {
+    "author": "ストリンドベリ アウグスト",
+    "author_kana": "ストリンドベリ アウグスト",
+    "author_birth": "1849",
+    "author_death": "1912"
+  },
+  {
+    "author": "原 勝郎",
+    "author_kana": "はら かつろう",
+    "author_birth": "1871-04-15",
+    "author_death": "1924-01-12"
+  },
+  {
+    "author": "ホフマン エルンスト・テオドーア・アマーデウス",
+    "author_kana": "ホフマン エルンスト・テオドーア・アマーデウス",
+    "author_birth": "1776-01-24",
+    "author_death": "1822-06-25"
+  },
+  { "author": "瞿 佑", "author_kana": "く ゆう", "author_birth": "1341", "author_death": "1427" },
+  {
+    "author": "陳 玄祐",
+    "author_kana": "ちん げんゆう",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "斎藤 茂吉",
+    "author_kana": "さいとう もきち",
+    "author_birth": "1882-5-14",
+    "author_death": "1953-2-25"
+  },
+  {
+    "author": "田村 俊子",
+    "author_kana": "たむら としこ",
+    "author_birth": "1884-04-25",
+    "author_death": "1945-04-16"
+  },
+  {
+    "author": "森 鴎外, 森 林太郎",
+    "author_kana": "もり おうがい, もり りんたろう",
+    "author_birth": "1862-02-17",
+    "author_death": "1922-07-09"
+  },
+  {
+    "author": "井原 西鶴",
+    "author_kana": "いはら さいかく",
+    "author_birth": "1642",
+    "author_death": "1693-09-09"
+  },
+  {
+    "author": "タゴール ラビンドラナート",
+    "author_kana": "タゴール ラビンドラナート",
+    "author_birth": "1861-05-06",
+    "author_death": "1941-08-07"
+  },
+  {
+    "author": "ケネディ パトリック, ハイド ダグラス",
+    "author_kana": "ケネディ パトリック, ハイド ダグラス",
+    "author_birth": "1801",
+    "author_death": "1873"
+  },
+  {
+    "author": "高田 力",
+    "author_kana": "たかた つとむ",
+    "author_birth": null,
+    "author_death": "1950"
+  },
+  {
+    "author": "飯田 平作",
+    "author_kana": "いいだ へいさく",
+    "author_birth": "1849",
+    "author_death": "1940-12-01"
+  },
+  {
+    "author": "竹内 勝太郎",
+    "author_kana": "たけうち かつたろう",
+    "author_birth": "1894-10-20",
+    "author_death": "1935-06-25"
+  },
+  {
+    "author": "森田 草平",
+    "author_kana": "もりた そうへい",
+    "author_birth": "1881-03-19",
+    "author_death": "1949-12-14"
+  },
+  {
+    "author": "折口 信夫, 釈 迢空",
+    "author_kana": "おりくち しのぶ, しゃく ちょうくう",
+    "author_birth": "1887-02-11",
+    "author_death": "1953-09-03"
+  },
+  {
+    "author": "高田 保",
+    "author_kana": "たかだ たもつ",
+    "author_birth": "1895-03-28",
+    "author_death": "1952-02-20"
+  },
+  {
+    "author": "水谷 まさる",
+    "author_kana": "みずたに まさる",
+    "author_birth": "1894-12-25",
+    "author_death": "1950-05-25"
+  },
+  {
+    "author": "スティーブンソン ロバート・ルイス",
+    "author_kana": "スティーブンソン ロバート・ルイス",
+    "author_birth": "1850-11-13",
+    "author_death": "1894-12-03"
+  },
+  {
+    "author": "吉川 英治",
+    "author_kana": "よしかわ えいじ",
+    "author_birth": "1892-08-11",
+    "author_death": "1962-09-07"
+  },
+  {
+    "author": "郡 虎彦",
+    "author_kana": "こおり とらひこ",
+    "author_birth": "1890-6-28",
+    "author_death": "1924-10-6"
+  },
+  {
+    "author": "藪野 椋十",
+    "author_kana": "やぶの むくじゅう",
+    "author_birth": "1872-06-03",
+    "author_death": "1926-04-09"
+  },
+  {
+    "author": "土井 晩翠",
+    "author_kana": "どい ばんすい",
+    "author_birth": "1871-12-05",
+    "author_death": "1952-10-19"
+  },
+  {
+    "author": "片上 伸",
+    "author_kana": "かたがみ のぶる",
+    "author_birth": "1884-02-20",
+    "author_death": "1928-03-05"
+  },
+  {
+    "author": "相馬 泰三",
+    "author_kana": "そうま たいぞう",
+    "author_birth": "1885-12-29",
+    "author_death": "1952-05-15"
+  },
+  {
+    "author": "矢崎 嵯峨の舎",
+    "author_kana": "やざき さがのや",
+    "author_birth": "1863-03-01",
+    "author_death": "1947-10-26"
+  },
+  {
+    "author": "寺島 柾史",
+    "author_kana": "てらしま まさし",
+    "author_birth": "1893-10-24",
+    "author_death": "1952"
+  },
+  {
+    "author": "富田 木歩",
+    "author_kana": "とみた もっぽ",
+    "author_birth": "1897-04-14",
+    "author_death": "1923-09-01"
+  },
+  {
+    "author": "デフォー ダニエル",
+    "author_kana": "デフォー ダニエル",
+    "author_birth": "1659",
+    "author_death": "1731-04-26"
+  },
+  {
+    "author": "プーシキン アレクサンドル・セルゲーヴィチ",
+    "author_kana": "プーシキン アレクサンドル・セルゲーヴィチ",
+    "author_birth": "1799-05-26",
+    "author_death": "1837-01-17"
+  },
+  {
+    "author": "リットン エドワード・ジョージ・アール・ブルワー",
+    "author_kana": "リットン エドワード・ジョージ・アール・ブルワー",
+    "author_birth": "1803-05-25",
+    "author_death": "1873-01-18"
+  },
+  {
+    "author": "オルコット ルイーザ・メイ",
+    "author_kana": "オルコット ルイーザ・メイ",
+    "author_birth": "1832-11-29",
+    "author_death": "1888-03-06"
+  },
+  {
+    "author": "グリム ヴィルヘルム・カール, グリム ヤーコプ・ルートヴィッヒ・カール",
+    "author_kana": "グリム ヴィルヘルム・カール, グリム ヤーコプ・ルートヴィッヒ・カール",
+    "author_birth": "1786-02-24",
+    "author_death": "1859-12-16"
+  },
+  {
+    "author": "山田 美妙",
+    "author_kana": "やまだ びみょう",
+    "author_birth": "1868-08-25",
+    "author_death": "1910-10-24"
+  },
+  {
+    "author": "豊島 与志雄",
+    "author_kana": "とよしま よしお",
+    "author_birth": "1890-11-27",
+    "author_death": "1955-06-18"
+  },
+  {
+    "author": "ロラン ロマン",
+    "author_kana": "ロラン ロマン",
+    "author_birth": "1866-01-29",
+    "author_death": "1944-12-30"
+  },
+  {
+    "author": "ユゴー ヴィクトル",
+    "author_kana": "ユゴー ヴィクトル",
+    "author_birth": "1802-02-26",
+    "author_death": "1885-05-22"
+  },
+  {
+    "author": "豊島 与志雄, ロラン ロマン",
+    "author_kana": "とよしま よしお, ロラン ロマン",
+    "author_birth": "1890-11-27",
+    "author_death": "1955-06-18"
+  },
+  {
+    "author": "坂口 安吾",
+    "author_kana": "さかぐち あんご",
+    "author_birth": "1906-10-20",
+    "author_death": "1955-02-17"
+  },
+  {
+    "author": "榊 亮三郎",
+    "author_kana": "さかき りょうざぶろう",
+    "author_birth": "1872-04-05",
+    "author_death": "1946-08-24"
+  },
+  {
+    "author": "下村 湖人",
+    "author_kana": "しもむら こじん",
+    "author_birth": "1884-10-03",
+    "author_death": "1955-04-20"
+  },
+  {
+    "author": "波多野 精一",
+    "author_kana": "はたの せいいち",
+    "author_birth": "1877-07-21",
+    "author_death": "1950-01-17"
+  },
+  {
+    "author": "岩波 茂雄",
+    "author_kana": "いわなみ しげお",
+    "author_birth": "1881-08-27",
+    "author_death": "1946-04-25"
+  },
+  {
+    "author": "ファイルマン ローズ, 宮原 晃一郎",
+    "author_kana": "ファイルマン ローズ, みやはら こういちろう",
+    "author_birth": "1877-03-06",
+    "author_death": "1957-08-01"
+  },
+  {
+    "author": "須川 邦彦",
+    "author_kana": "すがわ くにひこ",
+    "author_birth": "1880",
+    "author_death": "1949"
+  },
+  {
+    "author": "シェークスピア ウィリアム",
+    "author_kana": "シェークスピア ウィリアム",
+    "author_birth": "1546",
+    "author_death": "1616"
+  },
+  {
+    "author": "ブロンテ シャーロット",
+    "author_kana": "ブロンテ シャーロット",
+    "author_birth": "1816-04-21",
+    "author_death": "1855-03-31"
+  },
+  {
+    "author": "ルブラン モーリス",
+    "author_kana": "ルブラン モーリス",
+    "author_birth": "1864-11-11",
+    "author_death": "1941-11-06"
+  },
+  {
+    "author": "マロ エクトール・アンリ",
+    "author_kana": "マロ エクトール・アンリ",
+    "author_birth": "1830-05-20",
+    "author_death": "1907-07-17"
+  },
+  {
+    "author": "小泉 八雲",
+    "author_kana": "こいずみ やくも",
+    "author_birth": "1850-06-27",
+    "author_death": "1904-09-26"
+  },
+  {
+    "author": "チェスタートン ギルバート・キース",
+    "author_kana": "チェスタートン ギルバート・キース",
+    "author_birth": "1874-05-29",
+    "author_death": "1936-06-14"
+  },
+  {
+    "author": "魯迅",
+    "author_kana": "ろじん",
+    "author_birth": "1881-09-25",
+    "author_death": "1936-10-19"
+  },
+  {
+    "author": "狩野 直喜",
+    "author_kana": "かの なおき",
+    "author_birth": "1868-02-11",
+    "author_death": "1947-12-13"
+  },
+  { "author": "文部省", "author_kana": "もんぶしょう", "author_birth": null, "author_death": null },
+  {
+    "author": "平山 蘆江",
+    "author_kana": "ひらやま ろこう",
+    "author_birth": "1882-11-15",
+    "author_death": "1953-04-18"
+  },
+  {
+    "author": "三田村 鳶魚",
+    "author_kana": "みたむら えんぎょ",
+    "author_birth": "1870-04-17",
+    "author_death": "1952-05-14"
+  },
+  {
+    "author": "ペロー シャルル",
+    "author_kana": "ペロー シャルル",
+    "author_birth": "1628-01-12",
+    "author_death": "1703-05-16"
+  },
+  {
+    "author": "ド・ヴィルヌーヴ ガブリエル=シュザンヌ・バルボ",
+    "author_kana": "ド・ヴィルヌーヴ ガブリエル=シュザンヌ・バルボ",
+    "author_birth": "1695",
+    "author_death": "1755"
+  },
+  {
+    "author": "末弘 厳太郎",
+    "author_kana": "すえひろ いずたろう",
+    "author_birth": "1888-11-30",
+    "author_death": "1951-09-11"
+  },
+  {
+    "author": "正宗 白鳥",
+    "author_kana": "まさむね はくちょう",
+    "author_birth": "1879-03-03",
+    "author_death": "1962-10-28"
+  },
+  {
+    "author": "沢田 正二郎",
+    "author_kana": "さわだ しょうじろう",
+    "author_birth": "1892-05-27",
+    "author_death": "1929-03-04"
+  },
+  {
+    "author": "酒井 嘉七",
+    "author_kana": "さかい かしち",
+    "author_birth": "1903",
+    "author_death": "1946"
+  },
+  {
+    "author": "西尾 正",
+    "author_kana": "にしお ただし",
+    "author_birth": "1907-12-12",
+    "author_death": "1949-03-10"
+  },
+  {
+    "author": "山路 愛山",
+    "author_kana": "やまじ あいざん",
+    "author_birth": "1865-01-23",
+    "author_death": "1917-03-14"
+  },
+  {
+    "author": "マクドナルド ジョージ",
+    "author_kana": "マクドナルド ジョージ",
+    "author_birth": "1824-04-10",
+    "author_death": "1905-09-18"
+  },
+  {
+    "author": "クラウフォード フランシス・マリオン",
+    "author_kana": "クラウフォード フランシス・マリオン",
+    "author_birth": "1854-08-02",
+    "author_death": "1909-04-09"
+  },
+  {
+    "author": "ストックトン フランシス・リチャード",
+    "author_kana": "ストックトン フランシス・リチャード",
+    "author_birth": "1834-04-05",
+    "author_death": "1902-04-19"
+  },
+  {
+    "author": "清水 紫琴",
+    "author_kana": "しみず しきん",
+    "author_birth": "1868-01-25",
+    "author_death": "1933-07-31"
+  },
+  {
+    "author": "相馬 愛蔵, 相馬 黒光",
+    "author_kana": "そうま あいぞう, そうま こっこう",
+    "author_birth": "1870-11-08",
+    "author_death": "1954-02-14"
+  },
+  {
+    "author": "相馬 愛蔵",
+    "author_kana": "そうま あいぞう",
+    "author_birth": "1870-11-08",
+    "author_death": "1954-02-14"
+  },
+  {
+    "author": "大槻 文彦",
+    "author_kana": "おおつき ふみひこ",
+    "author_birth": "1847-12-22",
+    "author_death": "1928-02-17"
+  },
+  {
+    "author": "鈴木 梅太郎",
+    "author_kana": "すずき うめたろう",
+    "author_birth": "1874-04-07",
+    "author_death": "1943-09-20"
+  },
+  {
+    "author": "海野 十三, 佐野 昌一",
+    "author_kana": "うんの じゅうざ, さの しょういち",
+    "author_birth": "1897-12-26",
+    "author_death": "1949-05-17"
+  },
+  {
+    "author": "マルサス トマス・ロバート",
+    "author_kana": "マルサス トマス・ロバート",
+    "author_birth": "1766-02-13",
+    "author_death": "1834-12-29"
+  },
+  {
+    "author": "久米 正雄",
+    "author_kana": "くめ まさお",
+    "author_birth": "1891-11-23",
+    "author_death": "1952-03-01"
+  },
+  {
+    "author": "長岡 半太郎",
+    "author_kana": "ながおか はんたろう",
+    "author_birth": "1865-08-19",
+    "author_death": "1950-12-11"
+  },
+  {
+    "author": "岸田 国士",
+    "author_kana": "きしだ くにお",
+    "author_birth": "1890-11-02",
+    "author_death": "1954-03-05"
+  },
+  {
+    "author": "チェーホフ アントン",
+    "author_kana": "チェーホフ アントン",
+    "author_birth": "1860-01-17",
+    "author_death": "1904-07-02"
+  },
+  {
+    "author": "ルナール ジュール",
+    "author_kana": "ルナール ジュール",
+    "author_birth": "1864-02-22",
+    "author_death": "1910-05-22"
+  },
+  {
+    "author": "ビョルンソン ビョルンステェルネ",
+    "author_kana": "ビョルンソン ビョルンステェルネ",
+    "author_birth": "1832-12-08",
+    "author_death": "1910-04-26"
+  },
+  {
+    "author": "池田 菊苗",
+    "author_kana": "いけだ きくなえ",
+    "author_birth": "1864",
+    "author_death": "1936-05-03"
+  },
+  {
+    "author": "鳥谷部 春汀",
+    "author_kana": "とやべ しゅんてい",
+    "author_birth": "1865-03-29",
+    "author_death": "1908-12-21"
+  },
+  {
+    "author": "神西 清",
+    "author_kana": "じんざい きよし",
+    "author_birth": "1903-11-15",
+    "author_death": "1957-03-11"
+  },
+  {
+    "author": "仁科 芳雄",
+    "author_kana": "にしな よしお",
+    "author_birth": "1890-12-06",
+    "author_death": "1951-01-10"
+  },
+  {
+    "author": "リカード デイヴィッド",
+    "author_kana": "リカード デイヴィッド",
+    "author_birth": "1772-04-19",
+    "author_death": "1823-09-11"
+  },
+  {
+    "author": "新渡戸 稲造",
+    "author_kana": "にとべ いなぞう",
+    "author_birth": "1862-09-01",
+    "author_death": "1933-10-16"
+  },
+  {
+    "author": "中井 正一",
+    "author_kana": "なかい まさかず",
+    "author_birth": "1900-02-14",
+    "author_death": "1952-05-18"
+  },
+  {
+    "author": "日野 強",
+    "author_kana": "ひの つとむ",
+    "author_birth": "1866-01-23",
+    "author_death": "1920-12-23"
+  },
+  {
+    "author": "佐藤 惣之助",
+    "author_kana": "さとう そうのすけ",
+    "author_birth": "1890-12-03",
+    "author_death": "1942-05-15"
+  },
+  {
+    "author": "高村 光太郎",
+    "author_kana": "たかむら こうたろう",
+    "author_birth": "1883-03-13",
+    "author_death": "1956-04-02"
+  },
+  {
+    "author": "石川 三四郎",
+    "author_kana": "いしかわ さんしろう",
+    "author_birth": "1876-05-23",
+    "author_death": "1956-11-28"
+  },
+  {
+    "author": "ささき ふさ",
+    "author_kana": "ささき ふさ",
+    "author_birth": "1897",
+    "author_death": "1949"
+  },
+  {
+    "author": "渡辺 温, ワタナベ オン",
+    "author_kana": "わたなべ おん, ワタナベ オン",
+    "author_birth": "1902-08-26",
+    "author_death": "1930-02-10"
+  },
+  {
+    "author": "シェリー メアリー・ウォルストンクラフト",
+    "author_kana": "シェリー メアリー・ウォルストンクラフト",
+    "author_birth": "1797-08-30",
+    "author_death": "1851-02-01"
+  },
+  {
+    "author": "村山 籌子",
+    "author_kana": "むらやま かずこ",
+    "author_birth": "1903-11-07",
+    "author_death": "1946-08-04"
+  },
+  {
+    "author": "古川 アヤ, 村山 籌子",
+    "author_kana": "ふるかわ アヤ, むらやま かずこ",
+    "author_birth": "1903-11-07",
+    "author_death": "1946-08-04"
+  },
+  {
+    "author": "落合 ユキ子, 村山 籌子",
+    "author_kana": "おちあい ユキこ, むらやま かずこ",
+    "author_birth": "1903-11-07",
+    "author_death": "1946-08-04"
+  },
+  {
+    "author": "実吉 捷郎",
+    "author_kana": "さねよし はやお",
+    "author_birth": "1895-01-20",
+    "author_death": "1962-02-15"
+  },
+  {
+    "author": "テーラー ジェーン",
+    "author_kana": "テーラー ジェーン",
+    "author_birth": "1783",
+    "author_death": "1824"
+  },
+  {
+    "author": "土田 耕平",
+    "author_kana": "つちだ こうへい",
+    "author_birth": "1895-01-25",
+    "author_death": "1940-08-12"
+  },
+  {
+    "author": "沖野 岩三郎",
+    "author_kana": "おきの いわさぶろう",
+    "author_birth": "1876-01-05",
+    "author_death": "1956-01-30"
+  },
+  {
+    "author": "アンデルセン ハンス・クリスチャン, 鈴木 三重吉",
+    "author_kana": "アンデルセン ハンス・クリスチャン, すずき みえきち",
+    "author_birth": "1805-04-02",
+    "author_death": "1875-08-04"
+  },
+  {
+    "author": "鈴木 三重吉, リシュタンベルジェ アンドレ",
+    "author_kana": "すずき みえきち, リシュタンベルジェ アンドレ",
+    "author_birth": "1882-09-29",
+    "author_death": "1936-06-27"
+  },
+  {
+    "author": "ドーデ アルフォンス",
+    "author_kana": "ドーデ アルフォンス",
+    "author_birth": "1840-03-13",
+    "author_death": "1897-12-17"
+  },
+  {
+    "author": "ワルラス マリー・エスプリ・レオン",
+    "author_kana": "ワルラス マリー・エスプリ・レオン",
+    "author_birth": "1834-12-16",
+    "author_death": "1910-01-05"
+  },
+  {
+    "author": "ジェファーソン トマス",
+    "author_kana": "ジェファーソン トマス",
+    "author_birth": "1743-04-13",
+    "author_death": "1826-07-04"
+  },
+  {
+    "author": "ランド ハンス",
+    "author_kana": "ランド ハンス",
+    "author_birth": "1861",
+    "author_death": "不詳"
+  },
+  {
+    "author": "伊東 静雄",
+    "author_kana": "いとう しずお",
+    "author_birth": "1906-12-10",
+    "author_death": "1953-03-12"
+  },
+  {
+    "author": "土井 八枝",
+    "author_kana": "どい やえ",
+    "author_birth": "1879-02-21",
+    "author_death": "1948-05-10"
+  },
+  {
+    "author": "アミーチス エドモンド・デ",
+    "author_kana": "アミーチス エドモンド・デ",
+    "author_birth": "1846-10-31",
+    "author_death": "1908-03-11"
+  },
+  {
+    "author": "小舟 勝二",
+    "author_kana": "こぶね かつじ",
+    "author_birth": null,
+    "author_death": "1931"
+  },
+  {
+    "author": "下村 千秋",
+    "author_kana": "しもむら ちあき",
+    "author_birth": "1893-09-04",
+    "author_death": "1955-01-31"
+  },
+  {
+    "author": "石河 幹明",
+    "author_kana": "いしかわ みきあき",
+    "author_birth": "1859-11-11",
+    "author_death": "1943-07-25"
+  },
+  {
+    "author": "山下 利三郎",
+    "author_kana": "やました りさぶろう",
+    "author_birth": "1892",
+    "author_death": "1952-03-29"
+  },
+  {
+    "author": "宮崎 湖処子",
+    "author_kana": "みやざき こしょし",
+    "author_birth": "1864-09-20",
+    "author_death": "1922-08-09"
+  },
+  {
+    "author": "違星 北斗",
+    "author_kana": "いぼし ほくと",
+    "author_birth": "1902-01-01",
+    "author_death": "1929-01-26"
+  },
+  {
+    "author": "清沢 満之",
+    "author_kana": "きよざわ まんし",
+    "author_birth": "1863-08-10",
+    "author_death": "1903-06-06"
+  },
+  {
+    "author": "島田 清次郎",
+    "author_kana": "しまだ せいじろう",
+    "author_birth": "1899-02-26",
+    "author_death": "1930-04-29"
+  },
+  {
+    "author": "知里 幸恵",
+    "author_kana": "ちり ゆきえ",
+    "author_birth": "1903-06-08",
+    "author_death": "1922-09-18"
+  },
+  {
+    "author": "饗庭 篁村",
+    "author_kana": "あえば こうそん",
+    "author_birth": "1855-09-25",
+    "author_death": "1922-06-20"
+  },
+  {
+    "author": "ヴァレリー ポール",
+    "author_kana": "ヴァレリー ポール",
+    "author_birth": "1871-10-30",
+    "author_death": "1945-07-20"
+  },
+  {
+    "author": "竹越 三叉",
+    "author_kana": "たけこし さんさ",
+    "author_birth": "1865-11-22",
+    "author_death": "1950-01-12"
+  },
+  {
+    "author": "竹越 与三郎",
+    "author_kana": "たけこし よさぶろう",
+    "author_birth": "1865-11-22",
+    "author_death": "1950-01-12"
+  },
+  {
+    "author": "久生 十蘭",
+    "author_kana": "ひさお じゅうらん",
+    "author_birth": "1902-04-06",
+    "author_death": "1957-10-06"
+  },
+  {
+    "author": "村山 俊太郎",
+    "author_kana": "むらやま としたろう",
+    "author_birth": "1905-07-15",
+    "author_death": "1948-12-09"
+  },
+  {
+    "author": "田村 松魚",
+    "author_kana": "たむら しょうぎょ",
+    "author_birth": "1877",
+    "author_death": "1948"
+  },
+  {
+    "author": "島木 赤彦",
+    "author_kana": "しまぎ あかひこ",
+    "author_birth": "1876-12-17",
+    "author_death": "1926-03-27"
+  },
+  {
+    "author": "江見 水蔭",
+    "author_kana": "えみ すいいん",
+    "author_birth": "1869-09-17",
+    "author_death": "1934-11-03"
+  },
+  {
+    "author": "河合 栄治郎",
+    "author_kana": "かわい えいじろう",
+    "author_birth": "1891-02-13",
+    "author_death": "1944-02-15"
+  },
+  {
+    "author": "佐野 友三郎",
+    "author_kana": "さの ともさぶろう",
+    "author_birth": "1864-03-10",
+    "author_death": "1920-05-13"
+  },
+  {
+    "author": "辻村 もと子",
+    "author_kana": "つじむら もとこ",
+    "author_birth": "1906-02-11",
+    "author_death": "1946-05-24"
+  },
+  {
+    "author": "松本 文三郎",
+    "author_kana": "まつもと ぶんざぶろう",
+    "author_birth": "1869",
+    "author_death": "1944-12-18"
+  },
+  {
+    "author": "伊東 忠太",
+    "author_kana": "いとう ちゅうた",
+    "author_birth": "1867-11-21",
+    "author_death": "1954-04-07"
+  },
+  {
+    "author": "愛知 敬一",
+    "author_kana": "あいち けいいち",
+    "author_birth": "1880-07-25",
+    "author_death": "1923-06-23"
+  },
+  {
+    "author": "カフカ フランツ",
+    "author_kana": "カフカ フランツ",
+    "author_birth": "1883-07-03",
+    "author_death": "1924-06-03"
+  },
+  {
+    "author": "チャペック カレル",
+    "author_kana": "チャペック カレル",
+    "author_birth": "1890-01-09",
+    "author_death": "1938-12-25"
+  },
+  {
+    "author": "ニューヨーク・サン紙",
+    "author_kana": "ニューヨーク・サンし",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "ボーム ライマン・フランク",
+    "author_kana": "ボーム ライマン・フランク",
+    "author_birth": "1856-05-15",
+    "author_death": "1919-05-06"
+  },
+  {
+    "author": "ラング アンドルー",
+    "author_kana": "ラング アンドルー",
+    "author_birth": "1844-03-31",
+    "author_death": "1912-07-20"
+  },
+  {
+    "author": "加藤 道夫",
+    "author_kana": "かとう みちお",
+    "author_birth": "1918-10-17",
+    "author_death": "1953-12-22"
+  },
+  {
+    "author": "ゴルドン エリザベス、アンナ",
+    "author_kana": "ゴルドン エリザベス、アンナ",
+    "author_birth": "1851",
+    "author_death": "1925"
+  },
+  {
+    "author": "坪井 正五郎",
+    "author_kana": "つぼい しょうごろう",
+    "author_birth": "1863-02-22",
+    "author_death": "1913-05-26"
+  },
+  {
+    "author": "木村 小舟",
+    "author_kana": "きむら しょうしゅう",
+    "author_birth": "1881-09-12",
+    "author_death": "1955-04-20"
+  },
+  {
+    "author": "山本 禾太郎",
+    "author_kana": "やまもと のぎたろう",
+    "author_birth": "1889-02-28",
+    "author_death": "1951-03-16"
+  },
+  {
+    "author": "吉田 絃二郎",
+    "author_kana": "よしだ げんじろう",
+    "author_birth": "1886-11-24",
+    "author_death": "1956-05-21"
+  },
+  {
+    "author": "会津 八一",
+    "author_kana": "あいづ やいち",
+    "author_birth": "1881-08-01",
+    "author_death": "1956-11-21"
+  },
+  {
+    "author": "恩地 孝四郎",
+    "author_kana": "おんち こうしろう",
+    "author_birth": "1891-07-02",
+    "author_death": "1955-06-03"
+  },
+  {
+    "author": "小金井 喜美子",
+    "author_kana": "こがねい きみこ",
+    "author_birth": "1871-01-19",
+    "author_death": "1956-01-26"
+  },
+  {
+    "author": "佐藤 垢石",
+    "author_kana": "さとう こうせき",
+    "author_birth": "1888-06-18",
+    "author_death": "1956-07-04"
+  },
+  {
+    "author": "ケイ エレン",
+    "author_kana": "ケイ エレン",
+    "author_birth": "1849-12-11",
+    "author_death": "1926-04-25"
+  },
+  {
+    "author": "ゴールドマン エマ",
+    "author_kana": "ゴールドマン エマ",
+    "author_birth": "1869-06-27",
+    "author_death": "1940-05-14"
+  },
+  {
+    "author": "石井 研堂",
+    "author_kana": "いしい けんどう",
+    "author_birth": "1865",
+    "author_death": "1943"
+  },
+  {
+    "author": "平田 晋策",
+    "author_kana": "ひらた しんさく",
+    "author_birth": "1904-03-06",
+    "author_death": "1936-01-28"
+  },
+  {
+    "author": "島村 抱月",
+    "author_kana": "しまむら ほうげつ",
+    "author_birth": "1871-02-28",
+    "author_death": "1918-11-05"
+  },
+  {
+    "author": "白柳 秀湖",
+    "author_kana": "しらやなぎ しゅうこ",
+    "author_birth": "1884-01-07",
+    "author_death": "1950-11-09"
+  },
+  {
+    "author": "小栗 風葉",
+    "author_kana": "おぐり ふうよう",
+    "author_birth": "1875-02-03",
+    "author_death": "1926-01-15"
+  },
+  {
+    "author": "川上 眉山",
+    "author_kana": "かわかみ びざん",
+    "author_birth": "1869-04-16",
+    "author_death": "1908-06-15"
+  },
+  {
+    "author": "三宅 花圃",
+    "author_kana": "みやけ かほ",
+    "author_birth": "1869-02-04",
+    "author_death": "1943-07-18"
+  },
+  {
+    "author": "小林 一三",
+    "author_kana": "こばやし いちぞう",
+    "author_birth": "1873-01-03",
+    "author_death": "1957-01-25"
+  },
+  {
+    "author": "アーヴィング ワシントン",
+    "author_kana": "アーヴィング ワシントン",
+    "author_birth": "1783-04-03",
+    "author_death": "1859-11-28"
+  },
+  {
+    "author": "邦枝 完二",
+    "author_kana": "くにえだ かんじ",
+    "author_birth": "1892-12-28",
+    "author_death": "1956-08-02"
+  },
+  {
+    "author": "癋見 鈍太郎, 夢野 久作",
+    "author_kana": "かくみ どんたろう, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "土原 耕作, 夢野 久作",
+    "author_kana": "つちはら こうさく, ゆめの きゅうさく",
+    "author_birth": "1889-01-04",
+    "author_death": "1936-03-11"
+  },
+  {
+    "author": "サン＝テグジュペリ アントワーヌ・ド",
+    "author_kana": "サン＝テグジュペリ アントワーヌ・ド",
+    "author_birth": "1900-06-29",
+    "author_death": "1944-07-31"
+  },
+  {
+    "author": "牧野 富太郎",
+    "author_kana": "まきの とみたろう",
+    "author_birth": "1862-05-22",
+    "author_death": "1957-01-18"
+  },
+  {
+    "author": "榎本 武揚, 勝 海舟, 福沢 諭吉",
+    "author_kana": "えのもと たけあき, かつ かいしゅう, ふくざわ ゆきち",
+    "author_birth": "1836-10-05",
+    "author_death": "1908-10-26"
+  },
+  {
+    "author": "木村 芥舟",
+    "author_kana": "きむら かいしゅう",
+    "author_birth": "1830-02-27",
+    "author_death": "1901-12-09"
+  },
+  {
+    "author": "ホーフマンスタール フーゴー・フォン",
+    "author_kana": "ホーフマンスタール フーゴー・フォン",
+    "author_birth": "1874-02-01",
+    "author_death": "1929-07-15"
+  },
+  {
+    "author": "小村 雪岱",
+    "author_kana": "こむら せったい",
+    "author_birth": "1887-03-22",
+    "author_death": "1940-10-17"
+  },
+  {
+    "author": "溝口 健二",
+    "author_kana": "みぞぐち けんじ",
+    "author_birth": "1898-05-16",
+    "author_death": "1956-08-24"
+  },
+  {
+    "author": "宮島 資夫",
+    "author_kana": "みやじま すけお",
+    "author_birth": "1886-08-01",
+    "author_death": "1951-02-19"
+  },
+  { "author": "ホーマー", "author_kana": "ホーマー", "author_birth": null, "author_death": null },
+  {
+    "author": "ガンジー マハトマ",
+    "author_kana": "ガンジー マハトマ",
+    "author_birth": "1869-10-02",
+    "author_death": "1948-01-30"
+  },
+  {
+    "author": "ミドルトン リチャード・バラム",
+    "author_kana": "ミドルトン リチャード・バラム",
+    "author_birth": "1882-10-28",
+    "author_death": "1911-12-01"
+  },
+  {
+    "author": "エンゲルス フリードリッヒ, マルクス カール・ハインリッヒ",
+    "author_kana": "エンゲルス フリードリッヒ, マルクス カール・ハインリッヒ",
+    "author_birth": "1820-11-28",
+    "author_death": "1895-08-05"
+  },
+  {
+    "author": "慶應義塾, 福沢 諭吉",
+    "author_kana": "けいおうぎじゅく, ふくざわ ゆきち",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "桂 小南",
+    "author_kana": "かつら こなん",
+    "author_birth": "1880-05-24",
+    "author_death": "1947-11-21"
+  },
+  {
+    "author": "宮城 道雄",
+    "author_kana": "みやぎ みちお",
+    "author_birth": "1894-04-07",
+    "author_death": "1956-06-25"
+  },
+  {
+    "author": "犬田 卯",
+    "author_kana": "いぬた しげる",
+    "author_birth": "1891-08-23",
+    "author_death": "1957-07-21"
+  },
+  {
+    "author": "平山 千代子",
+    "author_kana": "ひらやま ちよこ",
+    "author_birth": "1925-12-16",
+    "author_death": "1944-08-02"
+  },
+  {
+    "author": "式場 隆三郎",
+    "author_kana": "しきば りゅうざぶろう",
+    "author_birth": "1898-07-02",
+    "author_death": "1965-11-21"
+  },
+  {
+    "author": "兼常 清佐",
+    "author_kana": "かねつね きよすけ",
+    "author_birth": "1885-11-22",
+    "author_death": "1957-04-25"
+  },
+  {
+    "author": "レスコーフ ニコライ・セミョーノヴィチ",
+    "author_kana": "レスコーフ ニコライ・セミョーノヴィチ",
+    "author_birth": "1831-02-16",
+    "author_death": "1895-03-05"
+  },
+  {
+    "author": "ランボー ジャン・ニコラ・アルチュール",
+    "author_kana": "ランボー ジャン・ニコラ・アルチュール",
+    "author_birth": "1854-10-20",
+    "author_death": "1891-11-10"
+  },
+  {
+    "author": "吉田 甲子太郎",
+    "author_kana": "よしだ きねたろう",
+    "author_birth": "1894-03-23",
+    "author_death": "1957-01-08"
+  },
+  {
+    "author": "前田河 広一郎",
+    "author_kana": "まえだこう ひろいちろう",
+    "author_birth": "1888-11-13",
+    "author_death": "1957-12-04"
+  },
+  {
+    "author": "三上 義夫",
+    "author_kana": "みかみ よしお",
+    "author_birth": "1875-02-16",
+    "author_death": "1950-12-31"
+  },
+  {
+    "author": "羽志 主水",
+    "author_kana": "はし もんど",
+    "author_birth": "1884-06-03",
+    "author_death": "1957-02-26"
+  },
+  {
+    "author": "川田 功",
+    "author_kana": "かわだ いさお",
+    "author_birth": "1882",
+    "author_death": "1931"
+  },
+  {
+    "author": "井上 哲次郎",
+    "author_kana": "いのうえ てつじろう",
+    "author_birth": "1856-02-01",
+    "author_death": "1944-12-07"
+  },
+  {
+    "author": "久保 良英",
+    "author_kana": "くぼ よしひで",
+    "author_birth": "1883-04-22",
+    "author_death": "1942-11-11"
+  },
+  {
+    "author": "木村 荘八",
+    "author_kana": "きむら しょうはち",
+    "author_birth": "1893-08-21",
+    "author_death": "1958-11-18"
+  },
+  {
+    "author": "正岡 容",
+    "author_kana": "まさおか いるる",
+    "author_birth": "1904-12-20",
+    "author_death": "1958-12-07"
+  },
+  {
+    "author": "青柳 喜兵衛",
+    "author_kana": "あおやぎ きへい",
+    "author_birth": "1904-01-01",
+    "author_death": "1938-08-28"
+  },
+  {
+    "author": "三好 十郎",
+    "author_kana": "みよし じゅうろう",
+    "author_birth": "1902-04-21",
+    "author_death": "1958-12-16"
+  },
+  {
+    "author": "高浜 虚子",
+    "author_kana": "たかはま きょし",
+    "author_birth": "1874-02-22",
+    "author_death": "1959-04-08"
+  },
+  {
+    "author": "井上 良夫",
+    "author_kana": "いのうえ よしお",
+    "author_birth": "1908",
+    "author_death": "1945"
+  },
+  {
+    "author": "大庭 武年",
+    "author_kana": "おおば たけとし",
+    "author_birth": "1904",
+    "author_death": "1945"
+  },
+  {
+    "author": "朝永 三十郎",
+    "author_kana": "ともなが さんじゅうろう",
+    "author_birth": "1871-02-05",
+    "author_death": "1951-09-18"
+  },
+  {
+    "author": "加藤 弘之",
+    "author_kana": "かとう ひろゆき",
+    "author_birth": "1836-06-23",
+    "author_death": "1916-02-09"
+  },
+  {
+    "author": "西郷 隆盛",
+    "author_kana": "さいごう たかもり",
+    "author_birth": "1828-01-23",
+    "author_death": "1877-09-24"
+  },
+  {
+    "author": "ゲラン シャルル",
+    "author_kana": "ゲラン シャルル",
+    "author_birth": "1873-12-29",
+    "author_death": "1907-03-17"
+  },
+  {
+    "author": "榎本 武揚",
+    "author_kana": "えのもと たけあき",
+    "author_birth": "1836-10-05",
+    "author_death": "1908-10-26"
+  },
+  {
+    "author": "津田 真道",
+    "author_kana": "つだ まみち",
+    "author_birth": "1829-07-25",
+    "author_death": "1903-09-03"
+  },
+  {
+    "author": "石川 啄木, 大木 頭",
+    "author_kana": "いしかわ たくぼく, おおき",
+    "author_birth": "1886-02-20",
+    "author_death": "1912-04-13"
+  },
+  {
+    "author": "西 周",
+    "author_kana": "にし あまね",
+    "author_birth": "1829-03-07",
+    "author_death": "1897-01-31"
+  },
+  {
+    "author": "江南 文三",
+    "author_kana": "えなみ ぶんぞう",
+    "author_birth": "1887-12-26",
+    "author_death": "1946-02-08"
+  },
+  {
+    "author": "羽田 亨",
+    "author_kana": "はねだ とおる",
+    "author_birth": "1882-05-15",
+    "author_death": "1955-04-13"
+  },
+  {
+    "author": "三宅 やす子",
+    "author_kana": "みやけ やすこ",
+    "author_birth": "1890-03-15",
+    "author_death": "1932-01-18"
+  },
+  {
+    "author": "相馬 御風",
+    "author_kana": "そうま ぎょふう",
+    "author_birth": "1883-07-10",
+    "author_death": "1950-05-08"
+  },
+  {
+    "author": "上村 経吉",
+    "author_kana": "うえむら つねきち",
+    "author_birth": "1868-04-28",
+    "author_death": "1922-11-21"
+  },
+  {
+    "author": "小笠原 長生",
+    "author_kana": "おがさわら ながなり",
+    "author_birth": "1867-12-15",
+    "author_death": "1958-09-20"
+  },
+  {
+    "author": "肝付 兼行",
+    "author_kana": "きもつき かねゆき",
+    "author_birth": "1853-04-23",
+    "author_death": "1922-01-13"
+  },
+  {
+    "author": "吉井 幸蔵",
+    "author_kana": "よしい こうぞう",
+    "author_birth": "1856-01-02",
+    "author_death": "1927-10-07"
+  },
+  {
+    "author": "乙骨 三郎",
+    "author_kana": "おっこつ さぶろう",
+    "author_birth": "1881-05-17",
+    "author_death": "1934-09-19"
+  },
+  {
+    "author": "秋月 種樹",
+    "author_kana": "あきづき たねたつ",
+    "author_birth": "1833-11-28",
+    "author_death": "1904-10-17"
+  },
+  {
+    "author": "秋月 種樹, 佐藤 一斎",
+    "author_kana": "あきづき たねたつ, さとう いっさい",
+    "author_birth": "1833-11-28",
+    "author_death": "1904-10-17"
+  },
+  {
+    "author": "山田 済斎",
+    "author_kana": "やまだ せいさい",
+    "author_birth": "1867-12-18",
+    "author_death": "1952-11-21"
+  },
+  {
+    "author": "和田 万吉",
+    "author_kana": "わだ まんきち",
+    "author_birth": "1865-10-07",
+    "author_death": "1934-11-21"
+  },
+  {
+    "author": "阪井 久良伎",
+    "author_kana": "さかい くらき",
+    "author_birth": "1869",
+    "author_death": "1945"
+  },
+  {
+    "author": "羽仁 もと子",
+    "author_kana": "はに もとこ",
+    "author_birth": "1873-09-08",
+    "author_death": "1957-04-07"
+  },
+  {
+    "author": "福士 幸次郎",
+    "author_kana": "ふくし こうじろう",
+    "author_birth": "1889-11-05",
+    "author_death": "1946-10-11"
+  },
+  {
+    "author": "岡本 帰一",
+    "author_kana": "おかもと きいち",
+    "author_birth": "1888-6-12",
+    "author_death": "1930-12-29"
+  },
+  {
+    "author": "ブラウニング ロバート",
+    "author_kana": "ブラウニング ロバート",
+    "author_birth": "1812-05-07",
+    "author_death": "1889-12-12"
+  },
+  {
+    "author": "千家 元麿",
+    "author_kana": "せんげ もとまろ",
+    "author_birth": "1888-06-08",
+    "author_death": "1948-03-14"
+  },
+  {
+    "author": "小野 佐世男",
+    "author_kana": "おの させお",
+    "author_birth": "1905-02-06",
+    "author_death": "1954-02-01"
+  },
+  {
+    "author": "田山 花袋, 田山 録弥",
+    "author_kana": "たやま かたい, たやま ろくや",
+    "author_birth": "1872-01-22",
+    "author_death": "1930-05-13"
+  },
+  {
+    "author": "桑木 厳翼",
+    "author_kana": "くわき げんよく",
+    "author_birth": "1874-06-25",
+    "author_death": "1946-12-15"
+  },
+  {
+    "author": "川合 貞一",
+    "author_kana": "かわい ていいち",
+    "author_birth": "1870-03-29",
+    "author_death": "1955-06-19"
+  },
+  {
+    "author": "槙本 楠郎",
+    "author_kana": "まきもと くすろう",
+    "author_birth": "1898-08-01",
+    "author_death": "1956-09-14"
+  },
+  {
+    "author": "原口 統三",
+    "author_kana": "はらぐち とうぞう",
+    "author_birth": "1927-01-14",
+    "author_death": "1946-10-25"
+  },
+  {
+    "author": "片山 広子",
+    "author_kana": "かたやま ひろこ",
+    "author_birth": "1878-02-10",
+    "author_death": "1957-03-19"
+  },
+  {
+    "author": "岡倉 由三郎",
+    "author_kana": "おかくら よしさぶろう",
+    "author_birth": "1868-03-15",
+    "author_death": "1936-10-31"
+  },
+  {
+    "author": "村岡 博",
+    "author_kana": "むらおか ひろし",
+    "author_birth": "1895-02-03",
+    "author_death": "1946-04-19"
+  },
+  {
+    "author": "永井 隆",
+    "author_kana": "ながい たかし",
+    "author_birth": "1908-02-03",
+    "author_death": "1951-05-01"
+  },
+  {
+    "author": "鈴木 鼓村",
+    "author_kana": "すずき こそん",
+    "author_birth": "1875",
+    "author_death": "1931-03-12"
+  },
+  {
+    "author": "児玉 花外",
+    "author_kana": "こだま かがい",
+    "author_birth": "1874-07-07",
+    "author_death": "1943-09-20"
+  },
+  {
+    "author": "池田 蕉園",
+    "author_kana": "いけだ しょうえん",
+    "author_birth": "1886-05-13",
+    "author_death": "1917-12-01"
+  },
+  {
+    "author": "池田 輝方",
+    "author_kana": "いけだ てるかた",
+    "author_birth": "1833-01-04",
+    "author_death": "1921-05-06"
+  },
+  {
+    "author": "柳川 春葉",
+    "author_kana": "やながわ しゅんよう",
+    "author_birth": "1877-03-05",
+    "author_death": "1918-01-09"
+  },
+  {
+    "author": "岩村 透",
+    "author_kana": "いわむら とおる",
+    "author_birth": "1870-02-25",
+    "author_death": "1917-08-17"
+  },
+  {
+    "author": "岡崎 雪声",
+    "author_kana": "おかざき せっせい",
+    "author_birth": "1854-02-26",
+    "author_death": "1921-04-16"
+  },
+  {
+    "author": "岡田 三郎助",
+    "author_kana": "おかだ さぶろうすけ",
+    "author_birth": "1869- 02-22",
+    "author_death": "1939-09-23"
+  },
+  {
+    "author": "尾上 梅幸",
+    "author_kana": "おのえ ばいこう",
+    "author_birth": "1870-11-08",
+    "author_death": "1934-11-08"
+  },
+  {
+    "author": "北村 四海",
+    "author_kana": "きたむら しかい",
+    "author_birth": "1871-04-03",
+    "author_death": "1927-11-14"
+  },
+  {
+    "author": "関根 黙庵",
+    "author_kana": "せきね もくあん",
+    "author_birth": "1863",
+    "author_death": "1923"
+  },
+  {
+    "author": "沼田 一雅",
+    "author_kana": "ぬまた いちが",
+    "author_birth": "1873-05-05",
+    "author_death": "1954-06-05"
+  },
+  {
+    "author": "平井 金三",
+    "author_kana": "ひらい きんざ",
+    "author_birth": "1859",
+    "author_death": "1916"
+  },
+  {
+    "author": "本田 親二",
+    "author_kana": "ほんだ しんじ",
+    "author_birth": "1885",
+    "author_death": "1948"
+  },
+  {
+    "author": "喜田 貞吉",
+    "author_kana": "きた さだきち",
+    "author_birth": "1871-07-11",
+    "author_death": "1939-07-03"
+  },
+  {
+    "author": "豊田 喜一郎",
+    "author_kana": "とよだ きいちろう",
+    "author_birth": "1894-06-11",
+    "author_death": "1952-03-27"
+  },
+  {
+    "author": "久保 栄",
+    "author_kana": "くぼ さかえ",
+    "author_birth": "1900-12-28",
+    "author_death": "1958-03-15"
+  },
+  {
+    "author": "徳永 直",
+    "author_kana": "とくなが すなお",
+    "author_birth": "1899-01-20",
+    "author_death": "1958-02-15"
+  },
+  {
+    "author": "ニューコム シモン",
+    "author_kana": "ニューコム シモン",
+    "author_birth": "1835",
+    "author_death": "1909"
+  },
+  {
+    "author": "嶋中 雄作",
+    "author_kana": "しまなか ゆうさく",
+    "author_birth": "1887-02-02",
+    "author_death": "1949-01-17"
+  },
+  {
+    "author": "山本 実彦",
+    "author_kana": "やまもと さねひこ",
+    "author_birth": "1885-01-05",
+    "author_death": "1952-07-01"
+  },
+  {
+    "author": "豊田 三郎",
+    "author_kana": "とよだ さぶろう",
+    "author_birth": "1907-02-12",
+    "author_death": "1959-11-18"
+  },
+  {
+    "author": "高頭 仁兵衛",
+    "author_kana": "たかとう じんべえ",
+    "author_birth": "1877-05-20",
+    "author_death": "1958-04-06"
+  },
+  {
+    "author": "柴崎 芳太郎",
+    "author_kana": "しばざき よしたろう",
+    "author_birth": "1876-08-13",
+    "author_death": "1938-01-29"
+  },
+  {
+    "author": "木暮 理太郎",
+    "author_kana": "こぐれ りたろう",
+    "author_birth": "1873",
+    "author_death": "1944-05-07"
+  },
+  {
+    "author": "大下 藤次郎",
+    "author_kana": "おおした とうじろう",
+    "author_birth": "1870-07-09",
+    "author_death": "1911-10-10"
+  },
+  {
+    "author": "鵜殿 正雄",
+    "author_kana": "うどの まさお",
+    "author_birth": "1877",
+    "author_death": "1945"
+  },
+  {
+    "author": "野中 至",
+    "author_kana": "のなか いたる",
+    "author_birth": "1867-09-19",
+    "author_death": "1955-02-28"
+  },
+  {
+    "author": "黒部 溯郎, 百瀬 慎太郎",
+    "author_kana": "くろべ そろう, ももせ しんたろう",
+    "author_birth": "1892",
+    "author_death": "1949-03"
+  },
+  {
+    "author": "細井 吉造",
+    "author_kana": "ほそい よしぞう",
+    "author_birth": "1904",
+    "author_death": "1936-11-04"
+  },
+  {
+    "author": "平野 長蔵",
+    "author_kana": "ひらの ちょうぞう",
+    "author_birth": "1870-09-05",
+    "author_death": "1930-08-20"
+  },
+  {
+    "author": "小川 登喜男",
+    "author_kana": "おがわ ときお",
+    "author_birth": "1908",
+    "author_death": "1949"
+  },
+  {
+    "author": "石川 欣一",
+    "author_kana": "いしかわ きんいち",
+    "author_birth": "1895-03-17",
+    "author_death": "1959-08-04"
+  },
+  {
+    "author": "大島 亮吉",
+    "author_kana": "おおしま りょうきち",
+    "author_birth": "1899-09-04",
+    "author_death": "1928-03-25"
+  },
+  {
+    "author": "徳富 蘇峰",
+    "author_kana": "とくとみ そほう",
+    "author_birth": "1863-01-25",
+    "author_death": "1957-11-02"
+  },
+  {
+    "author": "高楠 順次郎",
+    "author_kana": "たかくす じゅんじろう",
+    "author_birth": "1866-06-29",
+    "author_death": "1945-06-28"
+  },
+  {
+    "author": "永井 荷風",
+    "author_kana": "ながい かふう",
+    "author_birth": "1879-12-03",
+    "author_death": "1959-04-30"
+  },
+  {
+    "author": "谷崎 潤一郎",
+    "author_kana": "たにざき じゅんいちろう",
+    "author_birth": "1886-07-24",
+    "author_death": "1965-07-30"
+  },
+  {
+    "author": "石井 柏亭",
+    "author_kana": "いしい はくてい",
+    "author_birth": "1882-03-28",
+    "author_death": "1958-12-29"
+  },
+  {
+    "author": "小林 古径",
+    "author_kana": "こばやし こけい",
+    "author_birth": "1883-02-11",
+    "author_death": "1957-04-03"
+  },
+  {
+    "author": "新島 襄",
+    "author_kana": "にいじま じょう",
+    "author_birth": "1843-02-12",
+    "author_death": "1890-01-23"
+  },
+  {
+    "author": "中江 兆民, 中江 篤介",
+    "author_kana": "なかえ ちょうみん, なかえ とくすけ",
+    "author_birth": "1847-12-08",
+    "author_death": "1901-12-13"
+  },
+  {
+    "author": "田口 卯吉",
+    "author_kana": "たぐち うきち",
+    "author_birth": "1855-06-13",
+    "author_death": "1905-04-13"
+  },
+  {
+    "author": "シュウォッブ マルセル",
+    "author_kana": "シュウォッブ マルセル",
+    "author_birth": "1867-08-25",
+    "author_death": "1905-02-26"
+  },
+  {
+    "author": "金剛 巌",
+    "author_kana": "こんごう いわお",
+    "author_birth": "1886",
+    "author_death": "1951"
+  },
+  {
+    "author": "金子 薫園",
+    "author_kana": "かねこ くんえん",
+    "author_birth": "1876-11-30",
+    "author_death": "1951-03-30"
+  },
+  {
+    "author": "山下 博章",
+    "author_kana": "やました ひろあき",
+    "author_birth": "1898",
+    "author_death": "1943-12-05"
+  },
+  {
+    "author": "長谷 健",
+    "author_kana": "はせ けん",
+    "author_birth": "1904-10-17",
+    "author_death": "1957-12-21"
+  },
+  {
+    "author": "中山 省三郎",
+    "author_kana": "なかやま しょうざぶろう",
+    "author_birth": "1904-1-28",
+    "author_death": "1947-5-30"
+  },
+  {
+    "author": "伊良子 清白",
+    "author_kana": "いらこ せいはく",
+    "author_birth": "1877-10-04",
+    "author_death": "1946-01-10"
+  },
+  {
+    "author": "キャロル ルイス",
+    "author_kana": "キャロル ルイス",
+    "author_birth": "1832-01-27",
+    "author_death": "1898-01-14"
+  },
+  {
+    "author": "橘 外男",
+    "author_kana": "たちばな そとお",
+    "author_birth": "1894-10-10",
+    "author_death": "1959-07-09"
+  },
+  {
+    "author": "和辻 哲郎",
+    "author_kana": "わつじ てつろう",
+    "author_birth": "1889-03-01",
+    "author_death": "1960-12-26"
+  },
+  {
+    "author": "原田 義人",
+    "author_kana": "はらだ よしと",
+    "author_birth": "1918-08-05",
+    "author_death": "1960-08-01"
+  },
+  {
+    "author": "マクラウド フィオナ",
+    "author_kana": "マクラウド フィオナ",
+    "author_birth": "1855-09-12",
+    "author_death": "1905-12-12"
+  },
+  {
+    "author": "関口 存男",
+    "author_kana": "せきぐち つぎお",
+    "author_birth": "1894-11-21",
+    "author_death": "1958-07-25"
+  },
+  {
+    "author": "村井 弦斎",
+    "author_kana": "むらい げんさい",
+    "author_birth": "1863-12-18",
+    "author_death": "1927-07-30"
+  },
+  {
+    "author": "北大路 魯山人",
+    "author_kana": "きたおおじ ろさんじん",
+    "author_birth": "1883-03-23",
+    "author_death": "1959-12-21"
+  },
+  {
+    "author": "河口 慧海",
+    "author_kana": "かわぐち えかい",
+    "author_birth": "1866-02-26",
+    "author_death": "1945-02-24"
+  },
+  {
+    "author": "三沢 勝衛",
+    "author_kana": "みさわ かつえ",
+    "author_birth": "1885-01-25",
+    "author_death": "1937-08-18"
+  },
+  {
+    "author": "ストレイチー リットン",
+    "author_kana": "ストレイチー リットン",
+    "author_birth": "1880-03-01",
+    "author_death": "1932-01-21"
+  },
+  {
+    "author": "松浦 武四郎",
+    "author_kana": "まつうら たけしろう",
+    "author_birth": "1818-03-12",
+    "author_death": "1888-02-10"
+  },
+  {
+    "author": "穂積 重遠",
+    "author_kana": "ほづみ しげとお",
+    "author_birth": "1883-04-11",
+    "author_death": "1951-07-29"
+  },
+  {
+    "author": "クロポトキン ピョートル・アレクセーヴィチ",
+    "author_kana": "クロポトキン ピョートル・アレクセーヴィチ",
+    "author_birth": "1842-12-09",
+    "author_death": "1921-02-08"
+  },
+  {
+    "author": "中山 太郎",
+    "author_kana": "なかやま たろう",
+    "author_birth": "1876-11-13",
+    "author_death": "1947-06-13"
+  },
+  {
+    "author": "阿部 次郎",
+    "author_kana": "あべ じろう",
+    "author_birth": "1883-08-27",
+    "author_death": "1959-10-20"
+  },
+  {
+    "author": "戸田 豊子",
+    "author_kana": "とだ とよこ",
+    "author_birth": "1904-01",
+    "author_death": "1956-04-11"
+  },
+  {
+    "author": "小寺 菊子",
+    "author_kana": "こでら きくこ",
+    "author_birth": "1883-08-07",
+    "author_death": "1956-11-26"
+  },
+  {
+    "author": "アインシュタイン アルベルト",
+    "author_kana": "アインシュタイン アルベルト",
+    "author_birth": "1879-03-14",
+    "author_death": "1955-04-18"
+  },
+  {
+    "author": "ウェルズ ハーバート・ジョージ",
+    "author_kana": "ウェルズ ハーバート・ジョージ",
+    "author_birth": "1866-09-21",
+    "author_death": "1946-08-13"
+  },
+  {
+    "author": "服部 之総",
+    "author_kana": "はっとり しそう",
+    "author_birth": "1901-09-24",
+    "author_death": "1956-03-04"
+  },
+  {
+    "author": "松本 幸四郎",
+    "author_kana": "まつもと こうしろう",
+    "author_birth": "1870-05-12",
+    "author_death": "1949-01-28"
+  },
+  {
+    "author": "宍戸 儀一",
+    "author_kana": "ししど ぎいち",
+    "author_birth": "1907-05-09",
+    "author_death": "1954-08-19"
+  },
+  {
+    "author": "佐々木 直次郎",
+    "author_kana": "ささき なおじろう",
+    "author_birth": "1901-03-27",
+    "author_death": "1943-05-24"
+  },
+  {
+    "author": "宮地 嘉六",
+    "author_kana": "みやち かろく",
+    "author_birth": "1884-06-11",
+    "author_death": "1958-04-10"
+  },
+  {
+    "author": "松崎 天民",
+    "author_kana": "まつざき てんみん",
+    "author_birth": "1878-05-18",
+    "author_death": "1934-07-22"
+  },
+  {
+    "author": "浅井 洌",
+    "author_kana": "あさい れつ",
+    "author_birth": "1849-10-10",
+    "author_death": "1938-02-27"
+  },
+  {
+    "author": "伊藤 永之介",
+    "author_kana": "いとう えいのすけ",
+    "author_birth": "1903-11-21",
+    "author_death": "1959-07-26"
+  },
+  {
+    "author": "生田 長江",
+    "author_kana": "いくた ちょうこう",
+    "author_birth": "1882-04-21",
+    "author_death": "1936-01-11"
+  },
+  {
+    "author": "登張 竹風",
+    "author_kana": "とばり ちくふう",
+    "author_birth": "1873-10-02",
+    "author_death": "1955-01-06"
+  },
+  {
+    "author": "キャロル ルイス, クラーク ヘンリ・サヴィル",
+    "author_kana": "キャロル ルイス, クラーク ヘンリ・サヴィル",
+    "author_birth": "1832-01-27",
+    "author_death": "1898-01-14"
+  },
+  {
+    "author": "神田 孝平",
+    "author_kana": "かんだ たかひら",
+    "author_birth": "1830-10-31",
+    "author_death": "1898-07-05"
+  },
+  {
+    "author": "柏原 孝章",
+    "author_kana": "かしわばら たかあき",
+    "author_birth": "1835-05-06",
+    "author_death": "1910-11-05"
+  },
+  {
+    "author": "賀川 豊彦",
+    "author_kana": "かがわ とよひこ",
+    "author_birth": "1888-07-10",
+    "author_death": "1960-04-23"
+  },
+  {
+    "author": "河野 常吉",
+    "author_kana": "こうの つねきち",
+    "author_birth": "1863-01-11",
+    "author_death": "1930-09-03"
+  },
+  {
+    "author": "今野 大力",
+    "author_kana": "こんの だいりき",
+    "author_birth": "1904-02-05",
+    "author_death": "1935-06-19"
+  },
+  {
+    "author": "松井 須磨子",
+    "author_kana": "まつい すまこ",
+    "author_birth": "1886-03-08",
+    "author_death": "1919-01-05"
+  },
+  {
+    "author": "丘 浅次郎",
+    "author_kana": "おか あさじろう",
+    "author_birth": "1868-12-31",
+    "author_death": "1944-05-02"
+  },
+  {
+    "author": "高木 貞治",
+    "author_kana": "たかぎ ていじ",
+    "author_birth": "1875-04-21",
+    "author_death": "1960-02-28"
+  },
+  {
+    "author": "ゲーテ ヨハン・ヴォルフガング・フォン",
+    "author_kana": "ゲーテ ヨハン・ヴォルフガング・フォン",
+    "author_birth": "1749-08-28",
+    "author_death": "1832-03-22"
+  },
+  {
+    "author": "アルテンベルク ペーター",
+    "author_kana": "アルテンベルク ペーター",
+    "author_birth": "1859-03-09",
+    "author_death": "1919-01-08"
+  },
+  {
+    "author": "オイレンベルク ヘルベルト",
+    "author_kana": "オイレンベルク ヘルベルト",
+    "author_birth": "1876-01-25",
+    "author_death": "1949-09-04"
+  },
+  {
+    "author": "シュミットボン ウィルヘルム",
+    "author_kana": "シュミットボン ウィルヘルム",
+    "author_birth": "1876",
+    "author_death": "1952"
+  },
+  {
+    "author": "ダビット ヤーコプ・ユリウス",
+    "author_kana": "ダビット ヤーコプ・ユリウス",
+    "author_birth": "1859",
+    "author_death": "1906"
+  },
+  {
+    "author": "大鹿 卓",
+    "author_kana": "おおしか たく",
+    "author_birth": "1898-08-25",
+    "author_death": "1959-02-01"
+  },
+  { "author": "陳 寿", "author_kana": "ちん じゅ", "author_birth": "233", "author_death": "297" },
+  {
+    "author": "風巻 景次郎",
+    "author_kana": "かざまき けいじろう",
+    "author_birth": "1902-05-22",
+    "author_death": "1960-01-04"
+  },
+  {
+    "author": "小川 未明",
+    "author_kana": "おがわ みめい",
+    "author_birth": "1882-04-07",
+    "author_death": "1961-05-11"
+  },
+  {
+    "author": "杉村 楚人冠",
+    "author_kana": "すぎむら そじんかん",
+    "author_birth": "1872-08-28",
+    "author_death": "1945-10-03"
+  },
+  {
+    "author": "中沢 臨川",
+    "author_kana": "なかざわ りんせん",
+    "author_birth": "1878-10-28",
+    "author_death": "1920-08-09"
+  },
+  {
+    "author": "三木 貞一",
+    "author_kana": "みき ていいち",
+    "author_birth": "1861",
+    "author_death": "1933"
+  },
+  { "author": "范 曄", "author_kana": "はん よう", "author_birth": "398", "author_death": "445" },
+  { "author": "魏 徴", "author_kana": "ぎ ちょう", "author_birth": "580", "author_death": "643" },
+  { "author": "沈 約", "author_kana": "しん やく", "author_birth": "441", "author_death": "513" },
+  {
+    "author": "佐藤 緑葉",
+    "author_kana": "さとう りょくよう",
+    "author_birth": "1886-07-01",
+    "author_death": "1960-09-02"
+  },
+  {
+    "author": "浅沼 稲次郎",
+    "author_kana": "あさぬま いねじろう",
+    "author_birth": "1898-12-27",
+    "author_death": "1960-10-12"
+  },
+  {
+    "author": "浅沼 稲次郎, 日本経済新聞社",
+    "author_kana": "あさぬま いねじろう, にほんけいざいしんぶんしゃ",
+    "author_birth": "1898-12-27",
+    "author_death": "1960-10-12"
+  },
+  {
+    "author": "火野 葦平",
+    "author_kana": "ひの あしへい",
+    "author_birth": "1907-01-25",
+    "author_death": "1960-01-24"
+  },
+  {
+    "author": "高田 義一郎",
+    "author_kana": "たかだ ぎいちろう",
+    "author_birth": "1886-06-28",
+    "author_death": "1945-06-14"
+  },
+  {
+    "author": "シゲリスト ヘンリー・Ｅ",
+    "author_kana": "シゲリスト ヘンリー・イー",
+    "author_birth": "1891",
+    "author_death": "1957"
+  },
+  {
+    "author": "ジンサー ハンス",
+    "author_kana": "ジンサー ハンス",
+    "author_birth": "1878-11-17",
+    "author_death": "1940-09-04"
+  },
+  {
+    "author": "三木 竹二",
+    "author_kana": "みき たけじ",
+    "author_birth": "1867-10-02",
+    "author_death": "1908-01-10"
+  },
+  {
+    "author": "吉井 勇",
+    "author_kana": "よしい いさむ",
+    "author_birth": "1886-10-08",
+    "author_death": "1960-11-19"
+  },
+  {
+    "author": "外村 繁",
+    "author_kana": "とのむら しげる",
+    "author_birth": "1902-12-23",
+    "author_death": "1961-07-28"
+  },
+  {
+    "author": "総生 寛",
+    "author_kana": "ふそう かん",
+    "author_birth": "1841",
+    "author_death": "1894-10-09"
+  },
+  {
+    "author": "若林 玵蔵",
+    "author_kana": "わかばやし かんぞう",
+    "author_birth": "1857-09-19",
+    "author_death": "1938-05-03"
+  },
+  {
+    "author": "伊庭 心猿",
+    "author_kana": "いば しんえん",
+    "author_birth": "1908",
+    "author_death": "1957-02-25"
+  },
+  {
+    "author": "米川 正夫",
+    "author_kana": "よねかわ まさお",
+    "author_birth": "1891-11-25",
+    "author_death": "1965-12-29"
+  },
+  {
+    "author": "ポター ビアトリクス",
+    "author_kana": "ポター ビアトリクス",
+    "author_birth": "1866-07-28",
+    "author_death": "1943-12-22"
+  },
+  {
+    "author": "片岡 義男",
+    "author_kana": "かたおか よしお",
+    "author_birth": "1939-03-20",
+    "author_death": null
+  },
+  {
+    "author": "清水 卯三郎",
+    "author_kana": "しみず うさぶろう",
+    "author_birth": "1829-04-07",
+    "author_death": "1910-01-20"
+  },
+  {
+    "author": "津田 仙",
+    "author_kana": "つだ せん",
+    "author_birth": "1837-08-06",
+    "author_death": "1908-04-24"
+  },
+  {
+    "author": "箕作 秋坪",
+    "author_kana": "みつくり しゅうへい",
+    "author_birth": "1826-01-15",
+    "author_death": "1886-12-03"
+  },
+  {
+    "author": "フィリモア ロバート",
+    "author_kana": "フィリモア ロバート",
+    "author_birth": "1810-11-05",
+    "author_death": "1885-02-04"
+  },
+  {
+    "author": "山本 笑月",
+    "author_kana": "やまもと しょうげつ",
+    "author_birth": "1873-10-05",
+    "author_death": "1936-05-10"
+  },
+  {
+    "author": "草野 天平",
+    "author_kana": "くさの てんぺい",
+    "author_birth": "1910-02-28",
+    "author_death": "1952-04-25"
+  },
+  {
+    "author": "武田 祐吉",
+    "author_kana": "たけだ ゆうきち",
+    "author_birth": "1886-05-05",
+    "author_death": "1958-03-29"
+  },
+  {
+    "author": "太 安万侶, 稗田 阿礼",
+    "author_kana": "おおの やすまろ, ひえだの あれ",
+    "author_birth": null,
+    "author_death": "723-08-15"
+  },
+  {
+    "author": "柳 宗悦",
+    "author_kana": "やなぎ むねよし",
+    "author_birth": "1889-03-21",
+    "author_death": "1961-05-03"
+  },
+  {
+    "author": "長与 善郎",
+    "author_kana": "ながよ よしろう",
+    "author_birth": "1888-08-06",
+    "author_death": "1961-10-29"
+  },
+  {
+    "author": "鵜月 洋",
+    "author_kana": "うづき ひろし",
+    "author_birth": "1918-11-29",
+    "author_death": "1965-06-12"
+  },
+  { "author": "司馬 遷", "author_kana": "しば せん", "author_birth": null, "author_death": null },
+  {
+    "author": "真山 青果",
+    "author_kana": "まやま せいか",
+    "author_birth": "1878-09-01",
+    "author_death": "1948-03-25"
+  },
+  {
+    "author": "島袋 源一郎",
+    "author_kana": "しまぶくろ げんいちろう",
+    "author_birth": "1885-10-05",
+    "author_death": "1942-03-27"
+  },
+  {
+    "author": "栗島 山之助",
+    "author_kana": "くりしま さんのすけ",
+    "author_birth": "1876-04-01",
+    "author_death": "1945-11-06"
+  },
+  {
+    "author": "川田 雪山, 川田 瑞穂, 楢崎 竜",
+    "author_kana": "かわだ せつざん, かわだ みずほ, ならさき りょう",
+    "author_birth": "1879-05-24",
+    "author_death": "1951-01"
+  },
+  {
+    "author": "永井 荷風, 永井 壮吉",
+    "author_kana": "ながい かふう, ながい そうきち",
+    "author_birth": "1879-12-03",
+    "author_death": "1959-04-30"
+  },
+  {
+    "author": "宇野 浩二",
+    "author_kana": "うの こうじ",
+    "author_birth": "1891-07-26",
+    "author_death": "1961-09-21"
+  },
+  {
+    "author": "岩本 素白",
+    "author_kana": "いわもと そはく",
+    "author_birth": "1883-08-17",
+    "author_death": "1961-10-02"
+  },
+  {
+    "author": "津田 左右吉",
+    "author_kana": "つだ そうきち",
+    "author_birth": "1873-10-03",
+    "author_death": "1961-12-04"
+  },
+  {
+    "author": "桂 三木助",
+    "author_kana": "かつら みきすけ",
+    "author_birth": "1902-03-28",
+    "author_death": "1961-01-16"
+  },
+  {
+    "author": "喜多村 緑郎",
+    "author_kana": "きたむら ろくろう",
+    "author_birth": "1871-09-07",
+    "author_death": "1961-05-16"
+  },
+  {
+    "author": "矢内原 忠雄",
+    "author_kana": "やないはら ただお",
+    "author_birth": "1893-01-27",
+    "author_death": "1961-12-25"
+  },
+  {
+    "author": "高山 毅",
+    "author_kana": "たかやま つよし",
+    "author_birth": "1911-08-01",
+    "author_death": "1961-10-28"
+  },
+  {
+    "author": "青野 季吉",
+    "author_kana": "あおの すえきち",
+    "author_birth": "1890-02-24",
+    "author_death": "1961-06-23"
+  },
+  {
+    "author": "犬養 健",
+    "author_kana": "いぬかい たける",
+    "author_birth": "1896-07-28",
+    "author_death": "1960-08-28"
+  },
+  {
+    "author": "シェーンハイマー ルドルフ",
+    "author_kana": "シェーンハイマー ルドルフ",
+    "author_birth": "1898-05-10",
+    "author_death": "1941-09-11"
+  },
+  {
+    "author": "本多 静六",
+    "author_kana": "ほんだ せいろく",
+    "author_birth": "1866-08-11",
+    "author_death": "1952-01-29"
+  },
+  {
+    "author": "松村 任三",
+    "author_kana": "まつむら じんぞう",
+    "author_birth": "1856-02-14",
+    "author_death": "1928-05-04"
+  },
+  {
+    "author": "丹波 敬三",
+    "author_kana": "たんば けいぞう",
+    "author_birth": "1854",
+    "author_death": "1927"
+  },
+  {
+    "author": "古川 緑波",
+    "author_kana": "ふるかわ ろっぱ",
+    "author_birth": "1903-08-13",
+    "author_death": "1961-01-16"
+  },
+  {
+    "author": "村越 三千男",
+    "author_kana": "むらこし みちお",
+    "author_birth": "1880",
+    "author_death": "1948"
+  },
+  {
+    "author": "小川 正子",
+    "author_kana": "おがわ まさこ",
+    "author_birth": "1902-03-26",
+    "author_death": "1943-04-29"
+  },
+  {
+    "author": "成島 柳北, 濹上漁史",
+    "author_kana": "なるしま りゅうほく, ぼくじょうぎょし",
+    "author_birth": "1837-03-22",
+    "author_death": "1884-11-30"
+  },
+  {
+    "author": "ギャロッド アーチボルド",
+    "author_kana": "ギャロッド アーチボルド",
+    "author_birth": "1857-11-25",
+    "author_death": "1936-03-28"
+  },
+  {
+    "author": "斎藤 秀三郎",
+    "author_kana": "さいとう ひでさぶろう",
+    "author_birth": "1866-02-16",
+    "author_death": "1929-11-09"
+  },
+  {
+    "author": "ミルトン ジョン",
+    "author_kana": "ミルトン ジョン",
+    "author_birth": "1608-12-09",
+    "author_death": "1674-11-08"
+  },
+  {
+    "author": "グルモン レミ・ドゥ",
+    "author_kana": "グルモン レミ・ドゥ",
+    "author_birth": "1858-04-04",
+    "author_death": "1915-09-27"
+  },
+  {
+    "author": "柳田 国男",
+    "author_kana": "やなぎた くにお",
+    "author_birth": "1875-07-31",
+    "author_death": "1962-08-08"
+  },
+  {
+    "author": "妹尾 アキ夫",
+    "author_kana": "せのお あきお",
+    "author_birth": "1892-03-04",
+    "author_death": "1962-04-19"
+  },
+  {
+    "author": "中谷 宇吉郎",
+    "author_kana": "なかや うきちろう",
+    "author_birth": "1900-07-04",
+    "author_death": "1962-04-11"
+  },
+  {
+    "author": "知里 真志保",
+    "author_kana": "ちり ましほ",
+    "author_birth": "1909-02-24",
+    "author_death": "1961-06-09"
+  },
+  {
+    "author": "オスラー ウイリアム",
+    "author_kana": "オスラー ウイリアム",
+    "author_birth": "1849-07-12",
+    "author_death": "1919-12-29"
+  },
+  {
+    "author": "橘 樸",
+    "author_kana": "たちばな しらき",
+    "author_birth": "1881-10-14",
+    "author_death": "1945-10-25"
+  },
+  {
+    "author": "小柳 司気太",
+    "author_kana": "おやなぎ しげた",
+    "author_birth": "1870-12-24",
+    "author_death": "1940-07-18"
+  },
+  {
+    "author": "服部 宇之吉",
+    "author_kana": "はっとり うのきち",
+    "author_birth": "1867-06-02",
+    "author_death": "1939-07-11"
+  },
+  {
+    "author": "今村 明恒",
+    "author_kana": "いまむら あきつね",
+    "author_birth": "1870-06-14",
+    "author_death": "1948-01-01"
+  },
+  {
+    "author": "成島 柳北",
+    "author_kana": "なるしま りゅうほく",
+    "author_birth": "1837-03-22",
+    "author_death": "1884-11-30"
+  },
+  {
+    "author": "室生 犀星",
+    "author_kana": "むろう さいせい",
+    "author_birth": "1889-08-01",
+    "author_death": "1962-03-26"
+  },
+  {
+    "author": "宇田川 文海",
+    "author_kana": "うだがわ ぶんかい",
+    "author_birth": "1848-03-28",
+    "author_death": "1930-01-06"
+  },
+  {
+    "author": "秋田 雨雀",
+    "author_kana": "あきた うじゃく",
+    "author_birth": "1883-01-30",
+    "author_death": "1962-05-12"
+  },
+  {
+    "author": "槙村 浩",
+    "author_kana": "まきむら こう",
+    "author_birth": "1912-06-01",
+    "author_death": "1938-09-03"
+  },
+  {
+    "author": "ジェンナー エドワード",
+    "author_kana": "ジェンナー エドワード",
+    "author_birth": "1749-05-17",
+    "author_death": "1823-01-26"
+  },
+  {
+    "author": "井上 準之助",
+    "author_kana": "いのうえ じゅんのすけ",
+    "author_birth": "1869-05-06",
+    "author_death": "1932-02-09"
+  },
+  {
+    "author": "李 箱",
+    "author_kana": "い さん",
+    "author_birth": "1910-09-23",
+    "author_death": "1937-04-17"
+  },
+  {
+    "author": "森 林太郎",
+    "author_kana": "もり りんたろう",
+    "author_birth": "1862-02-17",
+    "author_death": "1922-07-09"
+  },
+  {
+    "author": "津田 左右吉, 津田 黄昏",
+    "author_kana": "つだ そうきち, つだ たそがれ",
+    "author_birth": "1873-10-03",
+    "author_death": "1961-12-04"
+  },
+  {
+    "author": "小竹 主, 津田 左右吉",
+    "author_kana": "こたけ, つだ そうきち",
+    "author_birth": "1873-10-03",
+    "author_death": "1961-12-04"
+  },
+  {
+    "author": "中江 兆民",
+    "author_kana": "なかえ ちょうみん",
+    "author_birth": "1847-12-08",
+    "author_death": "1901-12-13"
+  },
+  {
+    "author": "スノウ ジョン",
+    "author_kana": "スノウ ジョン",
+    "author_birth": "1813-03-15",
+    "author_death": "1858-06-16"
+  },
+  {
+    "author": "田辺 元",
+    "author_kana": "たなべ はじめ",
+    "author_birth": "1885-02-03",
+    "author_death": "1962-04-29"
+  },
+  {
+    "author": "三好 達治",
+    "author_kana": "みよし たつじ",
+    "author_birth": "1900-08-23",
+    "author_death": "1964-04-05"
+  },
+  {
+    "author": "石川 千代松",
+    "author_kana": "いしかわ ちよまつ",
+    "author_birth": "1860-01-08",
+    "author_death": "1935-01-17"
+  },
+  {
+    "author": "李 光洙",
+    "author_kana": "い ぐわんす",
+    "author_birth": "1892-03-05",
+    "author_death": "1950-10-25"
+  },
+  {
+    "author": "金 鍾漢",
+    "author_kana": "きむ じょんはん",
+    "author_birth": "1914-02-28",
+    "author_death": "1944-09-27"
+  },
+  {
+    "author": "佐々木 喜善",
+    "author_kana": "ささき きよし",
+    "author_birth": "1886-10-05",
+    "author_death": "1933-09-29"
+  },
+  {
+    "author": "桜間 中庸",
+    "author_kana": "さくらま ちゅうよう",
+    "author_birth": "1911-07-06",
+    "author_death": "1934-04-18"
+  },
+  {
+    "author": "世礼 国男",
+    "author_kana": "せれい くにお",
+    "author_birth": "1897-07-20",
+    "author_death": "1950-01-23"
+  },
+  {
+    "author": "末吉 安持",
+    "author_kana": "すえよし あんじ",
+    "author_birth": "1887",
+    "author_death": "1907"
+  },
+  {
+    "author": "石原 純",
+    "author_kana": "いしわら あつし",
+    "author_birth": "1881-1-15",
+    "author_death": "1947-1-19"
+  },
+  {
+    "author": "小倉 金之助",
+    "author_kana": "おぐら きんのすけ",
+    "author_birth": "1885-03-14",
+    "author_death": "1962-10-21"
+  },
+  {
+    "author": "河野 広道, 知里 真志保",
+    "author_kana": "こうの ひろみち, ちり ましほ",
+    "author_birth": "1905-01-17",
+    "author_death": "1963-07-12"
+  },
+  {
+    "author": "田辺 孝次",
+    "author_kana": "たなべ たかつぐ",
+    "author_birth": "1890",
+    "author_death": "1945"
+  },
+  {
+    "author": "徳永 保之助",
+    "author_kana": "とくなが やすのすけ",
+    "author_birth": "1889-08-10",
+    "author_death": "1925-12-13"
+  },
+  {
+    "author": "中山 啓",
+    "author_kana": "なかやま けい",
+    "author_birth": "1895-04-26",
+    "author_death": "1957-10-02"
+  },
+  {
+    "author": "加藤 一夫",
+    "author_kana": "かとう かずお",
+    "author_birth": "1887-02-28",
+    "author_death": "1951-01-25"
+  },
+  {
+    "author": "江森 盛弥",
+    "author_kana": "えもり もりや",
+    "author_birth": "1903-08-18",
+    "author_death": "1960-04-05"
+  },
+  {
+    "author": "後藤 謙太郎",
+    "author_kana": "ごとう けんたろう",
+    "author_birth": "1895",
+    "author_death": "1925"
+  },
+  {
+    "author": "佐藤 武夫",
+    "author_kana": "さとう たけお",
+    "author_birth": "1906",
+    "author_death": "1929"
+  },
+  {
+    "author": "下川 儀太郎",
+    "author_kana": "しもかわ ぎたろう",
+    "author_birth": "1904",
+    "author_death": "1961"
+  },
+  {
+    "author": "西村 陽吉",
+    "author_kana": "にしむら ようきち",
+    "author_birth": "1892-04-09",
+    "author_death": "1959-03-22"
+  },
+  {
+    "author": "根岸 正吉",
+    "author_kana": "ねぎし しょうきち",
+    "author_birth": "1892",
+    "author_death": "1922"
+  },
+  {
+    "author": "野村 吉哉",
+    "author_kana": "のむら よしや",
+    "author_birth": "1901-11-15",
+    "author_death": "1940-08-29"
+  },
+  {
+    "author": "波立 一",
+    "author_kana": "はりゅう はじめ",
+    "author_birth": "1908",
+    "author_death": "1937"
+  },
+  {
+    "author": "松本 淳三",
+    "author_kana": "まつもと じゅんぞう",
+    "author_birth": "1895-01-01",
+    "author_death": "1950-10-09"
+  },
+  {
+    "author": "百田 宗治",
+    "author_kana": "ももた そうじ",
+    "author_birth": "1893-01-25",
+    "author_death": "1955-12-12"
+  },
+  {
+    "author": "陀田 勘助",
+    "author_kana": "だだ かんすけ",
+    "author_birth": "1902-01-15",
+    "author_death": "1931-08-22"
+  },
+  {
+    "author": "猪狩 満直",
+    "author_kana": "いかり みつなお",
+    "author_birth": "1898-05-09",
+    "author_death": "1938-04-17"
+  },
+  {
+    "author": "今村 恒夫",
+    "author_kana": "いまむら つねお",
+    "author_birth": "1908-01-15",
+    "author_death": "1936-12-09"
+  },
+  {
+    "author": "上田 進",
+    "author_kana": "うえだ すすむ",
+    "author_birth": "1907-10-24",
+    "author_death": "1947-02-24"
+  },
+  {
+    "author": "榎南 謙一",
+    "author_kana": "えなみ けんいち",
+    "author_birth": "1913",
+    "author_death": "1945"
+  },
+  {
+    "author": "大石 喜幸",
+    "author_kana": "おおいし よしゆき",
+    "author_birth": "1910",
+    "author_death": "1941"
+  },
+  {
+    "author": "大江 鉄麿",
+    "author_kana": "おおえ てつまろ",
+    "author_birth": "1915",
+    "author_death": "1944"
+  },
+  {
+    "author": "国見 善弘",
+    "author_kana": "くにみ よしひろ",
+    "author_birth": "1916",
+    "author_death": "1937"
+  },
+  {
+    "author": "田村 乙彦",
+    "author_kana": "たむら おとひこ",
+    "author_birth": "1911-12-10",
+    "author_death": "1945-04-15"
+  },
+  {
+    "author": "丹沢 明",
+    "author_kana": "たんざわ あきら",
+    "author_birth": "1904",
+    "author_death": "1944"
+  },
+  {
+    "author": "中島 葉那子",
+    "author_kana": "なかじま はなこ",
+    "author_birth": "1909-12-20",
+    "author_death": "1939-04-20"
+  },
+  {
+    "author": "平林 彪吾",
+    "author_kana": "ひらばやし ひょうご",
+    "author_birth": "1903-09-01",
+    "author_death": "1939-04-28"
+  },
+  {
+    "author": "広海 大治",
+    "author_kana": "ひろうみ だいじ",
+    "author_birth": "1910",
+    "author_death": "1960-08-25"
+  },
+  {
+    "author": "森 竹夫",
+    "author_kana": "もり たけお",
+    "author_birth": "1905",
+    "author_death": "1946"
+  },
+  {
+    "author": "藪田 忠夫",
+    "author_kana": "やぶた ただお",
+    "author_birth": "1912",
+    "author_death": "1943-01"
+  },
+  {
+    "author": "伊藤 信二",
+    "author_kana": "いとう しんじ",
+    "author_birth": "1907-10-30",
+    "author_death": "1932-08-14"
+  },
+  {
+    "author": "木村 好子",
+    "author_kana": "きむら よしこ",
+    "author_birth": "1904-01-10",
+    "author_death": "1959-10-24"
+  },
+  {
+    "author": "倉橋 潤一郎",
+    "author_kana": "くらはし じゅんいちろう",
+    "author_birth": "1914",
+    "author_death": "1945-10"
+  },
+  {
+    "author": "神吉 三郎",
+    "author_kana": "かんき さぶろう",
+    "author_birth": "1899-2-17",
+    "author_death": "1952-11-9"
+  },
+  {
+    "author": "伊波 普猷",
+    "author_kana": "いは ふゆう",
+    "author_birth": "1876-03-15",
+    "author_death": "1947-08-13"
+  },
+  {
+    "author": "土谷 麓",
+    "author_kana": "つちや ふもと",
+    "author_birth": "1914-03-30",
+    "author_death": "1962-09-03"
+  },
+  {
+    "author": "ソロー ヘンリー・デイビッド",
+    "author_kana": "ソロー ヘンリー・デイビッド",
+    "author_birth": "1817-07-12",
+    "author_death": "1862-05-06"
+  },
+  {
+    "author": "森川 義信",
+    "author_kana": "もりかわ よしのぶ",
+    "author_birth": "1918-10-11",
+    "author_death": "1942-08-13"
+  },
+  {
+    "author": "李 孝石",
+    "author_kana": "い ひょそく",
+    "author_birth": "1907-02-23",
+    "author_death": "1942-05-25"
+  },
+  {
+    "author": "濤音",
+    "author_kana": "とうおん",
+    "author_birth": "1888-05-28",
+    "author_death": "1953-11-23"
+  },
+  {
+    "author": "長沢 佑",
+    "author_kana": "ながさわ たすく",
+    "author_birth": "1910-02-17",
+    "author_death": "1933-02-17"
+  },
+  {
+    "author": "矢田部 達郎",
+    "author_kana": "やたべ たつろう",
+    "author_birth": "1893-10-24",
+    "author_death": "1958-03-24"
+  },
+  {
+    "author": "アークム フレデリック",
+    "author_kana": "アークム フレデリック",
+    "author_birth": "1769-03-29",
+    "author_death": "1838-06-28"
+  },
+  {
+    "author": "渡久山 水鳴",
+    "author_kana": "とくやま すいめい",
+    "author_birth": "1884",
+    "author_death": "1911"
+  },
+  {
+    "author": "三浦 環",
+    "author_kana": "みうら たまき",
+    "author_birth": "1884-02-22",
+    "author_death": "1946-05-26"
+  },
+  {
+    "author": "中島 徳蔵",
+    "author_kana": "なかじま とくぞう",
+    "author_birth": "1864-03-09",
+    "author_death": "1940-05-31"
+  },
+  {
+    "author": "増田 惟茂",
+    "author_kana": "ますだ これしげ",
+    "author_birth": "1883-12-29",
+    "author_death": "1933-08-06"
+  },
+  {
+    "author": "片山 敏彦",
+    "author_kana": "かたやま としひこ",
+    "author_birth": "1898-11-05",
+    "author_death": "1961-10-11"
+  },
+  {
+    "author": "山口 芳光",
+    "author_kana": "やまぐち よしみつ",
+    "author_birth": null,
+    "author_death": "1930"
+  },
+  {
+    "author": "上里 春生",
+    "author_kana": "うえざと はるお",
+    "author_birth": "1897",
+    "author_death": "1939-06-02"
+  },
+  {
+    "author": "泉 芳朗",
+    "author_kana": "いずみ ほうろう",
+    "author_birth": "1905-03-18",
+    "author_death": "1959-04-09"
+  },
+  {
+    "author": "仲村 渠",
+    "author_kana": "なかむら かれ",
+    "author_birth": "1905-10-03",
+    "author_death": "1951-12-04"
+  },
+  {
+    "author": "西東 三鬼",
+    "author_kana": "さいとう さんき",
+    "author_birth": "1900-05-15",
+    "author_death": "1962-04-01"
+  },
+  {
+    "author": "大倉 燁子",
+    "author_kana": "おおくら てるこ",
+    "author_birth": "1886-04-12",
+    "author_death": "1960-07-18"
+  },
+  {
+    "author": "村上 浪六",
+    "author_kana": "むらかみ なみろく",
+    "author_birth": "1865-11-01",
+    "author_death": "1944-12-01"
+  },
+  {
+    "author": "野村 胡堂",
+    "author_kana": "のむら こどう",
+    "author_birth": "1882-10-15",
+    "author_death": "1963-04-14"
+  },
+  {
+    "author": "鶴 彬",
+    "author_kana": "つる あきら",
+    "author_birth": "1909-01-01",
+    "author_death": "1938-09-14"
+  },
+  {
+    "author": "竹内 浩三",
+    "author_kana": "たけうち こうぞう",
+    "author_birth": "1921-05-12",
+    "author_death": "1945-04-09"
+  },
+  {
+    "author": "正木 不如丘",
+    "author_kana": "まさき ふじょきゅう",
+    "author_birth": "1887-02-26",
+    "author_death": "1962-07-30"
+  },
+  {
+    "author": "江戸川 乱歩, 野村 胡堂",
+    "author_kana": "えどがわ らんぽ, のむら こどう",
+    "author_birth": "1894-10-21",
+    "author_death": "1965-07-28"
+  },
+  {
+    "author": "井上 貞治郎, 日本経済新聞社",
+    "author_kana": "いのうえ ていじろう, にほんけいざいしんぶんしゃ",
+    "author_birth": "1881-08-16",
+    "author_death": "1963-11-10"
+  },
+  {
+    "author": "グリーナウェイ ケイト",
+    "author_kana": "グリーナウェイ ケイト",
+    "author_birth": "1846-03-17",
+    "author_death": "1901-11-06"
+  },
+  {
+    "author": "ブリュノフ ジャン・ド",
+    "author_kana": "ブリュノフ ジャン・ド",
+    "author_birth": "1899-12-09",
+    "author_death": "1937-10-16"
+  },
+  {
+    "author": "リヴィングストン・ジュニア ヘンリー",
+    "author_kana": "リヴィングストン・ジュニア ヘンリー",
+    "author_birth": "1748-10-13",
+    "author_death": "1828-02-29"
+  },
+  {
+    "author": "ベートーヴェン ルートヴィヒ・ヴァン, ロラン ロマン",
+    "author_kana": "ベートーヴェン ルートヴィヒ・ヴァン, ロラン ロマン",
+    "author_birth": "1770-12",
+    "author_death": "1827-03-26"
+  },
+  {
+    "author": "ヴェーゲラー フランツ・ゲルハルト, ブロイニング エレオノーレ・フォン, ベートーヴェン ルートヴィヒ・ヴァン, ロラン ロマン",
+    "author_kana": "ヴェーゲラー フランツ・ゲルハルト, ブロイニング エレオノーレ・フォン, ベートーヴェン ルートヴィヒ・ヴァン, ロラン ロマン",
+    "author_birth": "1765-08-02",
+    "author_death": "1848-05-07"
+  },
+  {
+    "author": "ベートーヴェン ルートヴィヒ・ヴァン",
+    "author_kana": "ベートーヴェン ルートヴィヒ・ヴァン",
+    "author_birth": "1770-12",
+    "author_death": "1827-03-26"
+  },
+  {
+    "author": "上田 万年",
+    "author_kana": "うえだ かずとし",
+    "author_birth": "1867-02-11",
+    "author_death": "1937-10-26"
+  },
+  {
+    "author": "芳賀 矢一",
+    "author_kana": "はが やいち",
+    "author_birth": "1867-06-16",
+    "author_death": "1927-02-06"
+  },
+  {
+    "author": "高橋 竜雄",
+    "author_kana": "たかはし たつお",
+    "author_birth": "1868",
+    "author_death": "1946"
+  },
+  {
+    "author": "佐佐木 信綱",
+    "author_kana": "ささき のぶつな",
+    "author_birth": "1872-07-08",
+    "author_death": "1963-12-02"
+  },
+  {
+    "author": "久保田 万太郎",
+    "author_kana": "くぼた まんたろう",
+    "author_birth": "1889-11-07",
+    "author_death": "1963-05-06"
+  },
+  {
+    "author": "山之口 貘",
+    "author_kana": "やまのくち ばく",
+    "author_birth": "1903-09-11",
+    "author_death": "1963-07-19"
+  },
+  {
+    "author": "野村 あらえびす, 野村 胡堂",
+    "author_kana": "のむら あらえびす, のむら こどう",
+    "author_birth": "1882-10-15",
+    "author_death": "1963-04-14"
+  },
+  {
+    "author": "飯田 蛇笏",
+    "author_kana": "いいだ だこつ",
+    "author_birth": "1885-04-26",
+    "author_death": "1962-10-03"
+  },
+  {
+    "author": "吉本 明光",
+    "author_kana": "よしもと あきみつ",
+    "author_birth": "1899",
+    "author_death": "1960"
+  },
+  {
+    "author": "下村 海南",
+    "author_kana": "しもむら かいなん",
+    "author_birth": "1875-05-11",
+    "author_death": "1957-12-09"
+  },
+  {
+    "author": "高野 六郎",
+    "author_kana": "たかの ろくろう",
+    "author_birth": "1884-09-03",
+    "author_death": "1960-12-15"
+  },
+  {
+    "author": "光田 健輔",
+    "author_kana": "みつだ けんすけ",
+    "author_birth": "1876-01-12",
+    "author_death": "1964-05-14"
+  },
+  {
+    "author": "ヴェルハーレン エミール",
+    "author_kana": "ヴェルハーレン エミール",
+    "author_birth": "1855-03-21",
+    "author_death": "1916-11-27"
+  },
+  {
+    "author": "ネグリ アダ",
+    "author_kana": "ネグリ アダ",
+    "author_birth": "1870-02-03",
+    "author_death": "1945-01-11"
+  },
+  {
+    "author": "クローデル ポール",
+    "author_kana": "クローデル ポール",
+    "author_birth": "1868-08-06",
+    "author_death": "1955-02-23"
+  },
+  {
+    "author": "マラルメ ステファヌ",
+    "author_kana": "マラルメ ステファヌ",
+    "author_birth": "1842-03-18",
+    "author_death": "1898-09-09"
+  },
+  {
+    "author": "ベルトラン ルイ",
+    "author_kana": "ベルトラン ルイ",
+    "author_birth": "1807-04-20",
+    "author_death": "1841-04-29"
+  },
+  {
+    "author": "プラーテン アウグスト",
+    "author_kana": "プラーテン アウグスト",
+    "author_birth": "1796-10-24",
+    "author_death": "1835-12-05"
+  },
+  {
+    "author": "サッフォ",
+    "author_kana": "サッフォ",
+    "author_birth": "紀元前7世紀末",
+    "author_death": "紀元前6世紀初"
+  },
+  {
+    "author": "芝 不器男",
+    "author_kana": "しば ふきお",
+    "author_birth": "1903-04-18",
+    "author_death": "1930-02-24"
+  },
+  {
+    "author": "富沢 赤黄男",
+    "author_kana": "とみざわ かきお",
+    "author_birth": "1902-07-14",
+    "author_death": "1962-03-07"
+  },
+  {
+    "author": "アラルコン ペドロ・アントニオ",
+    "author_kana": "アラルコン ペドロ・アントニオ",
+    "author_birth": "1833-01-10",
+    "author_death": "1891-07-19"
+  },
+  {
+    "author": "ミュッセ アルフレッド",
+    "author_kana": "ミュッセ アルフレッド",
+    "author_birth": "1810-12-11",
+    "author_death": "1857-05-02"
+  },
+  {
+    "author": "前田 普羅",
+    "author_kana": "まえだ ふら",
+    "author_birth": "1884-04-18",
+    "author_death": "1954-08-08"
+  },
+  {
+    "author": "松本 たかし",
+    "author_kana": "まつもと たかし",
+    "author_birth": "1906-01-05",
+    "author_death": "1956-05-11"
+  },
+  {
+    "author": "高木 敏雄",
+    "author_kana": "たかぎ としお",
+    "author_birth": "1876",
+    "author_death": "1922"
+  },
+  {
+    "author": "ハッサル アーサー・ヒル",
+    "author_kana": "ハッサル アーサー・ヒル",
+    "author_birth": "1917-12-13",
+    "author_death": "1894-04-09"
+  },
+  {
+    "author": "ダンセイニ ロード",
+    "author_kana": "ダンセイニ ロード",
+    "author_birth": "1878-07-24",
+    "author_death": "1957-10-25"
+  },
+  {
+    "author": "ハバード エルバート",
+    "author_kana": "ハバード エルバート",
+    "author_birth": "1856-06-19",
+    "author_death": "1915-05-07"
+  },
+  {
+    "author": "野村 あらえびす, 野村 長一, 野村 胡堂",
+    "author_kana": "のむら あらえびす, のむら おさかず, のむら こどう",
+    "author_birth": "1882-10-15",
+    "author_death": "1963-04-14"
+  },
+  {
+    "author": "オルファース ジビュレ・フォン",
+    "author_kana": "オルファース ジビュレ・フォン",
+    "author_birth": "1881-05-08",
+    "author_death": "1916-01-29"
+  },
+  {
+    "author": "ベスコフ エルサ",
+    "author_kana": "ベスコフ エルサ",
+    "author_birth": "1874-02-11",
+    "author_death": "1953-06-30"
+  },
+  {
+    "author": "神田 左京",
+    "author_kana": "かんだ さきょう",
+    "author_birth": "1874-07-07",
+    "author_death": "1939-07-07"
+  },
+  {
+    "author": "ボードレール シャルル・ピエール",
+    "author_kana": "ボードレール シャルル・ピエール",
+    "author_birth": "1821-04-09",
+    "author_death": "1867-08-31"
+  },
+  {
+    "author": "フリーマン リチャード・オースティン",
+    "author_kana": "フリーマン リチャード・オースティン",
+    "author_birth": "1862-04-11",
+    "author_death": "1943-09-28"
+  },
+  {
+    "author": "富永 太郎",
+    "author_kana": "とみなが たろう",
+    "author_birth": "1901-05-04",
+    "author_death": "1925-11-12"
+  },
+  {
+    "author": "ベルトラン アロイジウス",
+    "author_kana": "ベルトラン アロイジウス",
+    "author_birth": "1807-04-20",
+    "author_death": "1841-04-29"
+  },
+  {
+    "author": "野口 英司, 宮川 典子",
+    "author_kana": "のぐち えいじ, みやかわ ふみこ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "吉田 松陰",
+    "author_kana": "よしだ しょういん",
+    "author_birth": "1830-09-20",
+    "author_death": "1859-11-21"
+  },
+  {
+    "author": "石原 忍",
+    "author_kana": "いしはら しのぶ",
+    "author_birth": "1879-09-25",
+    "author_death": "1963-01-03"
+  },
+  {
+    "author": "山川 健次郎",
+    "author_kana": "やまかわ けんじろう",
+    "author_birth": "1854-09-09",
+    "author_death": "1931-06-26"
+  },
+  {
+    "author": "長谷川 伸",
+    "author_kana": "はせがわ しん",
+    "author_birth": "1884-03-15",
+    "author_death": "1963-06-11"
+  },
+  {
+    "author": "武者 金吉",
+    "author_kana": "むしゃ きんきち",
+    "author_birth": "1891-02-22",
+    "author_death": "1962-11-07"
+  },
+  {
+    "author": "佐々木 邦",
+    "author_kana": "ささき くに",
+    "author_birth": "1883-05-04",
+    "author_death": "1964-09-22"
+  },
+  {
+    "author": "北尾 亀男",
+    "author_kana": "きたお かめお",
+    "author_birth": "1892-08-25",
+    "author_death": "1958-02-08"
+  },
+  {
+    "author": "橋本 多佳子",
+    "author_kana": "はしもと たかこ",
+    "author_birth": "1898-01-05",
+    "author_death": "1963-05-29"
+  },
+  {
+    "author": "尾崎 士郎",
+    "author_kana": "おざき しろう",
+    "author_birth": "1898-02-05",
+    "author_death": "1964-02-19"
+  },
+  {
+    "author": "コールデコット ランドルフ",
+    "author_kana": "コールデコット ランドルフ",
+    "author_birth": "1846-03-22",
+    "author_death": "1886-02-12"
+  },
+  {
+    "author": "マン パウル・トーマス",
+    "author_kana": "マン パウル・トーマス",
+    "author_birth": "1875-06-06",
+    "author_death": "1955-08-12"
+  },
+  {
+    "author": "小津 安二郎",
+    "author_kana": "おづ やすじろう",
+    "author_birth": "1903-12-12",
+    "author_death": "1963-12-12"
+  },
+  {
+    "author": "内山 完造",
+    "author_kana": "うちやま かんぞう",
+    "author_birth": "1885-01-11",
+    "author_death": "1959-09-20"
+  },
+  {
+    "author": "佐藤 春夫",
+    "author_kana": "さとう はるお",
+    "author_birth": "1892-04-09",
+    "author_death": "1964-05-06"
+  },
+  {
+    "author": "モース エドワード・シルヴェスター",
+    "author_kana": "モース エドワード・シルヴェスター",
+    "author_birth": "1838-06-18",
+    "author_death": "1925-12-20"
+  },
+  {
+    "author": "田辺 竜子",
+    "author_kana": "たなべ たつこ",
+    "author_birth": "1869-02-04",
+    "author_death": "1943-07-18"
+  },
+  {
+    "author": "サキ",
+    "author_kana": "サキ",
+    "author_birth": "1870-12-18",
+    "author_death": "1916-11-14"
+  },
+  {
+    "author": "高祖 保",
+    "author_kana": "こうそ たもつ",
+    "author_birth": "1910-05-04",
+    "author_death": "1945-01-20"
+  },
+  {
+    "author": "平野 零児",
+    "author_kana": "ひらの れいじ",
+    "author_birth": "1897-02-06",
+    "author_death": "1961-08-26"
+  },
+  {
+    "author": "蜷川 新",
+    "author_kana": "にながわ あらた",
+    "author_birth": "1873-01-14",
+    "author_death": "1959-08-17"
+  },
+  {
+    "author": "山崎 富栄",
+    "author_kana": "やまざき とみえ",
+    "author_birth": "1919-09-24",
+    "author_death": "1948-06-13"
+  },
+  {
+    "author": "シートン アーネスト・トンプソン",
+    "author_kana": "シートン アーネスト・トンプソン",
+    "author_birth": "1860-08-14",
+    "author_death": "1946-10-23"
+  },
+  {
+    "author": "金田 鬼一",
+    "author_kana": "かねだ きいち",
+    "author_birth": "1886-12-10",
+    "author_death": "1963-11-01"
+  },
+  {
+    "author": "辰野 九紫",
+    "author_kana": "たつの きゅうし",
+    "author_birth": "1892-07-16",
+    "author_death": "1962-08-06"
+  },
+  {
+    "author": "額田 六福",
+    "author_kana": "ぬかだ ろっぷく",
+    "author_birth": "1890-10-02",
+    "author_death": "1948-12-21"
+  },
+  {
+    "author": "エリオット ジェイムズ・サンヅ",
+    "author_kana": "エリオット ジェイムズ・サンヅ",
+    "author_birth": "1880-05-28",
+    "author_death": "1959-10-26"
+  },
+  {
+    "author": "ノイバーガー マクス",
+    "author_kana": "ノイバーガー マクス",
+    "author_birth": "1868-12-08",
+    "author_death": "1955-05-15"
+  },
+  {
+    "author": "石川 善助",
+    "author_kana": "いしかわ ぜんすけ",
+    "author_birth": "1901-05-16",
+    "author_death": "1932-06-27"
+  },
+  {
+    "author": "十返 肇",
+    "author_kana": "とがえり はじめ",
+    "author_birth": "1914-03-25",
+    "author_death": "1963-08-28"
+  },
+  {
+    "author": "青空文庫",
+    "author_kana": "あおぞらぶんこ",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "安藤 盛",
+    "author_kana": "あんどう さかん",
+    "author_birth": "1893-08-18",
+    "author_death": "1938-06-21"
+  },
+  {
+    "author": "幣原 喜重郎",
+    "author_kana": "しではら きじゅうろう",
+    "author_birth": "1872-09-13",
+    "author_death": "1951-03-10"
+  },
+  {
+    "author": "辰野 隆",
+    "author_kana": "たつの ゆたか",
+    "author_birth": "1888-03-01",
+    "author_death": "1964-02-28"
+  },
+  {
+    "author": "河本 大作",
+    "author_kana": "こうもと だいさく",
+    "author_birth": "1883-01-24",
+    "author_death": "1955-08-25"
+  },
+  {
+    "author": "梅崎 春生",
+    "author_kana": "うめざき はるお",
+    "author_birth": "1915-02-15",
+    "author_death": "1965-07-19"
+  },
+  {
+    "author": "中 勘助",
+    "author_kana": "なか かんすけ",
+    "author_birth": "1885-05-22",
+    "author_death": "1965-05-03"
+  },
+  {
+    "author": "江戸川 乱歩",
+    "author_kana": "えどがわ らんぽ",
+    "author_birth": "1894-10-21",
+    "author_death": "1965-07-28"
+  },
+  {
+    "author": "ソログープ フョードル",
+    "author_kana": "ソログープ フョードル",
+    "author_birth": "1863-02-17",
+    "author_death": "1927-12-07"
+  },
+  {
+    "author": "小杉 放庵",
+    "author_kana": "こすぎ ほうあん",
+    "author_birth": "1881-12-30",
+    "author_death": "1964-04-16"
+  },
+  {
+    "author": "三枝 博音",
+    "author_kana": "さいぐさ ひろと",
+    "author_birth": "1892-05-20",
+    "author_death": "1963-11-09"
+  },
+  {
+    "author": "三遊亭 金馬",
+    "author_kana": "さんゆうてい きんば",
+    "author_birth": "1894-10-25",
+    "author_death": "1964-11-08"
+  },
+  {
+    "author": "高群 逸枝",
+    "author_kana": "たかむれ いつえ",
+    "author_birth": "1894-01-18",
+    "author_death": "1964-06-07"
+  },
+  {
+    "author": "斉藤 弘吉",
+    "author_kana": "さいとう ひろきち",
+    "author_birth": "1899",
+    "author_death": "1964-09-19"
+  },
+  {
+    "author": "ラヴクラフト ハワード・フィリップス",
+    "author_kana": "ラヴクラフト ハワード・フィリップス",
+    "author_birth": "1890-08-20",
+    "author_death": "1937-03-15"
+  },
+  {
+    "author": "人見 絹枝",
+    "author_kana": "ひとみ きぬえ",
+    "author_birth": "1907-01-01",
+    "author_death": "1931-08-02"
+  },
+  {
+    "author": "石塚 浩之",
+    "author_kana": "いしづか ひろゆき",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "前田 夕暮",
+    "author_kana": "まえだ ゆうぐれ",
+    "author_birth": "1883-07-27",
+    "author_death": "1951-04-20"
+  },
+  {
+    "author": "浅野 正恭",
+    "author_kana": "あさの まさやす",
+    "author_birth": "1868-01-22",
+    "author_death": "1954-10-20"
+  },
+  {
+    "author": "蔵原 伸二郎",
+    "author_kana": "くらはら しんじろう",
+    "author_birth": "1899-09-04",
+    "author_death": "1965-03-16"
+  },
+  {
+    "author": "中村 地平",
+    "author_kana": "なかむら ちへい",
+    "author_birth": "1908-02-07",
+    "author_death": "1963-02-26"
+  },
+  {
+    "author": "高見 順",
+    "author_kana": "たかみ じゅん",
+    "author_birth": "1907-01-30",
+    "author_death": "1965-08-17"
+  },
+  {
+    "author": "大坪 砂男",
+    "author_kana": "おおつぼ すなお",
+    "author_birth": "1904-02-01",
+    "author_death": "1965-01-12"
+  },
+  {
+    "author": "菊池 幽芳",
+    "author_kana": "きくち ゆうほう",
+    "author_birth": "1870-10-27",
+    "author_death": "1947-07-21"
+  },
+  {
+    "author": "森下 雨村",
+    "author_kana": "もりした うそん",
+    "author_birth": "1890-02-23",
+    "author_death": "1965-05-16"
+  },
+  {
+    "author": "柴田 宵曲",
+    "author_kana": "しばた しょうきょく",
+    "author_birth": "1897-09-02",
+    "author_death": "1966-08-23"
+  },
+  {
+    "author": "中村 憲吉",
+    "author_kana": "なかむら けんきち",
+    "author_birth": "1889-01-25",
+    "author_death": "1934-05-05"
+  },
+  {
+    "author": "石川 成章",
+    "author_kana": "いしかわ せいしょう",
+    "author_birth": "1872-07-26",
+    "author_death": "1945-09-06"
+  },
+  {
+    "author": "カーペンター ケニス・Ｊ",
+    "author_kana": "カーペンター ケニス・ジェー",
+    "author_birth": "1923",
+    "author_death": null
+  },
+  {
+    "author": "アレン ジェームズ",
+    "author_kana": "アレン ジェームズ",
+    "author_birth": "1864-11-28",
+    "author_death": "1912-01-24"
+  },
+  {
+    "author": "小泉 信三",
+    "author_kana": "こいずみ しんぞう",
+    "author_birth": "1888-05-04",
+    "author_death": "1966-05-11"
+  },
+  {
+    "author": "ヘミングウェイ アーネスト・ミラー",
+    "author_kana": "ヘミングウェイ アーネスト・ミラー",
+    "author_birth": "1899-07-21",
+    "author_death": "1961-07-02"
+  },
+  {
+    "author": "バルザック オノレ・ド",
+    "author_kana": "バルザック オノレ・ド",
+    "author_birth": "1799-05-20",
+    "author_death": "1850-08--18"
+  },
+  {
+    "author": "山本 和久三",
+    "author_kana": "やまもと わくぞう",
+    "author_birth": "1893",
+    "author_death": "1932"
+  },
+  {
+    "author": "レ・ファニュ ジョゼフ・シェリダン",
+    "author_kana": "レ・ファニュ ジョゼフ・シェリダン",
+    "author_birth": "1814-08-28",
+    "author_death": "1873-02-07"
+  },
+  {
+    "author": "河井 酔茗",
+    "author_kana": "かわい すいめい",
+    "author_birth": "1874-05-07",
+    "author_death": "1965-01-17"
+  },
+  {
+    "author": "安西 冬衛",
+    "author_kana": "あんざい ふゆえ",
+    "author_birth": "1898-03-09",
+    "author_death": "1965-08-24"
+  },
+  {
+    "author": "森田 正馬",
+    "author_kana": "もりた まさたけ",
+    "author_birth": "1874-01-18",
+    "author_death": "1938-04-12"
+  },
+  {
+    "author": "山本 周五郎",
+    "author_kana": "やまもと しゅうごろう",
+    "author_birth": "1903-06-22",
+    "author_death": "1967-02-14"
+  },
+  {
+    "author": "亀井 勝一郎",
+    "author_kana": "かめい かついちろう",
+    "author_birth": "1907-02-06",
+    "author_death": "1966-11-14"
+  },
+  {
+    "author": "楠田 匡介",
+    "author_kana": "くすだ きょうすけ",
+    "author_birth": "1903",
+    "author_death": "1966"
+  },
+  {
+    "author": "大下 宇陀児",
+    "author_kana": "おおした うだる",
+    "author_birth": "1896-11-15",
+    "author_death": "1966-08-11"
+  },
+  {
+    "author": "壺井 栄",
+    "author_kana": "つぼい さかえ",
+    "author_birth": "1899-08-05",
+    "author_death": "1967-06-23"
+  },
+  {
+    "author": "塚原 健二郎",
+    "author_kana": "つかはら けんじろう",
+    "author_birth": "1895-02-16",
+    "author_death": "1965-08-07"
+  },
+  {
+    "author": "大隈 重信",
+    "author_kana": "おおくま しげのぶ",
+    "author_birth": "1838-03-11",
+    "author_death": "1922-01-10"
+  },
+  {
+    "author": "ロンドン ジャック",
+    "author_kana": "ロンドン ジャック",
+    "author_birth": "1876-01-12",
+    "author_death": "1916-11-22"
+  },
+  {
+    "author": "池田 亀鑑",
+    "author_kana": "いけだ きかん",
+    "author_birth": "1896-12-09",
+    "author_death": "1956-12-19"
+  },
+  {
+    "author": "キングスフォード アンナ",
+    "author_kana": "キングスフォード アンナ",
+    "author_birth": "1846-09-16",
+    "author_death": "1888-02-22"
+  },
+  {
+    "author": "小宮 豊隆",
+    "author_kana": "こみや とよたか",
+    "author_birth": "1884-03-07",
+    "author_death": "1966-05-03"
+  },
+  {
+    "author": "藤野 古白",
+    "author_kana": "ふじの こはく",
+    "author_birth": "1871-09-22",
+    "author_death": "1895-04-12"
+  },
+  {
+    "author": "小野 梓",
+    "author_kana": "おの あずさ",
+    "author_birth": "1852-03-10",
+    "author_death": "1886-01-11"
+  },
+  {
+    "author": "山中 峯太郎",
+    "author_kana": "やまなか みねたろう",
+    "author_birth": "1885-12-15",
+    "author_death": "1966-04-28"
+  },
+  {
+    "author": "矢崎 源九郎",
+    "author_kana": "やざき げんくろう",
+    "author_birth": "1921-03-26",
+    "author_death": "1967-02-23"
+  },
+  {
+    "author": "ラーゲルレーヴ セルマ",
+    "author_kana": "ラーゲルレーヴ セルマ",
+    "author_birth": "1858-11-20",
+    "author_death": "1940-03-16"
+  },
+  {
+    "author": "太宰 治, 山崎 富栄",
+    "author_kana": "だざい おさむ, やまざき とみえ",
+    "author_birth": "1909-06-19",
+    "author_death": "1948-06-13"
+  },
+  {
+    "author": "木村 荘十",
+    "author_kana": "きむら そうじゅう",
+    "author_birth": "1897-01-12",
+    "author_death": "1967-05-06"
+  },
+  {
+    "author": "鈴木 大拙",
+    "author_kana": "すずき だいせつ",
+    "author_birth": "1870-11-11",
+    "author_death": "1966-07-12"
+  },
+  {
+    "author": "ドロステ＝ヒュルスホフ アネッテ・フォン",
+    "author_kana": "ドロステ＝ヒュルスホフ アネッテ・フォン",
+    "author_birth": "1797-01-10",
+    "author_death": "1848-05-25"
+  },
+  {
+    "author": "新井 紀一",
+    "author_kana": "あらい きいち",
+    "author_birth": "1890-02-22",
+    "author_death": "1966-03-13"
+  },
+  {
+    "author": "上田 広",
+    "author_kana": "うえだ ひろし",
+    "author_birth": "1905-06-18",
+    "author_death": "1966-02-27"
+  },
+  {
+    "author": "佐佐木 茂索",
+    "author_kana": "ささき もさく",
+    "author_birth": "1894-11-11",
+    "author_death": "1966-12-01"
+  },
+  {
+    "author": "中野 秀人",
+    "author_kana": "なかの ひでと",
+    "author_birth": "1898-05-17",
+    "author_death": "1966-05-13"
+  },
+  {
+    "author": "河井 寛次郎",
+    "author_kana": "かわい かんじろう",
+    "author_birth": "1890-08-24",
+    "author_death": "1966-11-18"
+  },
+  {
+    "author": "窪田 空穂",
+    "author_kana": "くぼた うつぼ",
+    "author_birth": "1877-06-08",
+    "author_death": "1967-04-12"
+  },
+  {
+    "author": "安倍 能成",
+    "author_kana": "あべ よししげ",
+    "author_birth": "1883-12-23",
+    "author_death": "1966-06-07"
+  },
+  {
+    "author": "中島 哀浪",
+    "author_kana": "なかじま あいろう",
+    "author_birth": "1883-07-30",
+    "author_death": "1966-10-29"
+  },
+  {
+    "author": "川田 順",
+    "author_kana": "かわだ じゅん",
+    "author_birth": "1882-01-15",
+    "author_death": "1966-01-22"
+  },
+  {
+    "author": "野間 清六",
+    "author_kana": "のま せいろく",
+    "author_birth": "1902-02-12",
+    "author_death": "1966-12-13"
+  },
+  {
+    "author": "小穴 隆一",
+    "author_kana": "おあな りゅういち",
+    "author_birth": "1894-11-28",
+    "author_death": "1966-04-24"
+  },
+  {
+    "author": "深瀬 基寛",
+    "author_kana": "ふかせ もとひろ",
+    "author_birth": "1895-10-12",
+    "author_death": "1966-08-21"
+  },
+  {
+    "author": "福永 信",
+    "author_kana": "ふくなが しん",
+    "author_birth": "1972-06-22",
+    "author_death": null
+  },
+  {
+    "author": "澤西 祐典",
+    "author_kana": "さわにし ゆうてん",
+    "author_birth": "1986-07-12",
+    "author_death": null
+  },
+  {
+    "author": "円城 塔",
+    "author_kana": "えんじょう とう",
+    "author_birth": "1972-09-15",
+    "author_death": null
+  },
+  {
+    "author": "シェミン マーガレット",
+    "author_kana": "シェミン マーガレット",
+    "author_birth": "192X",
+    "author_death": "1976"
+  },
+  {
+    "author": "吉田 茂",
+    "author_kana": "よしだ しげる",
+    "author_birth": "1878-09-22",
+    "author_death": "1967-10-20"
+  },
+  {
+    "author": "山東 京山, 鈴木 牧之",
+    "author_kana": "さんとう きょうざん, すずき ぼくし",
+    "author_birth": "1769-07-18",
+    "author_death": "1858-10-30"
+  },
+  {
+    "author": "柳原 白蓮",
+    "author_kana": "やなぎわら びゃくれん",
+    "author_birth": "1885-10-15",
+    "author_death": "1967-02-22"
+  },
+  {
+    "author": "笠 信太郎",
+    "author_kana": "りゅう しんたろう",
+    "author_birth": "1900-12-11",
+    "author_death": "1967-12-04"
+  },
+  {
+    "author": "新村 出",
+    "author_kana": "しんむら いずる",
+    "author_birth": "1876-10-04",
+    "author_death": "1967-08-17"
+  },
+  {
+    "author": "恒藤 恭",
+    "author_kana": "つねとう きょう",
+    "author_birth": "1888-12-03",
+    "author_death": "1967-11-02"
+  },
+  {
+    "author": "小倉 右一郎",
+    "author_kana": "おぐら ゆういちろう",
+    "author_birth": "1881-06-09",
+    "author_death": "1962-07-15"
+  },
+  {
+    "author": "成沢 玲川",
+    "author_kana": "なるさわ れいせん",
+    "author_birth": "1877-12-14",
+    "author_death": "1962-10-20"
+  },
+  {
+    "author": "中野 鈴子",
+    "author_kana": "なかの すずこ",
+    "author_birth": "1906-01-24",
+    "author_death": "1958-01-05"
+  },
+  {
+    "author": "鮎川 義介",
+    "author_kana": "あゆかわ よしすけ",
+    "author_birth": "1880-11-06",
+    "author_death": "1967-02-13"
+  },
+  {
+    "author": "山浦 貫一",
+    "author_kana": "やまうら かんいち",
+    "author_birth": "1893-03-20",
+    "author_death": "1967-09-26"
+  },
+  {
+    "author": "クロッサー マイラ・ジョー",
+    "author_kana": "クロッサー マイラ・ジョー",
+    "author_birth": "1880",
+    "author_death": "1962"
+  },
+  {
+    "author": "ブラックウッド アルジャーノン",
+    "author_kana": "ブラックウッド アルジャーノン",
+    "author_birth": "1869-03-14",
+    "author_death": "1951-12-10"
+  },
+  {
+    "author": "チェンバース ロバート・Ｗ",
+    "author_kana": "チェンバース ロバート・Ｗ",
+    "author_birth": "1865-05-26",
+    "author_death": "1933-12-16"
+  },
+  {
+    "author": "中村 清太郎",
+    "author_kana": "なかむら せいたろう",
+    "author_birth": "1888-04-30",
+    "author_death": "1967-12-20"
+  },
+  {
+    "author": "太田 健一",
+    "author_kana": "おおた けんいち",
+    "author_birth": null,
+    "author_death": null
+  },
+  {
+    "author": "金森 徳次郎",
+    "author_kana": "かなもり とくじろう",
+    "author_birth": "1886-03-17",
+    "author_death": "1959-06-16"
+  },
+  {
+    "author": "富田 常雄",
+    "author_kana": "とみた つねお",
+    "author_birth": "1904-01-01",
+    "author_death": "1967-10-16"
+  },
+  {
+    "author": "プルス ボレスワフ",
+    "author_kana": "プルス ボレスワフ",
+    "author_birth": "1847-08-20",
+    "author_death": "1912-05-19"
+  },
+  {
+    "author": "ミルン アラン・アレクザンダー",
+    "author_kana": "ミルン アラン・アレクザンダー",
+    "author_birth": "1882-01-18",
+    "author_death": "1956-01-31"
+  },
+  {
+    "author": "稲垣 巌",
+    "author_kana": "いながき いわお",
+    "author_birth": "1897-02-15",
+    "author_death": "1937-08-15"
+  },
+  {
+    "author": "信時 潔",
+    "author_kana": "のぶとき きよし",
+    "author_birth": "1887-12-29",
+    "author_death": "1965-08-01"
+  },
+  {
+    "author": "生田 葵山",
+    "author_kana": "いくた きざん",
+    "author_birth": "1876-04-14",
+    "author_death": "1945-12-31"
+  },
+  {
+    "author": "天川 恵三郎",
+    "author_kana": "あまかわ けいさぶろう",
+    "author_birth": "1864",
+    "author_death": "1934-04-05"
+  },
+  {
+    "author": "時枝 誠記",
+    "author_kana": "ときえだ もとき",
+    "author_birth": "1900-12-06",
+    "author_death": "1967-10-27"
+  },
+  {
+    "author": "矢部 貞治",
+    "author_kana": "やべ ていじ",
+    "author_birth": "1902-11-09",
+    "author_death": "1967-05-07"
+  },
+  {
+    "author": "島 秋人",
+    "author_kana": "しま あきと",
+    "author_birth": "1934-06-28",
+    "author_death": "1967-11-02"
+  },
+  {
+    "author": "林 譲治",
+    "author_kana": "はやし じょうじ",
+    "author_birth": "1889-03-24",
+    "author_death": "1960-04-05"
+  },
+  {
+    "author": "吉野 秀雄",
+    "author_kana": "よしの ひでお",
+    "author_birth": "1902-07-03",
+    "author_death": "1967-07-13"
+  },
+  {
+    "author": "三木 露風",
+    "author_kana": "みき ろふう",
+    "author_birth": "1889-06-23",
+    "author_death": "1964-12-29"
+  },
+  {
+    "author": "森 於菟",
+    "author_kana": "もり おと",
+    "author_birth": "1890-09-13",
+    "author_death": "1967-12-21"
+  },
+  {
+    "author": "三宅 周太郎",
+    "author_kana": "みやけ しゅうたろう",
+    "author_birth": "1892-07-22",
+    "author_death": "1967-02-14"
+  },
+  {
+    "author": "野上 彰",
+    "author_kana": "のがみ あきら",
+    "author_birth": "1909-02-15",
+    "author_death": "1967-11-04"
+  },
+  {
+    "author": "勝本 清一郎",
+    "author_kana": "かつもと せいいちろう",
+    "author_birth": "1899-05-05",
+    "author_death": "1967-03-23"
+  },
+  {
+    "author": "藤原 咲平",
+    "author_kana": "ふじわら さくへい",
+    "author_birth": "1884-10-29",
+    "author_death": "1950-09-22"
+  },
+  {
+    "author": "菱山 修三",
+    "author_kana": "ひしやま しゅうぞう",
+    "author_birth": "1909-08-28",
+    "author_death": "1967-08-07"
+  },
+  {
+    "author": "淀野 隆三",
+    "author_kana": "よどの りゅうぞう",
+    "author_birth": "1904-04-16",
+    "author_death": "1967-07-07"
+  },
+  {
+    "author": "金沢 庄三郎",
+    "author_kana": "かなざわ しょうざぶろう",
+    "author_birth": "1872-06-12",
+    "author_death": "1967-06-02"
+  },
+  {
+    "author": "薄田 太郎",
+    "author_kana": "すすきだ たろう",
+    "author_birth": "1902-11-01",
+    "author_death": "1967-04-23"
+  },
+  {
+    "author": "秘田 余四郎",
+    "author_kana": "ひめだ よしろう",
+    "author_birth": "1908-10-15",
+    "author_death": "1967-09-18"
+  },
+  {
+    "author": "早川 鮎子",
+    "author_kana": "はやかわ あゆこ",
+    "author_birth": "1936",
+    "author_death": "1967"
+  },
+  {
+    "author": "芥川 紗織",
+    "author_kana": "あくたがわ さおり",
+    "author_birth": "1924-05-24",
+    "author_death": "1966-01-31"
+  },
+  {
+    "author": "東野辺 薫",
+    "author_kana": "とうのべ かおる",
+    "author_birth": "1902-03-09",
+    "author_death": "1962-06-25"
+  },
+  {
+    "author": "森 律子",
+    "author_kana": "もり りつこ",
+    "author_birth": "1890-10-30",
+    "author_death": "1961-07-22"
+  },
+  {
+    "author": "ジェイコブス ウイリアム・ワイマーク",
+    "author_kana": "ジェイコブス ウイリアム・ワイマーク",
+    "author_birth": "1863-09-08",
+    "author_death": "1943-09-01"
+  },
+  {
+    "author": "中村 研一",
+    "author_kana": "なかむら けんいち",
+    "author_birth": "1895-05-14",
+    "author_death": "1967-08-28"
+  },
+  {
+    "author": "三岸 好太郎",
+    "author_kana": "みぎし こうたろう",
+    "author_birth": "1903-04-18",
+    "author_death": "1934-07-01"
+  },
+  {
+    "author": "大石 誠之助",
+    "author_kana": "おおいし せいのすけ",
+    "author_birth": "1867-11-29",
+    "author_death": "1911-01-24"
+  },
+  {
+    "author": "ロティ ピエール",
+    "author_kana": "ロティ ピエール",
+    "author_birth": "1850-01-14",
+    "author_death": "1923-06-10"
+  },
+  {
+    "author": "菱田 春草",
+    "author_kana": "ひしだ しゅんそう",
+    "author_birth": "1874-09-21",
+    "author_death": "1911-09-16"
+  },
+  {
+    "author": "岡田 武松",
+    "author_kana": "おかだ たけまつ",
+    "author_birth": "1874-08-17",
+    "author_death": "1956-09-02"
+  },
+  {
+    "author": "山東 京山, 山東 京伝",
+    "author_kana": "さんとう きょうざん, さんとう きょうでん",
+    "author_birth": "1769-07-18",
+    "author_death": "1858-10-30"
+  },
+  {
+    "author": "山東 京山",
+    "author_kana": "さんとう きょうざん",
+    "author_birth": "1769-07-18",
+    "author_death": "1858-10-30"
+  },
+  {
+    "author": "藤村 操",
+    "author_kana": "ふじむら みさお",
+    "author_birth": "1886-07-20",
+    "author_death": "1903-05-22"
+  },
+  {
+    "author": "平光 吾一",
+    "author_kana": "ひらこう ごいち",
+    "author_birth": "1887-11",
+    "author_death": "1967-05-12"
+  },
+  {
+    "author": "マッケナ リチャード・ミルトン",
+    "author_kana": "マッケナ リチャード・ミルトン",
+    "author_birth": "1913-05-09",
+    "author_death": "1964-11-01"
+  },
+  {
+    "author": "スミス コードウェイナー",
+    "author_kana": "スミス コードウェイナー",
+    "author_birth": "1913-07-11",
+    "author_death": "1966-08-06"
+  },
+  {
+    "author": "吉岡 禅寺洞",
+    "author_kana": "よしおか ぜんじどう",
+    "author_birth": "1889-07-02",
+    "author_death": "1961-03-17"
+  },
+  {
+    "author": "ダ・ヴィンチ レオナルド",
+    "author_kana": "ダ・ヴィンチ レオナルド",
+    "author_birth": "1452-04-15",
+    "author_death": "1519-05-02"
+  },
+  {
+    "author": "池田 勇人",
+    "author_kana": "いけだ はやと",
+    "author_birth": "1899-12-03",
+    "author_death": "1965-08-13"
+  },
+  {
+    "author": "岡本 良雄",
+    "author_kana": "おかもと よしお",
+    "author_birth": "1913-06-10",
+    "author_death": "1963-02-06"
+  },
+  {
+    "author": "沼井 鉄太郎",
+    "author_kana": "ぬまい てつたろう",
+    "author_birth": "1898",
+    "author_death": "1959-07-02"
+  },
+  {
+    "author": "ヒューム デイヴィッド",
+    "author_kana": "ヒューム デイヴィッド",
+    "author_birth": "1711-05-07",
+    "author_death": "1776-08-25"
+  },
+  {
+    "author": "オーウェル ジョージ",
+    "author_kana": "オーウェル ジョージ",
+    "author_birth": "1903-06-25",
+    "author_death": "1950-01-21"
+  },
+  {
+    "author": "パイパー ヘンリー・ビーム",
+    "author_kana": "パイパー ヘンリー・ビーム",
+    "author_birth": "1904-03-23",
+    "author_death": "1964-11-06"
+  },
+  {
+    "author": "ポリドリ ジョン・ウィリアム",
+    "author_kana": "ポリドリ ジョン・ウィリアム",
+    "author_birth": "1795-09-07",
+    "author_death": "1821-08-24"
+  },
+  {
+    "author": "関根 秀雄",
+    "author_kana": "せきね ひでお",
+    "author_birth": "1895-09-17",
+    "author_death": "1987-07-27"
+  },
+  {
+    "author": "モンテーニュ ミシェル・エケム・ド",
+    "author_kana": "モンテーニュ ミシェル・エケム・ド",
+    "author_birth": "1533-02-28",
+    "author_death": "1592-09-13"
+  },
+  {
+    "author": "ホワイト フレッド・Ｍ",
+    "author_kana": "ホワイト フレッド・Ｍ",
+    "author_birth": "1859",
+    "author_death": "1935"
+  },
+  {
+    "author": "小西 茂也",
+    "author_kana": "こにし しげや",
+    "author_birth": "1909-01-16",
+    "author_death": "1955-04-21"
+  },
+  {
+    "author": "古賀 春江",
+    "author_kana": "こが はるえ",
+    "author_birth": "1895-06-18",
+    "author_death": "1933-09-10"
+  },
+  {
+    "author": "松本 竣介",
+    "author_kana": "まつもと しゅんすけ",
+    "author_birth": "1912-04-19",
+    "author_death": "1948-06-08"
+  },
+  {
+    "author": "プリリュー エドゥアール・エルネ",
+    "author_kana": "プリリュー エドゥアール・エルネ",
+    "author_birth": "1829-01-11",
+    "author_death": "1915-10-07"
+  },
+  {
+    "author": "嘉納 治五郎",
+    "author_kana": "かのう じごろう",
+    "author_birth": "1860-12-10",
+    "author_death": "1938-05-04"
+  },
+  {
+    "author": "間所 紗織",
+    "author_kana": "まどころ さおり",
+    "author_birth": "1924-05-24",
+    "author_death": "1966-01-31"
+  },
+  {
+    "author": "滝 廉太郎",
+    "author_kana": "たき れんたろう",
+    "author_birth": "1879-08-24",
+    "author_death": "1903-06-29"
+  },
+  {
+    "author": "板谷 波山",
+    "author_kana": "いたや はざん",
+    "author_birth": "1872-04-10",
+    "author_death": "1963-10-10"
+  },
+  {
+    "author": "志賀 重昂",
+    "author_kana": "しが しげたか",
+    "author_birth": "1863-12-25",
+    "author_death": "1927-04-06"
+  },
+  {
+    "author": "村松 梢風",
+    "author_kana": "むらまつ しょうふう",
+    "author_birth": "1889-09-21",
+    "author_death": "1961-02-13"
+  },
+  {
+    "author": "青木 正児",
+    "author_kana": "あおき まさる",
+    "author_birth": "1887-02-14",
+    "author_death": "1964-12-02"
+  },
+  {
+    "author": "滝沢 敬一",
+    "author_kana": "たきざわ けいいち",
+    "author_birth": "1884-03-23",
+    "author_death": "1965-02-26"
+  },
+  {
+    "author": "浜本 浩",
+    "author_kana": "はまもと ひろし",
+    "author_birth": "1890-08-14",
+    "author_death": "1959-03-12"
+  },
+  {
+    "author": "山本 鼎",
+    "author_kana": "やまもと かなえ",
+    "author_birth": "1882-10-24",
+    "author_death": "1946-10-08"
+  },
+  {
+    "author": "安井 曽太郎",
+    "author_kana": "やすい そうたろう",
+    "author_birth": "1888-05-17",
+    "author_death": "1955-12-14"
+  },
+  {
+    "author": "ファン・ゴッホ フィンセント",
+    "author_kana": "ファン・ゴッホ フィンセント",
+    "author_birth": "1853-03-30",
+    "author_death": "1890-07-29"
+  },
+  {
+    "author": "荻野 吟子",
+    "author_kana": "おぎの ぎんこ",
+    "author_birth": "1851-04-04",
+    "author_death": "1913-06-23"
+  },
+  {
+    "author": "パスカル ブレーズ",
+    "author_kana": "パスカル ブレーズ",
+    "author_birth": "1623-06-19",
+    "author_death": "1662-08-19"
+  },
+  {
+    "author": "ダンバー オリヴィア・ハワード",
+    "author_kana": "ダンバー オリヴィア・ハワード",
+    "author_birth": "1873-02-21",
+    "author_death": "1953-01-06"
+  },
+  {
+    "author": "芥川 多加志",
+    "author_kana": "あくたがわ たかし",
+    "author_birth": "1922-11-08",
+    "author_death": "1945-04-13"
+  },
+  {
+    "author": "クレイン ウォルター",
+    "author_kana": "クレイン ウォルター",
+    "author_birth": "1845-08-15",
+    "author_death": "1915-03-14"
+  },
+  {
+    "author": "アポリネール ギヨーム",
+    "author_kana": "アポリネール ギヨーム",
+    "author_birth": "1880-08-26",
+    "author_death": "1918-11-09"
+  },
+  {
+    "author": "ノアイユ アンナ・ド",
+    "author_kana": "ノアイユ アンナ・ド",
+    "author_birth": "1876-11-15",
+    "author_death": "1933-04-30"
+  },
+  {
+    "author": "パロマ コスティス",
+    "author_kana": "パロマ コスティス",
+    "author_birth": "1859-01-13",
+    "author_death": "1943-02-27"
+  },
+  {
+    "author": "村崎 敏郎",
+    "author_kana": "むらさき としろう",
+    "author_birth": "1904-07-23",
+    "author_death": "1962-04-19"
+  },
+  {
+    "author": "清沢 洌",
+    "author_kana": "きよさわ きよし",
+    "author_birth": "1890-02-08",
+    "author_death": "1945-05-21"
+  },
+  {
+    "author": "成瀬 無極",
+    "author_kana": "なるせ むきょく",
+    "author_birth": "1885-4-26",
+    "author_death": "1958-1-4"
+  },
+  {
+    "author": "前田 多門",
+    "author_kana": "まえだ たもん",
+    "author_birth": "1884-05-11",
+    "author_death": "1962-06-04"
+  },
+  {
+    "author": "五十公野 清一",
+    "author_kana": "いずみの せいいち",
+    "author_birth": "1902-02-26",
+    "author_death": "1966-06-25"
+  },
+  {
+    "author": "原 杞憂, 原 民喜",
+    "author_kana": "はら きゆう, はら たみき",
+    "author_birth": "1905-11-15",
+    "author_death": "1951-03-13"
+  },
+  {
+    "author": "長瀬 金平",
+    "author_kana": "ながせ きんぺい",
+    "author_birth": "1885",
+    "author_death": null
+  },
+  {
+    "author": "渡辺 千吉郎",
+    "author_kana": "わたなべ せんきちろう",
+    "author_birth": "1869",
+    "author_death": "1942"
+  },
+  {
+    "author": "ヤコブセン イエンス・ペーター",
+    "author_kana": "ヤコブセン イエンス・ペーター",
+    "author_birth": "1847-04-07",
+    "author_death": "1885-04-30"
+  },
+  {
+    "author": "吉岡 信敬",
+    "author_kana": "よしおか しんけい",
+    "author_birth": "1885-09-01",
+    "author_death": "1940-12-07"
+  },
+  {
+    "author": "熊平 武二",
+    "author_kana": "くまひら たけじ",
+    "author_birth": "1906-07-10",
+    "author_death": "1960-01-10"
+  },
+  {
+    "author": "ケネディ ジョン・フィッツジェラルド",
+    "author_kana": "ケネディ ジョン・フィッツジェラルド",
+    "author_birth": "1917-05-29",
+    "author_death": "1963-11-22"
+  },
+  {
+    "author": "リンカーン エイブラハム",
+    "author_kana": "リンカーン エイブラハム",
+    "author_birth": "1809-02-12",
+    "author_death": "1865-04-15"
+  },
+  {
+    "author": "杉浦 正一郎",
+    "author_kana": "すぎうら しょういちろう",
+    "author_birth": "1911-02-09",
+    "author_death": "1957-02-23"
+  },
+  {
+    "author": "津田 梅子",
+    "author_kana": "つだ うめこ",
+    "author_birth": "1864-12-31",
+    "author_death": "1929-8-16"
+  },
+  {
+    "author": "上田 秋成",
+    "author_kana": "うえだ あきなり",
+    "author_birth": "1734-07-25",
+    "author_death": "1809-08-08"
+  },
+  {
+    "author": "折口 春洋",
+    "author_kana": "おりくち はるみ",
+    "author_birth": "1907-2-28",
+    "author_death": "1945-3-19"
+  },
+  {
+    "author": "北村 兼子",
+    "author_kana": "きたむら かねこ",
+    "author_birth": "1903-11-26",
+    "author_death": "1931-07-26"
+  },
+  {
+    "author": "大塚 楠緒子",
+    "author_kana": "おおつか くすおこ",
+    "author_birth": "1875-08-09",
+    "author_death": "1910-11-09"
+  },
+  {
+    "author": "管野 須賀子",
+    "author_kana": "かんの すがこ",
+    "author_birth": "1881-06-07",
+    "author_death": "1911-01-25"
+  },
+  {
+    "author": "稲生 武太夫, 稲生 正令",
+    "author_kana": "いのう ぶだゆう, いのう まさよし",
+    "author_birth": "1735",
+    "author_death": "1803"
+  },
+  {
+    "author": "ハイド ダグラス",
+    "author_kana": "ハイド ダグラス",
+    "author_birth": "1860-01-17",
+    "author_death": "1949-07-12"
+  },
+  {
+    "author": "左川 ちか",
+    "author_kana": "さがわ ちか",
+    "author_birth": "1911-02-14",
+    "author_death": "1936-01-07"
+  },
+  {
+    "author": "木下 夕爾",
+    "author_kana": "きのした ゆうじ",
+    "author_birth": "1914-10-27",
+    "author_death": "1965-08-04"
+  },
+  {
+    "author": "三富 朽葉",
+    "author_kana": "みとみ くちは",
+    "author_birth": "1889-08-14",
+    "author_death": "1917-08-02"
+  },
+  {
+    "author": "畔柳 二美",
+    "author_kana": "くろやなぎ ふみ",
+    "author_birth": "1912-01-14",
+    "author_death": "1965-01-13"
+  },
+  {
+    "author": "九条 武子",
+    "author_kana": "くじょう たけこ",
+    "author_birth": "1887-10-20",
+    "author_death": "1928-02-07"
+  },
+  {
+    "author": "大田 洋子",
+    "author_kana": "おおた ようこ",
+    "author_birth": "1906-11-18",
+    "author_death": "1963-12-10"
+  },
+  {
+    "author": "呉 秀三",
+    "author_kana": "くれ しゅうぞう",
+    "author_birth": "1865-04-14",
+    "author_death": "1932-03-26"
+  },
+  {
+    "author": "三角 錫子",
+    "author_kana": "みすみ すずこ",
+    "author_birth": "1872-05-26",
+    "author_death": "1921-03-12"
+  },
+  {
+    "author": "畑中 武夫",
+    "author_kana": "はたなか たけお",
+    "author_birth": "1914-01-01",
+    "author_death": "1963-11-10"
+  },
+  {
+    "author": "植木 枝盛",
+    "author_kana": "うえき えもり",
+    "author_birth": "1857-02-14",
+    "author_death": "1892-01-23"
+  },
+  {
+    "author": "カプアーナ ルイージ",
+    "author_kana": "カプアーナ ルイージ",
+    "author_birth": "1839-05-28",
+    "author_death": "1915-11-29"
+  },
+  {
+    "author": "兼好法師",
+    "author_kana": "けんこうほうし",
+    "author_birth": "1283",
+    "author_death": "1352"
+  },
+  {
+    "author": "佐藤 春夫, 蒲 松齢",
+    "author_kana": "さとう はるお, ほ しょうれい",
+    "author_birth": "1892-04-09",
+    "author_death": "1964-05-06"
+  },
+  {
+    "author": "チュラーイ マルーシャ",
+    "author_kana": "チュラーイ マルーシャ",
+    "author_birth": "1625",
+    "author_death": "1653"
+  },
+  {
+    "author": "松尾 芭蕉",
+    "author_kana": "まつお ばしょう",
+    "author_birth": "1644",
+    "author_death": "1694-11-28"
+  },
+  {
+    "author": "和田 信賢",
+    "author_kana": "わだ のぶかた",
+    "author_birth": "1912-06-19",
+    "author_death": "1952-08-14"
+  },
+  {
+    "author": "ワインバウム スタンリー・Ｇ",
+    "author_kana": "ワインバウム スタンリー・Ｇ",
+    "author_birth": "1902-04-04",
+    "author_death": "1935-12-14"
+  },
+  {
+    "author": "ストーカー ブラム",
+    "author_kana": "ストーカー ブラム",
+    "author_birth": "1847-11-08",
+    "author_death": "1912-04-20"
+  },
+  {
+    "author": "イエイツ ウィリアム・バトラー, ウォルターズ レティス・ドイリー, ファイルマン ローズ",
+    "author_kana": "イエイツ ウィリアム・バトラー, ウォルターズ レティス・ドイリー, ファイルマン ローズ",
+    "author_birth": "1865-06-13",
+    "author_death": "1939-01-28"
+  },
+  {
+    "author": "ガアグ ワンダ",
+    "author_kana": "ガアグ ワンダ",
+    "author_birth": "1893-03-11",
+    "author_death": "1946-06-27"
+  },
+  {
+    "author": "ネルヴァル ジェラール・ド",
+    "author_kana": "ネルヴァル ジェラール・ド",
+    "author_birth": "1808-05-22",
+    "author_death": "1855-01-26"
+  }
+]

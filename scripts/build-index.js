@@ -200,6 +200,25 @@ async function main() {
 
     fs.writeFileSync(OUTPUT_PATH, JSON.stringify(books));
     console.log(`完了! 合計 ${books.length} 件の作品データを作成しました: ${OUTPUT_PATH}`);
+
+    // Recommendations コンポーネント専用の軽量データを生成。
+    // 著者の生没日だけあれば良く、books.json(数MB)を丸ごと待たせずに済む。
+    const authorsMap = new Map();
+    for (const b of books) {
+      if (!authorsMap.has(b.author)) {
+        authorsMap.set(b.author, {
+          author: b.author,
+          author_kana: b.author_kana,
+          author_birth: b.author_birth,
+          author_death: b.author_death,
+        });
+      }
+    }
+    const AUTHORS_OUTPUT_PATH = path.join(__dirname, '../public/authors.json');
+    fs.writeFileSync(AUTHORS_OUTPUT_PATH, JSON.stringify(Array.from(authorsMap.values())));
+    console.log(
+      `完了! 合計 ${authorsMap.size} 件の著者データを作成しました: ${AUTHORS_OUTPUT_PATH}`
+    );
   } catch (error) {
     console.error('エラーが発生しました:', error);
     process.exit(1);

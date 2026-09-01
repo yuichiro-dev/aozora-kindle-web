@@ -3,6 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { GENRE_GROUPS } from '@/lib/genres';
+import { useAuthors } from '@/hooks/useAuthors';
 
 export interface Book {
   id: number;
@@ -24,7 +25,6 @@ export interface Book {
 }
 
 interface Props {
-  books: Book[];
   searchQuery?: string;
   onSelectAuthor?: (author: string) => void;
 }
@@ -61,7 +61,8 @@ function shuffleArray<T>(array: T[]): T[] {
   return arr;
 }
 
-export default function Recommendations({ books, searchQuery, onSelectAuthor }: Props) {
+export default function Recommendations({ searchQuery, onSelectAuthor }: Props) {
+  const { authors } = useAuthors();
   const [recommendations, setRecommendations] = useState<RecommendationData[]>([]);
 
   useEffect(() => {
@@ -71,7 +72,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
         return;
       }
 
-      if (!books || books.length === 0) {
+      if (!authors || authors.length === 0) {
         setRecommendations([]);
         return;
       }
@@ -136,7 +137,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
       // 生誕作家
       const todayBirth = Array.from(
         new Set(
-          books
+          authors
             .filter((b) => {
               const p = parseMonthDay(b.author_birth);
               return p && p.month === month && p.day === day && !hasKatakana(b.author);
@@ -154,7 +155,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
         const monthBirth = shuffleArray(
           Array.from(
             new Set(
-              books
+              authors
                 .filter((b) => {
                   const p = parseMonthDay(b.author_birth);
                   return p && p.month === month && !hasKatakana(b.author);
@@ -174,7 +175,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
       // 命日作家
       const todayDeath = Array.from(
         new Set(
-          books
+          authors
             .filter((b) => {
               const p = parseMonthDay(b.author_death);
               return p && p.month === month && p.day === day && !hasKatakana(b.author);
@@ -192,7 +193,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
         const monthDeath = shuffleArray(
           Array.from(
             new Set(
-              books
+              authors
                 .filter((b) => {
                   const p = parseMonthDay(b.author_death);
                   return p && p.month === month && !hasKatakana(b.author);
@@ -221,7 +222,7 @@ export default function Recommendations({ books, searchQuery, onSelectAuthor }: 
       window.removeEventListener('storage', buildRecommendations);
       window.removeEventListener('history-updated', buildRecommendations);
     };
-  }, [books, searchQuery]);
+  }, [authors, searchQuery]);
 
   if (searchQuery && searchQuery.trim().length > 0) return null;
   if (recommendations.length === 0) return null;
