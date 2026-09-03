@@ -32,6 +32,6 @@ jobs:
         run: |
           git config --global user.name 'github-actions[bot]'
           git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          # books.json に加えて、パッケージのロックファイル等の変更も対象にする
-          git add public/books.json package.json package-lock.json 
-          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update books.json and dependencies via GitHub Actions" && git push)
+          # public/authors.json を追加（または必要に応じて git add -A に変更）
+          git add public/books.json public/authors.json package.json package-lock.json 
+          git diff --quiet && git diff --staged --quiet || (git commit -m "Auto-update books.json, authors.json, and dependencies via GitHub Actions" && git push)
