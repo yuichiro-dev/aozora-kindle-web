@@ -43,15 +43,36 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
-          # 対象プロジェクトの全デプロイをJSONで取得
-          RESPONSE=$(curl -s \
-            -H "Authorization: Bearer $VERCEL_TOKEN" \
-            "https://api.vercel.com/v6/deployments?projectId=$VERCEL_PROJECT_ID&teamId=$VERCEL_ORG_ID&limit=100")
+          set -eo pipefail
 
-          # 取得できたか確認
-          if [ "$(echo "$RESPONSE" | jq -r '.deployments | length')" = "0" ] || [ -z "$(echo "$RESPONSE" | jq -r '.deployments')" ]; then
-            echo "No deployments found or API error:"
+          # VERCEL_ORG_ID が team_ で始まらない(=個人アカウント)場合、
+          # teamId を付けるとAPIがプロジェクトを見つけられず失敗するので付けない
+          if [[ "$VERCEL_ORG_ID" == team_* ]]; then
+            TEAM_QS="&teamId=$VERCEL_ORG_ID"
+          else
+            TEAM_QS=""
+          fi
+
+          URL="https://api.vercel.com/v6/deployments?projectId=$VERCEL_PROJECT_ID&limit=100$TEAM_QS"
+
+          # HTTPステータスとボディを分けて取得(-w でステータスコードを末尾に付与)
+          HTTP_RESPONSE=$(curl -s -w "\n%{http_code}" -H "Authorization: Bearer $VERCEL_TOKEN" "$URL")
+          HTTP_STATUS=$(echo "$HTTP_RESPONSE" | tail -n1)
+          RESPONSE=$(echo "$HTTP_RESPONSE" | sed '$d')
+
+          echo "GET $URL -> HTTP $HTTP_STATUS"
+
+          if [ "$HTTP_STATUS" != "200" ]; then
+            echo "❌ API error response:"
             echo "$RESPONSE"
+            exit 1
+          fi
+
+          DEPLOY_COUNT=$(echo "$RESPONSE" | jq -r '.deployments | length')
+          echo "Found $DEPLOY_COUNT deployment(s)"
+
+          if [ "$DEPLOY_COUNT" -le 1 ]; then
+            echo "Nothing to clean up."
             exit 0
           fi
 
@@ -63,9 +84,13 @@ jobs:
           echo "$RESPONSE" | jq -r '.deployments[].uid' | while read -r uid; do
             if [ "$uid" != "$KEEP_UID" ]; then
               echo "Deleting deployment: $uid"
-              curl -s -X DELETE \
+              DEL_STATUS=$(curl -s -o /tmp/del_resp.json -w "%{http_code}" -X DELETE \
                 -H "Authorization: Bearer $VERCEL_TOKEN" \
-                "https://api.vercel.com/v13/deployments/$uid?teamId=$VERCEL_ORG_ID"
-              echo ""
+                "https://api.vercel.com/v13/deployments/$uid?$([[ -n "$TEAM_QS" ]] && echo "teamId=$VERCEL_ORG_ID")")
+              if [ "$DEL_STATUS" != "200" ] && [ "$DEL_STATUS" != "204" ]; then
+                echo "  -> ❌ failed (HTTP $DEL_STATUS): $(cat /tmp/del_resp.json)"
+              else
+                echo "  -> ✅ deleted"
+              fi
             fi
           done
