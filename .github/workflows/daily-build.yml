@@ -43,8 +43,29 @@ jobs:
           VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
           VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
         run: |
-          # 過去のデプロイ一覧から最新1件を除いてIDを取得し、一括削除する
-          DEPLOYMENTS=$(npx vercel ls --token=$VERCEL_TOKEN --scope=$VERCEL_ORG_ID | grep -E 'https://' | awk '{print $1}' | tail -n +2)
-          if [ -n "$DEPLOYMENTS" ]; then
-            echo "$DEPLOYMENTS" | xargs -I {} npx vercel rm {} -y --token=$VERCEL_TOKEN --scope=$VERCEL_ORG_ID || true
+          # 対象プロジェクトの全デプロイをJSONで取得
+          RESPONSE=$(curl -s \
+            -H "Authorization: Bearer $VERCEL_TOKEN" \
+            "https://api.vercel.com/v6/deployments?projectId=$VERCEL_PROJECT_ID&teamId=$VERCEL_ORG_ID&limit=100")
+
+          # 取得できたか確認
+          if [ "$(echo "$RESPONSE" | jq -r '.deployments | length')" = "0" ] || [ -z "$(echo "$RESPONSE" | jq -r '.deployments')" ]; then
+            echo "No deployments found or API error:"
+            echo "$RESPONSE"
+            exit 0
           fi
+
+          # 最新1件(created降順の先頭)のuidだけ残す
+          KEEP_UID=$(echo "$RESPONSE" | jq -r '.deployments | sort_by(-.created) | .[0].uid')
+          echo "Keeping latest deployment: $KEEP_UID"
+
+          # それ以外を全部削除
+          echo "$RESPONSE" | jq -r '.deployments[].uid' | while read -r uid; do
+            if [ "$uid" != "$KEEP_UID" ]; then
+              echo "Deleting deployment: $uid"
+              curl -s -X DELETE \
+                -H "Authorization: Bearer $VERCEL_TOKEN" \
+                "https://api.vercel.com/v13/deployments/$uid?teamId=$VERCEL_ORG_ID"
+              echo ""
+            fi
+          done
