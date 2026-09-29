@@ -30,7 +30,7 @@ export default function Home() {
   const { filteredBooks, suggestions } = useBookSearch(books, query);
 
   // ダウンロード成功時にモーダル用タイトルを設定するコールバックを渡す
-  const { downloadingId, downloadBook } = useDownloadBook(saveHistory, (title) => {
+  const { downloadingId, downloadBook } = useDownloadBook(saveHistory, (title: string) => {
     setDownloadedBookTitle(title);
   });
 
