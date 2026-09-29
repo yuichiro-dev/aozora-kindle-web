@@ -26,8 +26,7 @@ export default function Home() {
   const { savedHistoryMap, saveHistory } = useBookHistory();
   const { filteredBooks, suggestions } = useBookSearch(books, query);
 
-  const { downloadingId, downloadBook, showGuide, closeGuide } =
-    useDownloadBook(saveHistory);
+  const { downloadingId, downloadBook, showGuide, closeGuide } = useDownloadBook(saveHistory);
 
   const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
 
@@ -117,19 +116,19 @@ export default function Home() {
       {showGuide && (
         <div
           onClick={closeGuide}
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex flex-col items-center justify-start pt-6 px-4 cursor-pointer"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex flex-col items-center justify-start pt-28 sm:pt-36 px-4 cursor-pointer"
         >
-          {/* 上部の通知バナーを指し示す大きな矢印と案内 */}
-          <div className="bg-orange-500 text-white font-bold text-center px-6 py-4 rounded-2xl shadow-2xl space-y-2 animate-bounce max-w-sm">
-            <div className="text-3xl">⬆️ ⬆️ ⬆️</div>
-            <div className="text-lg">画面上部に出た通知の</div>
-            <div className="text-2xl font-extrabold underline decoration-white">
+          {/* バナーと被らないよう少し下に配置し、上指しの矢印で誘導 */}
+          <div className="bg-orange-500 text-white font-bold text-center px-6 py-5 rounded-3xl shadow-2xl space-y-2 animate-bounce max-w-xs border-2 border-white/20">
+            <div className="text-4xl">👆</div>
+            <div className="text-base text-orange-100">画面上部に出た通知の</div>
+            <div className="text-2xl font-black underline decoration-2 underline-offset-4">
               「開く」を押してください
             </div>
           </div>
 
-          <p className="text-white/80 text-xs mt-8">
-            （画面のどこかをタップすると元の画面に戻ります）
+          <p className="text-white/80 text-xs mt-6 bg-black/40 px-4 py-2 rounded-full border border-white/10">
+            （画面のどこかをタップすると戻ります）
           </p>
         </div>
       )}
