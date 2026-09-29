@@ -116,14 +116,15 @@ export default function Home() {
       {showGuide && (
         <div
           onClick={closeGuide}
-          className="fixed inset-0 z-50 bg-black/65 backdrop-blur-md flex flex-col items-center justify-center p-6 cursor-pointer"
+          className="fixed inset-0 z-50 bg-black/80 flex flex-col items-center justify-center p-6 cursor-pointer transform-gpuWillChange text-white"
+          style={{ height: '100dvh' }} // OSのナビゲーションバーの高さを正しく考慮
         >
-          {/* 画面中央やや上に大きく配置 */}
-          <div className="bg-orange-500 text-white font-bold text-center px-8 py-6 rounded-3xl shadow-2xl space-y-3 animate-bounce max-w-xs -mt-16 border-2 border-white/20">
-            <div className="text-5xl">👆</div>
+          {/* メイン指示カード */}
+          <div className="bg-orange-500 text-white font-bold text-center px-8 py-6 rounded-3xl shadow-2xl space-y-3 max-w-xs -mt-16 border-2 border-white/20">
+            <div className="text-5xl animate-bounce">👆</div>
             <div className="text-base text-orange-100">画面の上に出た通知の</div>
             <div className="text-2xl font-black underline decoration-2 underline-offset-4">
-              「開く」を押して下さい
+              「開く」を押してください
             </div>
           </div>
         </div>
