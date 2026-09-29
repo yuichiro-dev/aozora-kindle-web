@@ -8,6 +8,8 @@ type SaveHistory = (id: string | number, title: string, author: string) => void;
 
 export function useDownloadBook(saveHistory: SaveHistory) {
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
+  // ダウンロード直後に上部案内を表示するためのフラグ
+  const [showGuide, setShowGuide] = useState(false);
 
   const downloadBook = useCallback(
     async (book: Book) => {
@@ -32,20 +34,7 @@ export function useDownloadBook(saveHistory: SaveHistory) {
         });
 
         if (!res.ok) {
-          let message = 'EPUBの生成に失敗しました。';
-
-          try {
-            const errorData = await res.json();
-
-            if (errorData?.error) {
-              message = errorData.error;
-            }
-          } catch {
-            // JSONではないレスポンスの場合は
-            // デフォルトメッセージを使用
-          }
-
-          throw new Error(message);
+          throw new Error('EPUBの生成に失敗しました。');
         }
 
         const blob = await res.blob();
@@ -53,7 +42,6 @@ export function useDownloadBook(saveHistory: SaveHistory) {
         saveHistory(book.id, fullTitle, book.author);
 
         const url = window.URL.createObjectURL(blob);
-
         const a = document.createElement('a');
 
         a.href = url;
@@ -64,9 +52,11 @@ export function useDownloadBook(saveHistory: SaveHistory) {
         a.remove();
 
         window.URL.revokeObjectURL(url);
+
+        // ダウンロード実行直後に上部誘導のブラー画面を表示
+        setShowGuide(true);
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : '不明なエラーが発生しました';
-
         alert(`エラー: ${message}`);
       } finally {
         setDownloadingId(null);
@@ -78,5 +68,7 @@ export function useDownloadBook(saveHistory: SaveHistory) {
   return {
     downloadingId,
     downloadBook,
+    showGuide,
+    closeGuide: () => setShowGuide(false),
   };
 }
