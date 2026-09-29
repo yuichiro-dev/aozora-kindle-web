@@ -47,7 +47,7 @@ export default function BookCard({ book, savedAt, downloading, onDownload }: Boo
           <span>{book.author}</span>
 
           {savedAt && (
-            <span className="text-sm text-primary font-normal">
+            <span className="text-sm text-muted-foreground font-normal">
               （前回保存: {formatHistoryDate(savedAt)}）
             </span>
           )}
@@ -63,12 +63,10 @@ export default function BookCard({ book, savedAt, downloading, onDownload }: Boo
             ? 'bg-muted text-muted-foreground border border-border cursor-not-allowed shadow-none'
             : downloading
               ? 'bg-muted-foreground text-background cursor-wait animate-pulse'
-              : savedAt
-                ? 'bg-success/10 border border-success/30 text-success hover:bg-success/20 active:bg-success/30'
-                : 'bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] shadow'
+              : 'bg-primary text-primary-foreground hover:opacity-90 active:scale-[0.98] shadow'
         }`}
       >
-        {downloading ? '生成中...' : savedAt ? '再保存' : '保存'}
+        {downloading ? '生成中...' : '保存'}
       </button>
     </div>
   );
