@@ -1,19 +1,15 @@
 'use client';
 
 import { useCallback, useState } from 'react';
+
 import type { Book } from '@/components/Recommendations';
 
 type SaveHistory = (id: string | number, title: string, author: string) => void;
 
-export interface PreparedBook {
-  title: string;
-  file: File;
-  blob: Blob;
-}
-
 export function useDownloadBook(saveHistory: SaveHistory) {
   const [downloadingId, setDownloadingId] = useState<number | null>(null);
-  const [preparedBook, setPreparedBook] = useState<PreparedBook | null>(null);
+  // ダウンロード直後に上部案内を表示するためのフラグ
+  const [showGuide, setShowGuide] = useState(false);
 
   const downloadBook = useCallback(
     async (book: Book) => {
@@ -23,13 +19,18 @@ export function useDownloadBook(saveHistory: SaveHistory) {
       }
 
       setDownloadingId(book.id);
+
       const fullTitle = book.sub_title ? `${book.title} - ${book.sub_title}` : book.title;
 
       try {
         const res = await fetch('/api/convert', {
           method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ id: book.id }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            id: book.id,
+          }),
         });
 
         if (!res.ok) {
@@ -37,17 +38,23 @@ export function useDownloadBook(saveHistory: SaveHistory) {
         }
 
         const blob = await res.blob();
+
         saveHistory(book.id, fullTitle, book.author);
 
-        const fileName = `${fullTitle}.epub`;
-        const file = new File([blob], fileName, { type: 'application/epub+zip' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
 
-        // 生成完了したらモーダルに渡す準備データとして保持
-        setPreparedBook({
-          title: fullTitle,
-          file,
-          blob,
-        });
+        a.href = url;
+        a.download = `${fullTitle}.epub`;
+
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        window.URL.revokeObjectURL(url);
+
+        // ダウンロード実行直後に上部誘導のブラー画面を表示
+        setShowGuide(true);
       } catch (error: unknown) {
         const message = error instanceof Error ? error.message : '不明なエラーが発生しました';
         alert(`エラー: ${message}`);
@@ -61,7 +68,7 @@ export function useDownloadBook(saveHistory: SaveHistory) {
   return {
     downloadingId,
     downloadBook,
-    preparedBook,
-    clearPreparedBook: () => setPreparedBook(null),
+    showGuide,
+    closeGuide: () => setShowGuide(false),
   };
 }

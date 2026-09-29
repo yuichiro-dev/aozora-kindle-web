@@ -26,7 +26,7 @@ export default function Home() {
   const { savedHistoryMap, saveHistory } = useBookHistory();
   const { filteredBooks, suggestions } = useBookSearch(books, query);
 
-  const { downloadingId, downloadBook, preparedBook, clearPreparedBook } =
+  const { downloadingId, downloadBook, showGuide, closeGuide } =
     useDownloadBook(saveHistory);
 
   const totalPages = Math.ceil(filteredBooks.length / ITEMS_PER_PAGE);
@@ -52,43 +52,6 @@ export default function Home() {
   const handleClear = () => {
     setQuery('');
     setCurrentPage(1);
-  };
-
-  // モーダル内の「開く」ボタンが押された時の処理（ユーザー操作の直後なので Permission denied にならない）
-  const handleOpenApp = async () => {
-    if (!preparedBook) return;
-
-    // スマホの Web Share API が使える場合
-    if (navigator.canShare && navigator.canShare({ files: [preparedBook.file] })) {
-      try {
-        await navigator.share({
-          files: [preparedBook.file],
-          title: preparedBook.title,
-          text: `${preparedBook.title} を開く`,
-        });
-        clearPreparedBook(); // 共有完了したらモーダルを閉じる
-        return;
-      } catch (error: unknown) {
-        if (error instanceof Error && error.name === 'AbortError') {
-          // ユーザーが共有メニューをキャンセルした場合は何もしない
-          return;
-        }
-      }
-    }
-
-    // 非対応（PC等）の場合は通常のダウンロードを実行
-    const url = window.URL.createObjectURL(preparedBook.blob);
-    const a = document.createElement('a');
-
-    a.href = url;
-    a.download = `${preparedBook.title}.epub`;
-
-    document.body.appendChild(a);
-    a.click();
-    a.remove();
-
-    window.URL.revokeObjectURL(url);
-    clearPreparedBook();
   };
 
   return (
@@ -150,32 +113,24 @@ export default function Home() {
         </div>
       </main>
 
-      {/* EPUB準備完了モーダル */}
-      {preparedBook && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 p-4">
-          <div className="bg-background rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl space-y-5 border border-border animate-fade-in">
-            <div className="text-4xl">📚</div>
-
-            <div>
-              <h3 className="text-lg font-bold text-foreground">{preparedBook.title}</h3>
-              <p className="text-xs text-muted-foreground mt-1">本の準備が完了しました</p>
+      {/* 画面全体のブラー ＋ 上部バナーへの誘導ガイド */}
+      {showGuide && (
+        <div
+          onClick={closeGuide}
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-md flex flex-col items-center justify-start pt-6 px-4 cursor-pointer"
+        >
+          {/* 上部の通知バナーを指し示す大きな矢印と案内 */}
+          <div className="bg-orange-500 text-white font-bold text-center px-6 py-4 rounded-2xl shadow-2xl space-y-2 animate-bounce max-w-sm">
+            <div className="text-3xl">⬆️ ⬆️ ⬆️</div>
+            <div className="text-lg">画面上部に出た通知の</div>
+            <div className="text-2xl font-extrabold underline decoration-white">
+              「開く」を押してください
             </div>
-
-            {/* この「開く」ボタンをユーザーが直接タップすることで、100%確実にアプリ共有パネルが起動します */}
-            <button
-              onClick={handleOpenApp}
-              className="w-full py-4 bg-orange-500 text-white font-bold text-lg rounded-2xl shadow-lg hover:bg-orange-600 active:scale-95 transition"
-            >
-              📖 Kindle・アプリで開く
-            </button>
-
-            <button
-              onClick={clearPreparedBook}
-              className="text-xs text-muted-foreground underline pt-1 block mx-auto"
-            >
-              キャンセル
-            </button>
           </div>
+
+          <p className="text-white/80 text-xs mt-8">
+            （画面のどこかをタップすると元の画面に戻ります）
+          </p>
         </div>
       )}
     </>
