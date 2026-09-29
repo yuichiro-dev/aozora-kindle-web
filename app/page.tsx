@@ -123,7 +123,7 @@ export default function Home() {
             <div className="text-5xl">👆</div>
             <div className="text-base text-orange-100">画面の上に出た通知の</div>
             <div className="text-2xl font-black underline decoration-2 underline-offset-4">
-              「開く」を押してください
+              「開く」を押して下さい
             </div>
           </div>
         </div>
